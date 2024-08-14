@@ -82,7 +82,7 @@ export const Carousel = () => {
           </View>
         )}
         style={{
-          paddingTop: 70,
+          paddingTop: 60,
           height: 1,
         }}
         contentContainerStyle={{
@@ -94,31 +94,7 @@ export const Carousel = () => {
         keyExtractor={(item, index) => String(index)}
         showsHorizontalScrollIndicator={false}
       />
-      <FlatList
-        data={DATA}
-        renderItem={({ item, index }) => (
-          <Animated.View
-            layout={Layout}
-            entering={FadeInLeft}
-            exiting={FadeOutRight}
-            style={{
-              width: activeBanner === index ? 12 : 8,
-              height: 8,
-              borderRadius: 4,
-              backgroundColor: activeBanner === index ? 'black' : 'gray',
-              marginHorizontal: 2,
-            }}
-          />
-        )}
-        style={{
-          paddingBottom: 170,
-          alignSelf: 'center',
-          bottom: 100,
-        }}
-        scrollEnabled={false}
-        horizontal
-        keyExtractor={(item, index) => String(index)}
-      />
+     
     </View>
   );
 };

@@ -1,5 +1,6 @@
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import TxtComponent from '../Components/TxtComponents';
 
@@ -17,12 +18,18 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-        <ImageBackground
-        style={styles.imgfundo}
-        source={require("../assets/image/ImageFundo.png")}>
-        <TxtComponent styletxt={styles.txtname} txt="Doce Encanto"/>
-        <Carousel />
-        </ImageBackground>
+      <View style={styles.header}>
+      
+        <TxtComponent styletxt={styles.txtname} txt="Doce Encanto" fontFamily="Great_Vibes"/>
+        <View style={styles.favoritos}>
+        <AntDesign name="hearto" size={24} color="#4d2929" />
+        </View>
+              
+      </View>
+      <View style={styles.carrosel}>
+      <Carousel />
+      </View>
+      
     </View>
   );
 }

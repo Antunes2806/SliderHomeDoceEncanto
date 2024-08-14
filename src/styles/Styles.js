@@ -1,25 +1,37 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#ff9bd0',
     },
 
-    imgfundo:{
-        flex: 1,
-    width: "100%",
-    resizeMode: "cover",
-    alignItems:"center",
-    },
+
     txt: {
-      fontFamily: "GreatVibes",
       fontSize: 15,
       color: "red",
     },
 
-    txtname:{
-      fontSize: 35,
-      marginTop: "10%",
+    carrosel:{
+      justifyContent: "center",
+      alignItems:"center",
     },
+
+    txtname:{
+      fontSize: 35, 
+      top: 60,
+      alignItems:"center",
+      },
+
+  txtnvd:{
+    color:'#000000',
+    fontSize:24,
+    bottom: "50%",
+    left: "5%",
+  },
+
+  favoritos: {
+    left:"8%"
+  },
   });
