@@ -5,55 +5,51 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Animated,
 } from "react-native";
 
 import React, { useState } from "react";
 import TxtComponent from "../Components/TxtComponents";
 
 import { styles } from "../styles/Styles";
-import { Carousel } from "../Components";
 import Produtos from "./Produtos";
 
-export default function Home() {
+export default function Home({ setStart }) {
 
-  const [visible, setVisible] = useState(false); 
-  visModal = (vis) => {
-    if (!visible) {
-      setVisible(vis);
-    } else {
-      setVisible(vis);
-    }
-  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.imglogo}
-          source={require("../assets/image/4.png")}
-        />
-        <Image
-          style={styles.imglogoescrita}
-          source={require("../assets/image/5.png")}
-        />
-      </View>
-      <View style={styles.viewtotal}>
-        <View style={styles.test}>
+        <View style={styles.viewLogoEscrita}>
           <Image
-            style={styles.imghome}
-            source={require("../assets/image/donutspghome.png")}
+            style={styles.imgEscrita}
+            source={require("../assets/image/5.png")}
           />
         </View>
-        <View style={styles.testing}>
-          <TouchableOpacity
-            style={{ backgroundColor: "red" }}
-            onPress={() => visModal(true)}
+        <View style={styles.viewLogo}>
+          <Image
+            style={styles.imgLogo}
+            source={require("../assets/image/4.png")}
+          />
+        </View>
+      </View>
+      <View style={styles.teste}>
+        <View style={styles.circulo}>
+          <View style={styles.viewImgDnt}>
+            <Image
+              style={styles.imgdnt}
+              source={require("../assets/image/imgpgbemvindo.png")}
+            />
+          </View>
+          <View
+            style={
+              styles.viewBtnModal
+            }
           >
-            <TxtComponent txt="botao" />
-          </TouchableOpacity>
-          <Modal animationType="fade" visible={visible}>
-            <Produtos />
-          </Modal>
+            <TouchableOpacity style={styles.btn} onPress={() => setStart(true)}>
+              <TxtComponent txt="botao" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
