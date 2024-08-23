@@ -1,22 +1,16 @@
 import {
-  Text,
   View,
   Image,
-  ScrollView,
   TouchableOpacity,
-  Modal,
-  Animated,
 } from "react-native";
 
-import React, { useState } from "react";
+import { styles } from "../styles/Styles";
+//Import de components
 import TxtComponent from "../Components/TxtComponents";
 
-import { styles } from "../styles/Styles";
-import Produtos from "./Produtos";
-
+//Import Vector Icons
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 export default function Home({ setStart }) {
-
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -41,13 +35,12 @@ export default function Home({ setStart }) {
               source={require("../assets/image/imgpgbemvindo.png")}
             />
           </View>
-          <View
-            style={
-              styles.viewBtnModal
-            }
-          >
+          <View style={styles.viewBtnModal}>
             <TouchableOpacity style={styles.btn} onPress={() => setStart(true)}>
-              <TxtComponent txt="botao" />
+       
+                <TxtComponent txt="Próximo" styletxt={styles.proxtxt} />
+                <FontAwesome6 name="arrow-right-long" size={30} color="white" />
+             
             </TouchableOpacity>
           </View>
         </View>

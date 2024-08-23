@@ -16,7 +16,7 @@ export default function Produtos() {
 
     Animated.timing(widthAnim, {
       toValue: width, // Posição final com largura total
-      duration: 2500, // Duração da animação em milissegundos
+      duration: 1500, // Duração da animação em milissegundos
       easing: Easing.out(Easing.ease), // Efeito de easing
       useNativeDriver: false, // Precisa ser false porque width não é suportado pelo native driver
     }).start(); // Corrigido para chamar start como função
