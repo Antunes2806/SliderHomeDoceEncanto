@@ -1,4 +1,4 @@
-import { Dimensions, ImageProps, Image } from "react-native";
+import { Dimensions, ImageProps, Image, Text } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -19,7 +19,9 @@ const CircularCarouselListItem: React.FC<CircularCarouselListItemProps> = ({
   imageSrc,
   index,
   contentOffset,
+  textSrc,
 }) => {
+  alert(textSrc);
   const rStyle = useAnimatedStyle(() => {
     const inputRange = [
       (index - 2) * ListItemWidth,
@@ -29,11 +31,12 @@ const CircularCarouselListItem: React.FC<CircularCarouselListItemProps> = ({
       (index + 2) * ListItemWidth,
     ];
 
+    // Aumentando a amplitude da rotação vertical
     const translateYOutputRange = [
       0,
-      -ListItemWidth / 3,
-      -ListItemWidth / 2,
-      -ListItemWidth / 3,
+      ListItemWidth,
+      ListItemWidth * 1.5,
+      ListItemWidth,
       0,
     ];
 
@@ -68,14 +71,9 @@ const CircularCarouselListItem: React.FC<CircularCarouselListItemProps> = ({
         {
           translateY: translateY,
         },
-        // Padding left is better than translateX
-        // {
-        //   translateX: ListItemWidth / 2 + ListItemWidth,
-        // },
         {
           scale,
         },
-        { rotate: `${180}deg` }, // Rotaciona o componente em graus
       ],
     };
   });
@@ -86,8 +84,8 @@ const CircularCarouselListItem: React.FC<CircularCarouselListItemProps> = ({
         {
           width: ListItemWidth,
           aspectRatio: 1,
-          elevation: 5,
-          shadowOpacity: 0.2,
+          elevation: 10,
+          shadowOpacity: 3,
           shadowOffset: {
             width: 0,
             height: 0,
@@ -97,21 +95,15 @@ const CircularCarouselListItem: React.FC<CircularCarouselListItemProps> = ({
         rStyle,
       ]}
     >
-      {/* 
-        I've used the React Native Image because it was crashing on Android:
-      */}
       <Image
         source={imageSrc}
         style={{
-          margin: 3,
           height: ListItemWidth,
           width: ListItemWidth,
-
           borderRadius: 200,
-          borderWidth: 2,
-          borderColor: "white",
         }}
       />
+      <Text>{textSrc}</Text>
     </Animated.View>
   );
 };

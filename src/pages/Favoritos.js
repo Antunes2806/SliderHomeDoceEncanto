@@ -4,24 +4,23 @@ import { styles } from "../styles/Styles";
 import Entypo from "@expo/vector-icons/Entypo";
 import { CircularCarousel } from "../Components/circular-carousel";
 
-const data=[
-    require("../assets/image/donutspghome.png"),
-    require("../assets/image/imgpgbemvindo.png"),
-    require("../assets/image/4.png"),
-    require("../assets/image/5.png"),
-    require("../assets/image/doceencanto.png"),
-    require("../assets/image/fundofv.jpg"),
+const data = [
+  require("../assets/image/donutspghome.png"),
+  require("../assets/image/imgpgbemvindo.png"),
+  require("../assets/image/4.png"),
+  require("../assets/image/5.png"),
+  require("../assets/image/doceencanto.png"),
+  require("../assets/image/fundofv.jpg"),
 ];
 
 export default function Favoritos() {
-
   return (
     <ImageBackground
       style={styles.fundofv}
       source={require("../assets/image/fundofv.jpg")}
       blurRadius={9}
     >
-         <CircularCarousel data={data} />
+      <CircularCarousel data={data} />
       <View style={styles.containerfavoritos}>
         <View style={styles.headerfv}>
           <View style={styles.viewIconfv}>
@@ -41,3 +40,4 @@ export default function Favoritos() {
     </ImageBackground>
   );
 }
++63

@@ -21,7 +21,7 @@ const CircularCarousel: React.FC<CircularCarouselProps> = ({ data }) => {
       snapToInterval={ListItemWidth}
       style={{
         position: "absolute",
-        bottom: 0,
+        bottom: 200, // altura
         height: 1200,
       }}
       showsHorizontalScrollIndicator={false}
@@ -39,6 +39,7 @@ const CircularCarousel: React.FC<CircularCarouselProps> = ({ data }) => {
             contentOffset={contentOffset}
             imageSrc={item}
             index={index}
+            textSrc={item}
           />
         );
       }}

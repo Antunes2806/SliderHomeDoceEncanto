@@ -56,7 +56,6 @@ export default function RoutesTab() {
             tabBarIcon: ({ color, size }) => {
               return (
                 <FontAwesome
-                  style={styles.btn}
                   size={size}
                   color={color}
                   name="product-hunt"
@@ -78,7 +77,6 @@ export default function RoutesTab() {
                   name="newspaper-o"
                   size={size}
                   color={color}
-                  style={styles.btn}
                 />
               );
             },
@@ -94,7 +92,6 @@ export default function RoutesTab() {
             tabBarIcon: ({ color, size }) => {
               return (
                 <MaterialIcons
-                  style={styles.btn}
                   name="shopping-cart"
                   size={size}
                   color={color}

@@ -8,6 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 
+import { stylesProdutos } from "../styles/StylesProdutos";
+import TxtComponent from "../Components/TxtComponents";
+
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 export default function Produtos() {
   const widthAnim = useRef(new Animated.Value(0)).current; // Largura inicial 0
 
@@ -23,29 +28,33 @@ export default function Produtos() {
   }, [widthAnim]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "red" }}>
-      <Animated.View
-        style={[
-          styles.viewBtnModal,
-          {
-            width: widthAnim, // Largura animada da View
-          },
-        ]}
-      >
-        <Text>pagina produtos</Text>
-      </Animated.View>
-    </View>
+    <Animated.View
+      style={[
+        styles.viewBtnModal,
+        {
+          width: widthAnim, // Largura animada da View
+        },
+      ]}
+    >
+      <View style={stylesProdutos.headerprdt}>
+        <View style={stylesProdutos.icon}>
+          <Ionicons name="location" size={24} color="black" />
+          <View style={stylesProdutos.titulo}>
+            <TxtComponent txt="Produtos" />
+            </View>
+        </View>
+      </View>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   viewBtnModal: {
+    flex: 1,
     height: "100%", // Garante que a altura da View seja 100%
-    backgroundColor: "white", // Define a cor de fundo
-    justifyContent: "center", // Centraliza o conteúdo verticalmente
-    alignItems: "center", // Centraliza o conteúdo horizontalmente
+    width: "100%",
+    backgroundColor: "pink", // Define a cor de fundo
     borderRadius: 10, // Adiciona bordas arredondadas
-    padding: 20, // Adiciona preenchimento interno
     overflow: "hidden", // Garante que o conteúdo não exceda os limites da View
   },
 });
