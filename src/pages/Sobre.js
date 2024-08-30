@@ -4,6 +4,14 @@ import { useFonts } from "expo-font";
 import { stylesSobre } from "../styles/StylesSobre";
 
 export default function Sobre() {
+  const [font] = useFonts({
+    Montserrat: require("../fontes/Montserrat/Montserrat/static/Montserrat-SemiBoldItalic.ttf"),
+    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-LightItalic.ttf"),
+  });
+
+  if (!font) {
+    return null;
+  }
   return (
     <View style={stylesSobre.container}>
       <View style={stylesSobre.header}>

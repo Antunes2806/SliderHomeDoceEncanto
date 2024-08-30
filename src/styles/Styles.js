@@ -127,5 +127,6 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     width: "20%",
+    
   },
 });

@@ -6,10 +6,14 @@ import {
   Easing,
   Dimensions,
   StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
-
+import Entypo from "@expo/vector-icons/Entypo";
 import { stylesProdutos } from "../styles/StylesProdutos";
 import TxtComponent from "../Components/TxtComponents";
+import Sobre from "./Sobre";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -36,14 +40,56 @@ export default function Produtos() {
         },
       ]}
     >
+      {/*header*/}
       <View style={stylesProdutos.headerprdt}>
         <View style={stylesProdutos.icon}>
-          <Ionicons name="location" size={24} color="black" />
-          <View style={stylesProdutos.titulo}>
-            <TxtComponent txt="Produtos" />
-            </View>
+          <Entypo name="chevron-small-left" size={28} color="black" />
+        </View>
+        <View style={stylesProdutos.viewtitulo}>
+          <TxtComponent style={stylesProdutos.titulopd} txt="Produtos" />
+        </View>
+        <View style={stylesProdutos.viewLogopd}>
+          <Image
+            style={stylesProdutos.imgLogopd}
+            source={require("../assets/image/4.png")}
+          />
         </View>
       </View>
+      {/* Nome e pesquisa*/}
+      <View style={stylesProdutos.containerpesquisa}>
+        <View style={stylesProdutos.ViewTxtNome}>
+          <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
+        </View>
+      </View>
+      {/* Categorias*/}
+      <View style={stylesProdutos.categorias}>
+        <Text style={stylesProdutos.txtcategorias}>categorias</Text>
+      </View>
+      <ScrollView>
+        <View style={stylesProdutos.Viewprodutos}>
+          <View style={stylesProdutos.donuts}>
+            <Text style={stylesProdutos.txtdonuts}>Donuts</Text>
+            <TouchableOpacity
+              style={stylesProdutos.btnsaibamais}
+              onPress={Sobre}
+            >
+              <Text>Saiba Mais</Text>
+            </TouchableOpacity>
+            <View style={stylesProdutos.ViewDonuts}>
+              <Image
+                style={stylesProdutos.donutspd}
+                source={require("../assets/image/donuts.png")}
+              />
+            </View>
+            <TouchableOpacity
+              style={stylesProdutos.btncarrinho}
+              onPress={Sobre}
+            >
+              <Text>adicionar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </Animated.View>
   );
 }
@@ -53,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%", // Garante que a altura da View seja 100%
     width: "100%",
-    backgroundColor: "pink", // Define a cor de fundo
+    backgroundColor: "#f6c8e0", // Define a cor de fundo
     borderRadius: 10, // Adiciona bordas arredondadas
     overflow: "hidden", // Garante que o conteúdo não exceda os limites da View
   },

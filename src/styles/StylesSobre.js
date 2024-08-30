@@ -21,17 +21,18 @@ export const stylesSobre = StyleSheet.create({
 
   cards: {
     flex: 1,
+    marginBottom: 60,
   },
 
   card: {
     width: "100%",
-    height: 150,
-
+    height: 200,
     flexDirection: "row",
+    alignItems: "center",
   },
 
   imgcupcake: {
-    width: "60%",
+    width: "70%",
     height: 150,
   },
 
@@ -74,10 +75,10 @@ export const stylesSobre = StyleSheet.create({
   },
 
   titulo: {
-    fontFamily: "Nixie_One",
+    fontFamily: "Montserrat",
   },
 
   sobre: {
-    fontFamily: "Nixie_One",
+    fontFamily: "Rokkitt",
   },
 });

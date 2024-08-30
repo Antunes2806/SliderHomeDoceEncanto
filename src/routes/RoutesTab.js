@@ -52,14 +52,9 @@ export default function RoutesTab() {
         <Tab.Screen
           options={{
             headerShown: false,
-
             tabBarIcon: ({ color, size }) => {
               return (
-                <FontAwesome
-                  size={size}
-                  color={color}
-                  name="product-hunt"
-                />
+              <AntDesign name="home" size={size} color={color} />
               );
             },
             title: "",
@@ -73,11 +68,7 @@ export default function RoutesTab() {
             headerShown: false,
             tabBarIcon: ({ color, size }) => {
               return (
-                <FontAwesome
-                  name="newspaper-o"
-                  size={size}
-                  color={color}
-                />
+                <FontAwesome name="newspaper-o" size={size} color={color} />
               );
             },
             title: "",
@@ -91,11 +82,7 @@ export default function RoutesTab() {
             headerShown: false,
             tabBarIcon: ({ color, size }) => {
               return (
-                <MaterialIcons
-                  name="shopping-cart"
-                  size={size}
-                  color={color}
-                />
+                <MaterialIcons name="shopping-cart" size={size} color={color} />
               );
             },
             title: "",
