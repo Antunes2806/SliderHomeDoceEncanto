@@ -76,7 +76,7 @@ export default function Sobre() {
             </View>
             <Image
               style={stylesSobre.imgsorvete}
-              source={require("../assets/image/sorvete.png")}
+              source={require("../assets/image/sorvete1.png")}
             />
           </View>
           <View style={stylesSobre.card}>

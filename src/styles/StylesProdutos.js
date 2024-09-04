@@ -55,29 +55,33 @@ export const stylesProdutos = StyleSheet.create({
   },
 
   donuts: {
-    backgroundColor: "brown",
-    height: 350,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#ff9bd0",
+    height: 200,
     width: 300,
     borderBottomEndRadius: 40,
     borderBottomLeftRadius: 40,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    marginTop: 15,
+    marginTop: 19, // pra descer a view
+    shadowOpacity: 9, //itencidade da sombra
+    shadowColor: "pink", // cor da sombra
+    shadowOffset: { width: 9, height: 9 }, //pra aparecer ao redor da view toda
   },
+
   txtdonuts: {
     fontSize: 30,
-    left: 20,
-    marginTop: 20,
+    alignItems: "flex-end",
   },
 
   btnsaibamais: {
+    backgroundColor: "red",
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
     borderRadius: 20,
     padding: 5,
     height: 30,
     width: 80,
-    opacity: 0.8,
     left: 20,
   },
   ViewDonuts: {
@@ -91,8 +95,7 @@ export const stylesProdutos = StyleSheet.create({
     height: "180%",
   },
   btncarrinho: {
-    justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "center",
     height: 30,
     width: 80,
     backgroundColor: "green",

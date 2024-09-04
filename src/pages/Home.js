@@ -1,16 +1,12 @@
-import {
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 
 import { styles } from "../styles/Styles";
 //Import de components
 import TxtComponent from "../Components/TxtComponents";
 
 //Import Vector Icons
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-export default function Home({ setStart }) {
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+export default function Home({}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -36,11 +32,9 @@ export default function Home({ setStart }) {
             />
           </View>
           <View style={styles.viewBtnModal}>
-            <TouchableOpacity style={styles.btn} onPress={() => setStart(true)}>
-       
-                <TxtComponent txt="Próximo" styletxt={styles.proxtxt} />
-                <FontAwesome6 name="arrow-right-long" size={30} color="white" />
-             
+            <TouchableOpacity style={styles.btn}>
+              <TxtComponent txt="Próximo" styletxt={styles.proxtxt} />
+              <FontAwesome6 name="arrow-right-long" size={30} color="white" />
             </TouchableOpacity>
           </View>
         </View>

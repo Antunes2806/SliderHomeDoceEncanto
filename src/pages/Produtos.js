@@ -14,7 +14,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { stylesProdutos } from "../styles/StylesProdutos";
 import TxtComponent from "../Components/TxtComponents";
 import Sobre from "./Sobre";
-
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Produtos() {
@@ -65,28 +64,25 @@ export default function Produtos() {
       <View style={stylesProdutos.categorias}>
         <Text style={stylesProdutos.txtcategorias}>categorias</Text>
       </View>
+      {/* View dos produtos*/}
       <ScrollView>
         <View style={stylesProdutos.Viewprodutos}>
+        <View style={stylesProdutos.ViewDonuts}>
+              <Image
+                style={stylesProdutos.donutspd}
+                source={require("../assets/image/donuts.png")}
+              />
+            </View>
           <View style={stylesProdutos.donuts}>
             <Text style={stylesProdutos.txtdonuts}>Donuts</Text>
+            <View style={stylesProdutos.btn}>
             <TouchableOpacity
               style={stylesProdutos.btnsaibamais}
               onPress={Sobre}
             >
               <Text>Saiba Mais</Text>
             </TouchableOpacity>
-            <View style={stylesProdutos.ViewDonuts}>
-              <Image
-                style={stylesProdutos.donutspd}
-                source={require("../assets/image/donuts.png")}
-              />
             </View>
-            <TouchableOpacity
-              style={stylesProdutos.btncarrinho}
-              onPress={Sobre}
-            >
-              <Text>adicionar</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%", // Garante que a altura da View seja 100%
     width: "100%",
-    backgroundColor: "#f6c8e0", // Define a cor de fundo
+    backgroundColor: "white", // Define a cor de fundo
     borderRadius: 10, // Adiciona bordas arredondadas
     overflow: "hidden", // Garante que o conteúdo não exceda os limites da View
   },
