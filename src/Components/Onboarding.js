@@ -10,8 +10,13 @@ import Slides from "../../Slides";
 import OnboardingItem from "./OnboardingItem";
 import Paginator from "./Paginator";
 import ButtonComponent from "./ButtonComponent";
-export default function Onboarding({ setStart }) {
+
+import { NavigationContainer } from "@react-navigation/native";
+import RoutesTab from "../routes/Index";
+
+export default function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [startHome, setStartHome] = useState(false);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
 
@@ -21,7 +26,6 @@ export default function Onboarding({ setStart }) {
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-  // Impede que o botão "voltar" funcione na tela de onboarding
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -30,37 +34,55 @@ export default function Onboarding({ setStart }) {
     return () => backHandler.remove();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={Slides}
-          renderItem={({ item }) => (
-            <OnboardingItem item={item} scrollX={scrollX} />
-          )}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          bounces={false}
-          pagingEnabled
-          keyExtractor={(item) => item.id}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
-          scrollEventThrottle={32}
-          onViewableItemsChanged={viewableItemChanged}
-          viewabilityConfig={viewConfig}
-          ref={slidesRef}
-        />
+  const handlePress = () => {
+    if (currentIndex < Slides.length - 1) {
+      slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
+    } else {
+      setStartHome(true);
+    }
+  };
 
-        <View style={styles.paginatorContainer}>
-          <Paginator data={Slides} scrollX={scrollX} />
-          <ButtonComponent setStart={setStart} />
+  return (
+    <>
+      {startHome ? (
+        <View style={{ flex: 1 }}>
+          <NavigationContainer>
+            <RoutesTab />
+          </NavigationContainer>
         </View>
-      </View>
-    </View>
+      ) : (
+        <View style={styles.container}>
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={Slides}
+              renderItem={({ item }) => (
+                <OnboardingItem item={item} scrollX={scrollX} />
+              )}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              bounces={false}
+              pagingEnabled
+              keyExtractor={(item) => item.id}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                {
+                  useNativeDriver: false,
+                }
+              )}
+              scrollEventThrottle={32}
+              onViewableItemsChanged={viewableItemChanged}
+              viewabilityConfig={viewConfig}
+              ref={slidesRef}
+            />
+
+            <View style={styles.paginatorContainer}>
+              <Paginator data={Slides} scrollX={scrollX} />
+              <ButtonComponent onPress={handlePress} />
+            </View>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 

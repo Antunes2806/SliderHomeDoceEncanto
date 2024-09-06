@@ -8,17 +8,5 @@ import Animacao from "./src/pages/Animacao";
 export default function App() {
   const [start, setStart] = useState(false);
 
-  return (
-    <>
-      {start ? (
-        <View style={{ flex: 1 }}>
-          <NavigationContainer>
-            <RoutesTab />
-          </NavigationContainer>
-        </View>
-      ) : (
-        <Animacao setStart={setStart} />
-      )}
-    </>
-  );
+  return <>{start ? <Onboarding /> : <Animacao setStart={setStart} />}</>;
 }

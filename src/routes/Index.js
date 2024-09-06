@@ -19,10 +19,10 @@ export default function RoutesTab() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "4d2929",
+        tabBarActiveTintColor: "#6a2042", // cor de quando clicamos no item
+        tabBarInactiveTintColor: "#f5f3f3", //cor dos icones
         tabBarStyle: {
-          backgroundColor: "#ff9bd0",
+          backgroundColor: "#ed8e8e",// cor da barra
           bottom: "8%",
           height: 50,
           width: "80%",
@@ -33,7 +33,7 @@ export default function RoutesTab() {
           borderBottomLeftRadius: 30,
           borderTopColor: "transparent",
           padding: 10,
-          shadowColor: "#662520",
+          shadowColor: "#f5f3f3", 
           shadowOffset: {
             width: 0,
             height: 4,

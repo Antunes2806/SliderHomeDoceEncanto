@@ -6,6 +6,7 @@ export const stylesProdutos = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     paddingLeft: 20,
+    paddingTop: 50,
   },
   icon: {
     alignItems: "flex-start",
@@ -34,14 +35,14 @@ export const stylesProdutos = StyleSheet.create({
   },
 
   containerpesquisa: {
-    height: 90,
+    paddingHorizontal: 20,
   },
   txtNome: {
     fontSize: 30,
     fontFamily: "bold",
   },
   categorias: {
-    height: 90,
+    paddingHorizontal: 20,
   },
 
   txtcategorias: {
@@ -51,49 +52,49 @@ export const stylesProdutos = StyleSheet.create({
   Viewprodutos: {
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 20,
+    paddingTop: 100,
+    paddingBottom: 30,
+    position: "relative",
   },
 
   donuts: {
+    position: "relative",
     justifyContent: "flex-end",
     alignItems: "center",
-    backgroundColor: "#ff9bd0",
-    height: 200,
-    width: 300,
-    borderBottomEndRadius: 40,
-    borderBottomLeftRadius: 40,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    marginTop: 19, // pra descer a view
-    shadowOpacity: 9, //itencidade da sombra
+    backgroundColor: "pink",
+    height: 175,
+    width: 270,
+    borderRadius: 40,
+    marginTop: 2, // pra descer a view
+    shadowOpacity: 0.1, //itencidade da sombra
     shadowColor: "pink", // cor da sombra
-    shadowOffset: { width: 9, height: 9 }, //pra aparecer ao redor da view toda
+    shadowOffset: { width: 9, height: 9 },
+    shadowRadius: 100, //pra aparecer ao redor da view toda
+    elevation: 10,
+    paddingBottom: 10,
+  },
+
+  imgdonutspd: {
+    width: 350,
+    height: 350,
+    position: "absolute",
+    top: -150,
+    left: -20,
   },
 
   txtdonuts: {
-    fontSize: 30,
-    alignItems: "flex-end",
+    fontSize: 25,
+    marginBottom: 10,
   },
 
   btnsaibamais: {
-    backgroundColor: "red",
+    backgroundColor: "black",
     alignItems: "center",
     borderRadius: 20,
-    padding: 5,
     height: 30,
     width: 80,
-    left: 20,
   },
-  ViewDonuts: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  donutspd: {
-    bottom: 20,
-    width: "160%",
-    height: "180%",
-  },
+
   btncarrinho: {
     alignItems: "center",
     height: 30,

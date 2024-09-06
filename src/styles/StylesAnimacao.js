@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const stylesAnimacao = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "lightpink",
+    backgroundColor: "#ed8e8e",
     alignItems: "center",
     justifyContent: "center",
   },

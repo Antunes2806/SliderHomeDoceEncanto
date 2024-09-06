@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Animated } from "react-native";
 import { stylesAnimacao } from "../styles/StylesAnimacao";
 
-export default function Animacao(setStart = { setStart }) {
-  const [fadeAnim] = useState(new Animated.Value(-1)); // Valor inicial ajustado
+export default function Animacao({ setStart }) {
+  const [fadeAnim] = useState(new Animated.Value(0)); // Valor inicial ajustado
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -11,9 +11,9 @@ export default function Animacao(setStart = { setStart }) {
       duration: 5000,
       useNativeDriver: true,
     }).start(() => {
-      setStart = { setStart };
+      setStart(true); // Atualiza o estado para mostrar o componente Onboarding
     });
-  }, []);
+  }, [fadeAnim, setStart]);
 
   return (
     <View style={stylesAnimacao.container}>

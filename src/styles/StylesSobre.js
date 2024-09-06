@@ -2,83 +2,30 @@ import { StyleSheet } from "react-native";
 
 export const stylesSobre = StyleSheet.create({
   container: {
+    backgroundColor: "red",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
-  header: {
-    backgroundColor: "lightpink",
-    width: "100%",
-    height: 125,
-    justifyContent: "flex-end",
-  },
-
-  logo: {
-    width: "100%",
-    height: "80%",
-  },
-
-  cards: {
-    flex: 1,
-    marginBottom: 60,
-  },
-
-  card: {
-    width: "100%",
-    height: 200,
-    flexDirection: "row",
+  Viewtexto: {
+    justifyContent: "flex-start",
     alignItems: "center",
-  },
-
-  imgcupcake: {
+    backgroundColor: "green",
     width: "70%",
-    height: 150,
+    height: "75%",
+    borderColor: "black",
+    borderWidth: 5,
+    padding: 9,
   },
-
-  imgdonuts: {
-    width: "65%",
-    height: 150,
+  linha: {
+    top: 4,
+    backgroundColor: "black",
+    width: 150,
+    height: 1,
   },
-
-  imgcookie: {
-    width: "40%",
-    height: 100,
-  },
-
-  imgsorvete: {
-    width: "40%",
-    height: 120,
-  },
-
-  imgbrownie: {
-    width: "50%",
-    height: 150,
-  },
-
-  imgbolo: {
-    width: "50%",
-    height: 150,
-  },
-
-  textsCard: {
-    flex: 1,
-    textAlign: "justify",
-    justifyContent: "center",
-    width: "100%",
-  },
-
-  footer: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "lightpink",
-  },
-
-  titulo: {
-    fontFamily: "Montserrat",
-  },
-
-  sobre: {
+  txt: {
+    top: 9,
+    fontSize: 10,
     fontFamily: "Rokkitt",
   },
 });

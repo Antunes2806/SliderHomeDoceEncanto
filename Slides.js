@@ -1,10 +1,10 @@
 export default [
   {
     id: "1",
-    image: require("../ProjetoDoceria/src/assets/image/bemvindo.png"),
+    image: require("../ProjetoDoceria/src/assets/image/2.png"),
   },
   {
     id: "2",
-    image: require("../ProjetoDoceria/src/assets/image/sorvete.png"),
+    image: require("../ProjetoDoceria/src/assets/image/3.png"),
   },
 ];
