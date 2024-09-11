@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export const stylesSobre = StyleSheet.create({
   container: {
-    backgroundColor: "red",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -10,22 +9,65 @@ export const stylesSobre = StyleSheet.create({
   Viewtexto: {
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "green",
-    width: "70%",
-    height: "75%",
+    backgroundColor: "white",
+    width: "82%",
+    height: "78%",
     borderColor: "black",
-    borderWidth: 5,
+    borderWidth: 3,
     padding: 9,
   },
   linha: {
-    top: 4,
+    top: 15,
     backgroundColor: "black",
     width: 150,
-    height: 1,
+    height: 2,
+  },
+  linha2: {
+    top:40,
+    backgroundColor: "black",
+    width: 150,
+    height: 2,
   },
   txt: {
-    top: 9,
-    fontSize: 10,
-    fontFamily: "Rokkitt",
+    top: 30,
+    fontSize: 18,
+    fontFamily: "Nunito",
+    margin:10,
+    textAlign:"center",
+  },
+  txtsobre: {
+    top:10,
+    fontSize: 30,
+    fontFamily: "League_Spartan",
+  },
+  txtsubtitulo: {
+    top:9,
+    fontSize: 17,
+    fontFamily: "League_Spartan",
+  },
+
+  ImgFundo: {
+    width: "100%",
+    height: "100%",
+  },
+
+  Viewcontato:{
+    width:"100%",
+    height:"20%",
+    justifyContent:"flex-end",
+  },
+
+  Viewinsta:{
+    bottom:9,
+    left:5,
+    flexDirection: "row",
+  },
+  Viewlocalizacao:{
+    flexDirection: "row",
+    alignItems:"center",
+  },
+  txtendereco:{
+    left:5,
+    fontFamily: "Nunito",
   },
 });

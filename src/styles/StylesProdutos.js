@@ -6,7 +6,7 @@ export const stylesProdutos = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     paddingLeft: 20,
-    paddingTop: 50,
+    paddingBottom: 50,
   },
   icon: {
     alignItems: "flex-start",
@@ -39,10 +39,11 @@ export const stylesProdutos = StyleSheet.create({
   },
   txtNome: {
     fontSize: 30,
-    fontFamily: "bold",
+    fontFamily: "Rokkitt",
   },
   categorias: {
     paddingHorizontal: 20,
+    fontFamily: "League_Spartan",
   },
 
   txtcategorias: {

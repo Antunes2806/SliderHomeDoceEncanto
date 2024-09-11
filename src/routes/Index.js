@@ -22,7 +22,7 @@ export default function RoutesTab() {
         tabBarActiveTintColor: "#6a2042", // cor de quando clicamos no item
         tabBarInactiveTintColor: "#f5f3f3", //cor dos icones
         tabBarStyle: {
-          backgroundColor: "#ed8e8e",// cor da barra
+          backgroundColor: "#ed8e8e", // cor da barra
           bottom: "8%",
           height: 50,
           width: "80%",
@@ -33,7 +33,7 @@ export default function RoutesTab() {
           borderBottomLeftRadius: 30,
           borderTopColor: "transparent",
           padding: 10,
-          shadowColor: "#f5f3f3", 
+          shadowColor: "#f5f3f3",
           shadowOffset: {
             width: 0,
             height: 4,
@@ -54,8 +54,8 @@ export default function RoutesTab() {
           },
           title: "",
         }}
-        name="Produtos"
-        component={Produtos}
+        name="ProdutosTab"
+        component={RoutesStack}
       />
 
       <Tab.Screen

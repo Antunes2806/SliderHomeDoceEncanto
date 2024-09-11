@@ -17,11 +17,39 @@ import { stylesProdutos } from "../styles/StylesProdutos";
 import TxtComponent from "../Components/TxtComponents";
 import Sobre from "./Sobre";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { COLOURS, Categorias } from "../database/items";
+import { Categorias, COLOURS } from "../database/items";
+import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
 export default function Produtos() {
+  const [font] = useFonts({
+    League_Spartan: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
+    Nunito: require("../fontes/Nunito/static/Nunito-SemiBold.ttf"),
+    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
+  });
+
+  // Verifique se a fonte foi carregada
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+
+  useEffect(() => {
+    if (font) {
+      setIsFontLoaded(true);
+    }
+  }, [font]);
   const [currentSelected, setcurrentSelected] = useState([0]);
-  //categorias
+  const widthAnim = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const { width } = Dimensions.get("window");
+
+    Animated.timing(widthAnim, {
+      toValue: width,
+      duration: 1500,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: false,
+    }).start();
+  }, [widthAnim]);
 
   const renderCategorias = ({ item, index }) => {
     return (
@@ -42,7 +70,7 @@ export default function Produtos() {
             elevation: 5,
           }}
         >
-          <View style={{ width: 60, height: 60 }}>
+          <View style={{ width: 100, height: 100 }}>
             <Image
               source={item.image}
               style={{
@@ -66,147 +94,148 @@ export default function Produtos() {
     );
   };
 
-  const renderItem = ({ data, index }) => {
+  const renderItem = (data, index) => {
     return (
       <TouchableOpacity
         key={index}
+        activeOpacity={0.9}
         style={{
           width: "100%",
           height: 180,
           justifyContent: "center",
           alignItems: "center",
+          marginTop: 50,
         }}
       >
-        <View style={stylesProdutos.donuts}></View>
-      </TouchableOpacity>
-    );
-  };
-
-  const widthAnim = useRef(new Animated.Value(0)).current; // Largura inicial 0
-
-  useEffect(() => {
-    const { width } = Dimensions.get("window"); // Obtém a largura da tela
-
-    Animated.timing(widthAnim, {
-      toValue: width, // Posição final com largura total
-      duration: 1500, // Duração da animação em milissegundos
-      easing: Easing.out(Easing.ease), // Efeito de easing
-      useNativeDriver: false, // Precisa ser false porque width não é suportado pelo native driver
-    }).start(); // Corrigido para chamar start como função
-  }, [widthAnim]);
-
-  return (
-    <Animated.View
-      style={[
-        styles.viewBtnModal,
-        {
-          width: widthAnim, // Largura animada da View
-        },
-      ]}
-    >
-      {/*header*/}
-      <View style={stylesProdutos.headerprdt}>
-        <View style={stylesProdutos.icon}>
-          <Entypo name="chevron-small-left" size={28} color="black" />
-        </View>
-        <View style={stylesProdutos.viewtitulo}>
-          <TxtComponent style={stylesProdutos.titulopd} txt="Produtos" />
-        </View>
-        <View style={stylesProdutos.viewLogopd}>
-          <Image
-            style={stylesProdutos.imgLogopd}
-            source={require("../assets/image/4.png")}
-          />
-        </View>
-      </View>
-      {/* Nome e pesquisa*/}
-      <View style={stylesProdutos.containerpesquisa}>
-        <View style={stylesProdutos.ViewTxtNome}>
-          <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
-        </View>
-      </View>
-
-      {/*View pesquisa*/}
-      <View
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <Ionicons
-          name="search"
-          style={{ fontSize: 20, color: COLOURS.black, opacity: 0.8 }}
-        />
-        <TextInput
-          placeholder="Search..."
-          style={{
-            color: COLOURS.black,
-            fontSize: 16,
-            paddingVertical: 5,
-            borderBottomWidth: 1,
-            borderBottomColor: COLOURS.black + 20,
-            width: "90%",
-            marginLeft: 10,
-            letterSpacing: 1,
-          }}
-        />
-      </View>
-
-      {/* Categorias*/}
-      <View style={stylesProdutos.categorias}>
-        <Text style={stylesProdutos.txtcategorias}>categorias</Text>
-      </View>
-
-      <Text
-        style={{
-          paddingTop: 20,
-          paddingHorizontal: 20,
-          fontSize: 18,
-          fontWeight: "700",
-          color: COLOURS.black,
-        }}
-      >
-        Produtos
-      </Text>
-      {Categorias[currentSelected].items.map(renderItem)}
-
-      <FlatList
-        horizontal={true}
-        data={Categorias}
-        renderItem={renderCategorias}
-        showsHorizontalScrollIndicator={false}
-      />
-      {/* View dos produtos*/}
-      <ScrollView>
-        <View style={stylesProdutos.Viewprodutos}>
-          <View style={stylesProdutos.donuts}>
+        <View style={stylesProdutos.donuts}>
+          <View style={{ width: 150, height: 150 }}>
             <Image
-              style={stylesProdutos.imgdonutspd}
-              source={require("../assets/image/donuts.png")}
+              source={data.image}
+              style={{
+                width: "100%",
+                height: "100%",
+                resizeMode: "contain",
+              }}
             />
-            <Text style={stylesProdutos.txtdonuts}>Donuts de Morango</Text>
+          </View>
+          <View
+            style={{
+              display: data.isTopOfTheWeek ? "flex" : "none",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>{data.name}</Text>
             <TouchableOpacity
               style={stylesProdutos.btnsaibamais}
-              onPress={Sobre}
+              onPress={() => navigation.navigate(data.routeName)} // Navegar para a rota específica
             >
               <Text style={{ color: "lightpink" }}>Saiba Mais</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
-    </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      <Animated.View
+        style={[
+          styles.viewBtnModal,
+          {
+            width: widthAnim,
+            marginBottom: 200,
+          },
+        ]}
+      >
+        {/*header*/}
+        <View style={stylesProdutos.headerprdt}>
+          <View style={stylesProdutos.icon}>
+            <Entypo name="chevron-small-left" size={28} color="black" />
+          </View>
+          <View style={stylesProdutos.viewtitulo}>
+            <TxtComponent style={stylesProdutos.titulopd} txt="Produtos" />
+          </View>
+          <View style={stylesProdutos.viewLogopd}>
+            <Image
+              style={stylesProdutos.imgLogopd}
+              source={require("../assets/image/4.png")}
+            />
+          </View>
+        </View>
+        <View style={{ bottom: 100 }}>
+          {/* Nome e pesquisa*/}
+          <View style={stylesProdutos.containerpesquisa}>
+            <View style={stylesProdutos.ViewTxtNome}>
+              <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
+            </View>
+          </View>
+
+          {/*View pesquisa*/}
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Ionicons
+              name="search"
+              style={{ fontSize: 20, color: COLOURS.black, opacity: 0.8 }}
+            />
+            <TextInput
+              placeholder="Search..."
+              style={{
+                color: COLOURS.black,
+                fontSize: 16,
+                paddingVertical: 5,
+                borderBottomWidth: 1,
+                borderBottomColor: COLOURS.black + 20,
+                width: "90%",
+                marginLeft: 10,
+                letterSpacing: 1,
+              }}
+            />
+          </View>
+
+          {/* Categorias*/}
+          <View style={stylesProdutos.categorias}>
+            <Text style={stylesProdutos.txtcategorias}>categoria</Text>
+            <FlatList
+              horizontal={true}
+              data={Categorias}
+              renderItem={renderCategorias}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+
+          <Text
+            style={{
+              paddingTop: 20,
+              paddingHorizontal: 20,
+              fontSize: 18,
+              fontWeight: "700",
+              color: COLOURS.black,
+            }}
+          >
+            Produtos
+          </Text>
+
+          {Categorias[currentSelected] &&
+            Categorias[currentSelected].items.map(renderItem)}
+        </View>
+      </Animated.View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   viewBtnModal: {
-    flex: 1,
-    height: "100%", // Garante que a altura da View seja 100%
+    height: "100%",
     width: "100%",
-    backgroundColor: "white", // Define a cor de fundo
-    borderRadius: 10, // Adiciona bordas arredondadas
-    overflow: "hidden", // Garante que o conteúdo não exceda os limites da View
+    backgroundColor: "white",
+    borderRadius: 10,
+    overflow: "hidden",
   },
 });
