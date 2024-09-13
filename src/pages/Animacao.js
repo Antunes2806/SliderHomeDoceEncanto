@@ -8,7 +8,7 @@ export default function Animacao({ setStart }) {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 5000,
+      duration: 5000, // Tempo de duração da animação
       useNativeDriver: true,
     }).start(() => {
       setStart(true); // Atualiza o estado para mostrar o componente Onboarding
