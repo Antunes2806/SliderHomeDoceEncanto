@@ -59,12 +59,12 @@ export default function Produtos() {
       >
         <View
           style={{
-            width: 120,
-            height: 180,
+            width: 70,
+            height: 80,
             justifyContent: "space-evenly",
             alignItems: "center",
             backgroundColor:
-              currentSelected == index ? COLOURS.accent : COLOURS.white,
+              currentSelected == index ? COLOURS.white : COLOURS.rosa,
             borderRadius: 20,
             margin: 10,
             elevation: 5,
@@ -80,15 +80,7 @@ export default function Produtos() {
               }}
             />
           </View>
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLOURS.black,
-              fontWeight: "600",
-            }}
-          >
-            {item.name}
-          </Text>
+          
         </View>
       </TouchableOpacity>
     );

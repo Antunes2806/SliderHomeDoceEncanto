@@ -62,7 +62,7 @@ export const stylesProdutos = StyleSheet.create({
     position: "relative",
     justifyContent: "flex-end",
     alignItems: "center",
-    backgroundColor: "pink",
+    backgroundColor: "#ed8e8e",
     height: 175,
     width: 270,
     borderRadius: 40,

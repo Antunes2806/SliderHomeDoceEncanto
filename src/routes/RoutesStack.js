@@ -10,9 +10,9 @@ import DonutsPacoca from "../Produtos/DonutsPacoca";
 import SorveteCookies from "../Produtos/SorveteCookies";
 import SorveteMorango from "../Produtos/SorveteMorango";
 import SorvetePistache from "../Produtos/SorvetePistache";
-import CupcakeChocolate from "../Produtos/CupcakeChocolate";
+import CupcakeDocedeLeite from "../Produtos/CupcakeDocedeLeite";
 import CupcakeMorango from "../Produtos/CupcakeMorango";
-import CupcakeCookies from "../Produtos/CupcakeCookies";
+import CupcakeChocolate from "../Produtos/CupcakeChocolate";
 
 const Stack = createNativeStackNavigator();
 
@@ -68,20 +68,19 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
+        name="CupcakeMorango"
+        component={CupcakeMorango}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="CupcakeChocolate"
         component={CupcakeChocolate}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="CupcakeMorango"
-        component={CupcakeMorango}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="CupcakeCookies"
-        component={CupcakeCookies}
+        name="CupcakeDocedeLeite"
+        component={CupcakeDocedeLeite}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

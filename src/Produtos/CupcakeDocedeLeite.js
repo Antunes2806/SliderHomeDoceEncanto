@@ -7,7 +7,7 @@ import { useFonts } from "expo-font";
 // Import AntDesign
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function CupcakeChocolate() {
+export default function CupcakeDocedeLeite() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -20,39 +20,39 @@ export default function CupcakeChocolate() {
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
-      <Text style={styles.txt}>CUPCAKE DE CHOCOLATE</Text>
+      <Text style={styles.txt}>Cupcake de Doce de Leite</Text>
       <View style={styles.row}></View>
 
       <Image
-        style={styles.cupcakedechocolate}
-        source={require("../assets/image/cupcakechoc.png")}
+        style={styles.cupcakededocedeleite}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <Text style={styles.txtcupcake}>blablabla</Text>
 
       <Image
         style={styles.cupcake1}
-        source={require("../assets/image/cupcakechoc.png")}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <Image
         style={styles.cupcake2}
-        source={require("../assets/image/cupcakechoc.png")}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <Image
         style={styles.cupcake3}
-        source={require("../assets/image/cupcakechoc.png")}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <Image
         style={styles.cupcake4}
-        source={require("../assets/image/cupcakechoc.png")}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <Image
         style={styles.cupcake5}
-        source={require("../assets/image/cupcakechoc.png")}
+        source={require("../assets/image/cupcakedl.png")}
       />
 
       <View style={{ top: 450, right: "20%" }}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
   },
 
-  cupcakedechocolate: {
+  cupcakededocedeleite: {
     width: 300,
     height: 500,
     position: "absolute",

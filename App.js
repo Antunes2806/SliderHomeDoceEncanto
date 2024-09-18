@@ -9,4 +9,5 @@ export default function App() {
   const [start, setStart] = useState(false);
 
   return <>{start ? <Onboarding /> : <Animacao setStart={setStart} />}</>;
+ 
 }

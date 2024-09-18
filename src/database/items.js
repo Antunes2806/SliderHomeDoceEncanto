@@ -2,6 +2,7 @@ import { styles } from "../styles/Styles";
 
 export const COLOURS = {
   white: "#ffffff",
+  rosa: "#ed8e8e",
   black: "#00000",
   ligthGray: "B384B6",
   accent: "#ffc231",
@@ -12,7 +13,7 @@ export const COLOURS = {
 export const Categorias = [
   {
     name: "Donuts",
-    image: require("./images/burger.png"),
+    image: require("./images/pgdntcat.png"),
     items: [
       {
         name: "Donuts de Morango",
@@ -50,12 +51,24 @@ export const Categorias = [
         delivery: 35,
         routeName: "DonutsPacoca",
       },
+      {
+        name: "Donuts de Cookies",
+        weight: 250,
+        rating: "4.2",
+        price: 299,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/dntck.png"),
+        size: 'Large 10"',
+        crust: "Thick Crust",
+        delivery: 35,
+        routeName: "DonutsPacoca",
+      },
     ],
   },
 
   {
     name: "Sorvete",
-    image: require("./images/pizza.png"),
+    image: require("./images/svtcat.png"),
     items: [
       {
         name: "Sorvete de cookies",
@@ -95,12 +108,25 @@ export const Categorias = [
         delivery: 45,
         routeName: "SorvetePistache",
       },
+
+      {
+        name: "Sorvete de Flocos",
+        weight: 350,
+        rating: "4.2",
+        price: 299,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/svtflocos.png"),
+        size: "Large 15",
+        crust: "Thin Crust",
+        delivery: 45,
+        routeName: "SorvetePistache",
+      },
     ],
   },
 
   {
-    name: "CupCakes",
-    image: require("./images/softdrinks.png"),
+    name: "CupCake",
+    image: require("./images/cccat.png"),
     items: [
       {
         name: "Cupcake de morango",
@@ -112,7 +138,7 @@ export const Categorias = [
         size: "Medium Glass",
         crust: "Small Ice",
         delivery: 10,
-        routeName: "CupcakeChocolate",
+        routeName: "CupcakeMorango",
       },
 
       {
@@ -125,7 +151,7 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Large Ice",
         delivery: 8,
-        routeName: "CupcakeCookies",
+        routeName: "CupcakeChocolate",
       },
 
       {
@@ -138,7 +164,137 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Small Ice",
         delivery: 5,
+        routeName: "CupcakeDocedeLeite",
+      },
+
+      {
+        name: "Cupcake de Frutas Vermelhas",
+        weight: 150,
+        rating: "4.2",
+        price: 99,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cccereja.png"),
+        size: "Large Glass",
+        crust: "Small Ice",
+        delivery: 5,
+        routeName: "CupcakeDocedeLeite",
+      },
+
+    ],
+  },
+
+  {
+    name: "Bolo",
+    image: require("./images/bolocat.png"),
+    items: [
+      {
+        name: "Cupcake de morango",
+        weight: 200,
+        rating: "5.0",
+        price: 299,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cupcakemor.png"),
+        size: "Medium Glass",
+        crust: "Small Ice",
+        delivery: 10,
         routeName: "CupcakeMorango",
+      },
+
+      {
+        name: "Cupcake de chocolate",
+        weight: 500,
+        rating: "4.0",
+        price: 199,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cupcakechoc.png"),
+        size: "Large Glass",
+        crust: "Large Ice",
+        delivery: 8,
+        routeName: "CupcakeChocolate",
+      },
+
+      {
+        name: "Cupcake de Doce de Leite",
+        weight: 150,
+        rating: "4.2",
+        price: 99,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cupcakedl.png"),
+        size: "Large Glass",
+        crust: "Small Ice",
+        delivery: 5,
+        routeName: "CupcakeDocedeLeite",
+      },
+
+      {
+        name: "Cupcake de Frutas Vermelhas",
+        weight: 150,
+        rating: "4.2",
+        price: 99,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cccereja.png"),
+        size: "Large Glass",
+        crust: "Small Ice",
+        delivery: 5,
+        routeName: "CupcakeDocedeLeite",
+      },
+    ],
+  },
+
+  {
+    name: "Cookie",
+    image: require("./images/ckcat.png"),
+    items: [
+      {
+        name: "Cookie Tradicional",
+        weight: 200,
+        rating: "5.0",
+        price: 299,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/cktrad.png"),
+        size: "Medium Glass",
+        crust: "Small Ice",
+        delivery: 10,
+        routeName: "CupcakeMorango",
+      },
+
+      {
+        name: "Cookie Chocolate Branco",
+        weight: 500,
+        rating: "4.0",
+        price: 199,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/ckbranco.png"),
+        size: "Large Glass",
+        crust: "Large Ice",
+        delivery: 8,
+        routeName: "CupcakeChocolate",
+      },
+
+      {
+        name: "Cookie de Chocolate",
+        weight: 150,
+        rating: "4.2",
+        price: 99,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/ckchoc.png"),
+        size: "Large Glass",
+        crust: "Small Ice",
+        delivery: 5,
+        routeName: "CupcakeDocedeLeite",
+      },
+
+      {
+        name: "Cookie duo",
+        weight: 150,
+        rating: "4.2",
+        price: 99,
+        isTopOfTheWeek: true,
+        image: require("../assets/image/ckduo.png"),
+        size: "Large Glass",
+        crust: "Small Ice",
+        delivery: 5,
+        routeName: "CupcakeDocedeLeite",
       },
     ],
   },
