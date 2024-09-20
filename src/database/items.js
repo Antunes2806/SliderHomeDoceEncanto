@@ -17,9 +17,9 @@ export const Categorias = [
     items: [
       {
         name: "Donuts de Morango",
-        weight: 120,
-        rating: "5.0",
-        price: 199,
+        
+      weight: 120,
+        rating: "5.0",  price: 199,
         isTopOfTheWeek: true,
         image: require("../assets/image/dnt.png"),
         size: 'Large 8"',
@@ -61,7 +61,7 @@ export const Categorias = [
         size: 'Large 10"',
         crust: "Thick Crust",
         delivery: 35,
-        routeName: "DonutsPacoca",
+        routeName: "DonutsCookies",
       },
     ],
   },
@@ -119,7 +119,7 @@ export const Categorias = [
         size: "Large 15",
         crust: "Thin Crust",
         delivery: 45,
-        routeName: "SorvetePistache",
+        routeName: "SorveteFlocos",
       },
     ],
   },
@@ -177,9 +177,8 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Small Ice",
         delivery: 5,
-        routeName: "CupcakeDocedeLeite",
+        routeName: "CupcakeFV",
       },
-
     ],
   },
 
@@ -255,7 +254,7 @@ export const Categorias = [
         size: "Medium Glass",
         crust: "Small Ice",
         delivery: 10,
-        routeName: "CupcakeMorango",
+        routeName: "CookiesTrad",
       },
 
       {
@@ -268,7 +267,7 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Large Ice",
         delivery: 8,
-        routeName: "CupcakeChocolate",
+        routeName: "CookiesBranco",
       },
 
       {
@@ -281,7 +280,7 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Small Ice",
         delivery: 5,
-        routeName: "CupcakeDocedeLeite",
+        routeName: "CookiesChoc",
       },
 
       {
@@ -294,7 +293,7 @@ export const Categorias = [
         size: "Large Glass",
         crust: "Small Ice",
         delivery: 5,
-        routeName: "CupcakeDocedeLeite",
+        routeName: "Cookiesduo",
       },
     ],
   },

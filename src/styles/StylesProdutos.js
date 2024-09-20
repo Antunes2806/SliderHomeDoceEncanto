@@ -1,13 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const stylesProdutos = StyleSheet.create({
-  headerprdt: {
-    height: "13%",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingLeft: 20,
-    paddingBottom: 50,
-  },
+ 
   icon: {
     alignItems: "flex-start",
     justifyContent: "center",

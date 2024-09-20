@@ -13,6 +13,7 @@ import ButtonComponent from "./ButtonComponent";
 
 import { NavigationContainer } from "@react-navigation/native";
 import RoutesTab from "../routes/Index";
+import RoutesDrawer from "../routes/Index";
 
 export default function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,7 +48,7 @@ export default function Onboarding() {
       {startHome ? (
         <View style={{ flex: 1 }}>
           <NavigationContainer>
-            <RoutesTab />
+            <RoutesDrawer />
           </NavigationContainer>
         </View>
       ) : (

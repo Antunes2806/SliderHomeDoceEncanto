@@ -13,6 +13,15 @@ import SorvetePistache from "../Produtos/SorvetePistache";
 import CupcakeDocedeLeite from "../Produtos/CupcakeDocedeLeite";
 import CupcakeMorango from "../Produtos/CupcakeMorango";
 import CupcakeChocolate from "../Produtos/CupcakeChocolate";
+import CupcakeFV from "../Produtos/CupcakeFV";
+import SorveteFlocos from "../Produtos/SorveteFlocos";
+import DonutsCookies from "../Produtos/DonutsCookies";
+import CookiesTrad from "../Produtos/CookiesTrad";
+import CookiesBranco from "../Produtos/CookiesBranco";
+import CookiesChoc from "../Produtos/CookiesChoc";
+import Cookiesduo from "../Produtos/Cookiesduo";
+import Carrinho from "../pages/Carrinho";
+import Favoritos from "../pages/Favoritos";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +37,18 @@ export default function RoutesStack() {
       <Stack.Screen
         name="Details"
         component={Details}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Favoritos"
+        component={Favoritos}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Carrinho"
+        component={Carrinho}
         options={{ headerShown: false }}
       />
 
@@ -50,6 +71,12 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
+        name="DonutsCookies"
+        component={DonutsCookies}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
         name="SorveteCookies"
         component={SorveteCookies}
         options={{ headerShown: false }}
@@ -68,10 +95,17 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
+        name="SorveteFlocos"
+        component={SorveteFlocos}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
         name="CupcakeMorango"
         component={CupcakeMorango}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name="CupcakeChocolate"
         component={CupcakeChocolate}
@@ -81,6 +115,36 @@ export default function RoutesStack() {
       <Stack.Screen
         name="CupcakeDocedeLeite"
         component={CupcakeDocedeLeite}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="CupcakeFV"
+        component={CupcakeFV}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="CookiesTrad"
+        component={CookiesTrad}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="CookiesBranco"
+        component={CookiesBranco}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="CookiesChoc"
+        component={CookiesChoc}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Cookiesduo"
+        component={Cookiesduo}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

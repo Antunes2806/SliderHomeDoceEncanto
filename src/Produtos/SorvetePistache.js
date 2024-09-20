@@ -7,7 +7,7 @@ import { useFonts } from "expo-font";
 // Import AntDesign
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function App() {
+export default function SorvetePistache() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -20,12 +20,12 @@ export default function App() {
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
-      <Text style={styles.txt}>Sorvete de Pistache</Text>
+      <Text style={styles.txt}>SORVETE DE PISTACHE</Text>
       <View style={styles.row}></View>
 
       <Image
-        style={styles.sorvetecokie}
-        source={require("../assets/image/sorvetecokie.png")}
+        style={styles.sorvetepistache}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <Image style={styles.seta} source={require("../assets/image/seta.png")} />
@@ -34,27 +34,27 @@ export default function App() {
 
       <Image
         style={styles.sorvete1}
-        source={require("../assets/image/sorvetecokie.png")}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <Image
         style={styles.sorvete2}
-        source={require("../assets/image/sorvetecokie.png")}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <Image
         style={styles.sorvete3}
-        source={require("../assets/image/sorvetecokie.png")}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <Image
         style={styles.sorvete4}
-        source={require("../assets/image/sorvetecokie.png")}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <Image
         style={styles.sorvete5}
-        source={require("../assets/image/sorvetecokie.png")}
+        source={require("../assets/image/svtpistache.png")}
       />
 
       <View style={{ top: "55%", left: "10%" }}>
@@ -85,10 +85,9 @@ const styles = StyleSheet.create({
   },
 
   txt: {
-    fontSize: 40,
+    fontSize: 30,
     fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "60%",
     textAlign: "center",
     transform: [{ rotate: "-90deg" }],
     top: "50%",
@@ -96,20 +95,20 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    width: "100%",
+    width: "80%",
     height: 2,
-    backgroundColor: "brown",
+    backgroundColor: "lightpink",
     zIndex: 5,
     position: "absolute",
-    top: "60%",
-    right: "35%",
+    top: "61%",
+    right: "45%",
     transform: [{ rotate: "-90deg" }],
   },
 
-  sorvetecokie: {
+  sorvetepistache: {
     width: "100%",
-    height: "100%",
-    left: "10%",
+    height: "90%",
+    left: "-10%",
     position: "absolute",
     top: "10%",
   },
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     position: "absolute",
     top: "60%",
-    left: "65%",
+    left: "70%",
     fontFamily: "Rokkitt",
   },
 

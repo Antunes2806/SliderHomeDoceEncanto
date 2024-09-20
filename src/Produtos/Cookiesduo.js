@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 // Import useFonts
 import { useFonts } from "expo-font";
 
-export default function DonutsPacoca() {
+export default function CookiesDuo() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -17,21 +17,21 @@ export default function DonutsPacoca() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntpcc.png")}
+        source={require("../assets/image/fundocokmisto.png")}
       />
 
-      <Text style={styles.txt}>DONUTS DE PAÇOCA</Text>
+      <Text style={styles.txt}>COOKIE MISTO </Text>
 
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
       <View style={styles.row}></View>
 
       <Image
-        style={styles.dntpacoca}
-        source={require("../assets/image/dntpacoca.png")}
+        style={styles.cookieduo}
+        source={require("../assets/image/ckduo.png")}
       />
 
-      <Text style={styles.txtdnt}>blablabla</Text>
+      <Text style={styles.txtcookies}>blablabla</Text>
     </View>
   );
 }
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    width: "60%",
+    width: "50%",
     height: 2,
-    backgroundColor: "peachpuff",
+    backgroundColor: "wheat",
     position: "absolute",
-    top: "20%",
+    top: "17%",
   },
 
   logo: {
@@ -66,17 +66,17 @@ const styles = StyleSheet.create({
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "15%",
+    top: "10%",
   },
 
-  txtdnt: {
+  txtcookies: {
     fontSize: 30,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
   },
 
-  dntpacoca: {
+  cookieduo: {
     width: 300,
     height: 500,
     position: "absolute",

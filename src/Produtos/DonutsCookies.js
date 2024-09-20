@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 // Import useFonts
 import { useFonts } from "expo-font";
 
-export default function DonutsPacoca() {
+export default function DonutsCookies() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -17,21 +17,21 @@ export default function DonutsPacoca() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntpcc.png")}
+        source={require("../assets/image/fundodntcke.png")}
       />
 
-      <Text style={styles.txt}>DONUTS DE PAÇOCA</Text>
+      <Text style={styles.txt}>DONUTS DE COOKIES</Text>
 
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
       <View style={styles.row}></View>
 
       <Image
-        style={styles.dntpacoca}
-        source={require("../assets/image/dntpacoca.png")}
+        style={styles.donutscookies}
+        source={require("../assets/image/dntck.png")}
       />
 
-      <Text style={styles.txtdnt}>blablabla</Text>
+      <Text style={styles.txtdonuts}>blablabla</Text>
     </View>
   );
 }
@@ -44,19 +44,19 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    width: "60%",
+    width: "50%",
     height: 2,
-    backgroundColor: "peachpuff",
+    backgroundColor: "saddlebrown",
     position: "absolute",
-    top: "20%",
+    top: "22%",
   },
 
   logo: {
     width: "10%",
-    height: "10%",
-    left: "75%",
+    height: "15%",
+    left: "85%",
     position: "absolute",
-    top: "5%",
+    top: "10%",
   },
 
   txt: {
@@ -66,21 +66,22 @@ const styles = StyleSheet.create({
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "15%",
+    top: "18%",
   },
 
-  txtdnt: {
+  txtdonuts: {
     fontSize: 30,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
   },
 
-  dntpacoca: {
-    width: 300,
-    height: 500,
+  donutscookies: {
+    width: 250,
+    height: 380,
     position: "absolute",
-    top: "15%",
+    left: "20%",
+    top: "20%",
   },
 
   fundo: {

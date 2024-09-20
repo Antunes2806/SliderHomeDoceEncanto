@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import { useFonts } from "expo-font"; //importa a fonte
+// Import react-native
+import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 
-import AntDesign from "@expo/vector-icons/AntDesign";
+// Import useFonts
+import { useFonts } from "expo-font";
 
-export default function App() {
+export default function DonutsMorango() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -14,61 +15,23 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        style={styles.fundo}
+        source={require("../assets/image/fundodntmor.png")}
+      />
+
+      <Text style={styles.txt}>DONUTS DE MORANGO</Text>
+
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
-      <View
-        style={{
-          width: "100%",
-          padding: 10,
-          alignItems: "center",
-          marginTop: 115,
-          position: "absolute",
-        }}
-      >
-        <Text style={styles.txt}>DONUTS DE MORANGO!</Text>
-        <View style={styles.row}></View>
-      </View>
+
+      <View style={styles.row}></View>
 
       <Image
         style={styles.donutsmorango}
         source={require("../assets/image/donutsmorango.png")}
       />
 
-      <Text style={styles.txtdonuts}>blablabla</Text>
-
-      <Image
-        style={styles.donuts1}
-        source={require("../assets/image/donutsmorango.png")}
-      />
-
-      <Image
-        style={styles.donuts2}
-        source={require("../assets/image/donutsmorango.png")}
-      />
-
-      <Image
-        style={styles.donuts3}
-        source={require("../assets/image/donutsmorango.png")}
-      />
-
-      <Image
-        style={styles.donuts4}
-        source={require("../assets/image/donutsmorango.png")}
-      />
-
-      <Image
-        style={styles.donuts5}
-        source={require("../assets/image/donutsmorango.png")}
-      />
-
-      <View style={{ top: "10%", right: 100 }}>
-        <AntDesign name="hearto" size={40} color="black" />
-
-        <Text style={styles.valor}> R$ 15,00</Text>
-
-        <View style={{ bottom: "50%", left: 200 }}>
-          <AntDesign name="shoppingcart" size={50} color="black" />
-        </View>
-      </View>
+      <Text style={styles.txtcupcake}>blablabla</Text>
     </View>
   );
 }
@@ -80,86 +43,49 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 
-  logo: {
-    width: "10%",
-    height: "10%",
-    left: "40%",
-    top: "5%",
-  },
-
-  txt: {
-    fontSize: 40,
-    fontFamily: "Rokkitt",
-    zIndex: 5,
-    width: "55%",
-    textAlign: "center",
-  },
-
-  donutsmorango: {
-    width: 500,
-    height: 500,
-    top: "15%",
-    right: "5%",
-  },
-
-  donuts1: {
-    width: 700,
-    height: 700,
-    position: "absolute",
-    top: -130,
-    right: 130,
-  },
-
-  donuts2: {
-    width: 150,
-    height: 150,
-    position: "absolute",
-    top: "45%",
-    right: 350,
-  },
-
-  donuts3: {
-    width: 150,
-    height: 150,
-    position: "absolute",
-    top: "85%",
-    right: 350,
-  },
-
-  donuts4: {
-    width: 150,
-    height: 150,
-    position: "absolute",
-    top: "55%",
-    left: 350,
-  },
-
-  donuts5: {
-    width: 150,
-    height: 150,
-    position: "absolute",
-    top: "95%",
-    left: 310,
-  },
-
-  txtdonuts: {
-    fontSize: 30,
-    bottom: "10%",
-    fontFamily: "Rokkitt",
-  },
-
-  valor: {
-    fontSize: 25,
-    fontFamily: "Rokkitt",
-    position: "absolute",
-    top: "10%",
-    left: 80,
-  },
-
   row: {
     width: "50%",
     height: 2,
     backgroundColor: "lightpink",
+    position: "absolute",
+    top: "22%",
+  },
+
+  logo: {
+    width: "10%",
+    height: "10%",
+    left: "75%",
+    position: "absolute",
+    top: "10%",
+  },
+
+  txt: {
+    fontSize: 30,
+    fontFamily: "Rokkitt",
     zIndex: 5,
+    width: "60%",
+    textAlign: "center",
+    position: "absolute",
+    top: "15%",
+  },
+
+  txtcupcake: {
+    fontSize: 30,
+    top: "65%",
+    fontFamily: "Rokkitt",
+    position: "absolute",
+  },
+
+  donutsmorango: {
+    width: 550,
+    height: 550,
+    position: "absolute",
+    left: "-18%",
+    top: "25%",
+  },
+
+  fundo: {
+    width: "100%",
+    height: "100%",
   },
 });

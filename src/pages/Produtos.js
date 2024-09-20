@@ -80,7 +80,6 @@ export default function Produtos() {
               }}
             />
           </View>
-          
         </View>
       </TouchableOpacity>
     );
@@ -141,28 +140,9 @@ export default function Produtos() {
         ]}
       >
         {/*header*/}
-        <View style={stylesProdutos.headerprdt}>
-          <View style={stylesProdutos.icon}>
-            <Entypo name="chevron-small-left" size={28} color="black" />
-          </View>
-          <View style={stylesProdutos.viewtitulo}>
-            <TxtComponent style={stylesProdutos.titulopd} txt="Produtos" />
-          </View>
-          <View style={stylesProdutos.viewLogopd}>
-            <Image
-              style={stylesProdutos.imgLogopd}
-              source={require("../assets/image/4.png")}
-            />
-          </View>
-        </View>
-        <View style={{ bottom: 100 }}>
-          {/* Nome e pesquisa*/}
-          <View style={stylesProdutos.containerpesquisa}>
-            <View style={stylesProdutos.ViewTxtNome}>
-              <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
-            </View>
-          </View>
-
+        {/* Nome e pesquisa*/}
+        <View style={stylesProdutos.ViewTxtNome}>
+          <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
           {/*View pesquisa*/}
           <View
             style={{

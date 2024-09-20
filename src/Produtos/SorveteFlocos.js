@@ -7,7 +7,7 @@ import { useFonts } from "expo-font";
 // Import AntDesign
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function SorveteMorango() {
+export default function SorveteFlocos() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -20,12 +20,12 @@ export default function SorveteMorango() {
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
-      <Text style={styles.txt}>SORVETE DE MORANGO</Text>
+      <Text style={styles.txt}>SORVETE DE FLOCOS</Text>
       <View style={styles.row}></View>
 
       <Image
-        style={styles.sorvetemorango}
-        source={require("../assets/image/svtmor.png")}
+        style={styles.sorveteflocos}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <Image style={styles.seta} source={require("../assets/image/seta.png")} />
@@ -34,27 +34,27 @@ export default function SorveteMorango() {
 
       <Image
         style={styles.sorvete1}
-        source={require("../assets/image/svtmor.png")}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <Image
         style={styles.sorvete2}
-        source={require("../assets/image/svtmor.png")}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <Image
         style={styles.sorvete3}
-        source={require("../assets/image/svtmor.png")}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <Image
         style={styles.sorvete4}
-        source={require("../assets/image/svtmor.png")}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <Image
         style={styles.sorvete5}
-        source={require("../assets/image/svtmor.png")}
+        source={require("../assets/image/svtflocos.png")}
       />
 
       <View style={{ top: "55%", left: "10%" }}>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "Rokkitt",
     zIndex: 5,
+    width: "60%",
     textAlign: "center",
     transform: [{ rotate: "-90deg" }],
     top: "50%",
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   row: {
     width: "80%",
     height: 2,
-    backgroundColor: "lightpink",
+    backgroundColor: "burlywood",
     zIndex: 5,
     position: "absolute",
     top: "61%",
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "-90deg" }],
   },
 
-  sorvetemorango: {
+  sorveteflocos: {
     width: "100%",
     height: "90%",
     left: "-10%",

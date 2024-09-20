@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 // Import useFonts
 import { useFonts } from "expo-font";
 
-export default function DonutsPacoca() {
+export default function CupcakeFV() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -17,21 +17,21 @@ export default function DonutsPacoca() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntpcc.png")}
+        source={require("../assets/image/fundocupfrv.png")}
       />
 
-      <Text style={styles.txt}>DONUTS DE PAÇOCA</Text>
+      <Text style={styles.txt}>CUPCAKE DE FRUTAS VERMELHAS</Text>
 
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
       <View style={styles.row}></View>
 
       <Image
-        style={styles.dntpacoca}
-        source={require("../assets/image/dntpacoca.png")}
+        style={styles.cupcakedefrutas}
+        source={require("../assets/image/cupcakemor.png")}
       />
 
-      <Text style={styles.txtdnt}>blablabla</Text>
+      <Text style={styles.txtcupcake}>blablabla</Text>
     </View>
   );
 }
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
   },
 
   row: {
-    width: "60%",
+    width: "50%",
     height: 2,
-    backgroundColor: "peachpuff",
+    backgroundColor: "lightpink",
     position: "absolute",
-    top: "20%",
+    top: "17%",
   },
 
   logo: {
@@ -66,17 +66,17 @@ const styles = StyleSheet.create({
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "15%",
+    top: "10%",
   },
 
-  txtdnt: {
+  txtcupcake: {
     fontSize: 30,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
   },
 
-  dntpacoca: {
+  cupcakedefrutas: {
     width: 300,
     height: 500,
     position: "absolute",
