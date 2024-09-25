@@ -31,7 +31,10 @@ export default function CookiesTrad() {
         source={require("../assets/image/cktrad.png")}
       />
 
-      <Text style={styles.txtcookies}>blablabla</Text>
+      <Text style={styles.txtcookies}>
+        Um sabor clássicos e irresistíveis, esses cookies são crocantes por fora e macios
+        por dentro, proporcionando uma combinação perfeita de textura e sabor !
+      </Text>
     </View>
   );
 }
@@ -70,10 +73,12 @@ const styles = StyleSheet.create({
   },
 
   txtcookies: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cookietradicional: {

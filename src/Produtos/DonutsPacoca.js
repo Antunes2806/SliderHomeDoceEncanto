@@ -31,7 +31,9 @@ export default function DonutsPacoca() {
         source={require("../assets/image/dntpacoca.png")}
       />
 
-      <Text style={styles.txtdnt}>blablabla</Text>
+      <Text style={styles.txtdnt}>
+      Uma mistura deliciosa de amendoim, coberto com paçoca, oferecendo uma experiência única e nostálgica para os fãs de sabores brasileiros !
+      </Text>
     </View>
   );
 }
@@ -70,10 +72,12 @@ const styles = StyleSheet.create({
   },
 
   txtdnt: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   dntpacoca: {

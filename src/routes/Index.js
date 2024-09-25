@@ -1,52 +1,66 @@
 import * as React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { View, Text, Image } from "react-native";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import Produtos from "../pages/Produtos";
 import Sobre from "../pages/Sobre";
 import Favoritos from "../pages/Favoritos";
 import RoutesStack from "./RoutesStack";
-
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Carrinho from "../pages/Carrinho";
 
-const Drawer = createDrawerNavigator();
-
+// Componente Customizado para DrawerContent
 function CustomDrawerContent(props) {
   return (
-    <View style={{ flex: 1 }}>
-      {/* Logo no topo */}
-      <View style={styles.logoContainer}>
+    <DrawerContentScrollView {...props}>
+      <View
+        style={{
+          width: "100%",
+          height: 175,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingBottom: 10,
+        }}
+      >
         <Image
-          source={require("../assets/image/4.png")} // Caminho para o logo
-          style={styles.logo}
+          source={require("../assets/image/4.png")} // Coloque o link ou use require para imagem local
+          style={{
+            width: "100%",
+            height: "80%",
+            resizeMode: "cover",
+          }} // Estilize conforme desejar
         />
+        <Text style={{ marginTop: 10, fontSize: 18 }}>Bem-vindo!</Text>
       </View>
-      {/* Itens padrão do Drawer */}
-      <View style={{ flex: 1 }}>
-        <Drawer.NavigatorItem {...props} />
-      </View>
-    </View>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
   );
 }
+
+const Drawer = createDrawerNavigator();
 
 export default function RoutesDrawer() {
   return (
     <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={({ navigation }) => ({
         drawerStyle: { backgroundColor: "white" },
         drawerActiveBackgroundColor: "#ed8e8e",
         drawerActiveTintColor: "white",
         drawerInactiveBackgroundColor: "white",
         drawerInactiveTintColor: "black",
-        headerTitle: "", // Remove o título do cabeçalho
+        headerTitle: "",
         headerLeft: () => (
-          // Mantém o ícone de menu (hambúrguer) no lado esquerdo
           <Ionicons.Button
             name="menu"
             size={25}
             backgroundColor="transparent"
             color="black"
-            onPress={() => navigation.openDrawer()} // Abre o menu lateral
+            onPress={() => navigation.openDrawer()}
           />
         ),
       })}

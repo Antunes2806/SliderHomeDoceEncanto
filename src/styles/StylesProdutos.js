@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const stylesProdutos = StyleSheet.create({
- 
   icon: {
     alignItems: "flex-start",
     justifyContent: "center",
@@ -31,18 +30,19 @@ export const stylesProdutos = StyleSheet.create({
   containerpesquisa: {
     paddingHorizontal: 20,
   },
+
   txtNome: {
     fontSize: 30,
     fontFamily: "Rokkitt",
+    paddingHorizontal: 20,
   },
   categorias: {
     paddingHorizontal: 20,
-    fontFamily: "League_Spartan",
   },
 
   txtcategorias: {
     fontSize: 30,
-    fontFamily: "bold",
+    fontWeight: "500",
   },
   Viewprodutos: {
     alignItems: "center",

@@ -31,7 +31,9 @@ export default function CupcakeMorango() {
         source={require("../assets/image/cupcakemor.png")}
       />
 
-      <Text style={styles.txtcupcake}>blablabla</Text>
+      <Text style={styles.txtcupcake}>
+        O sabor é perfeito para quem ama sabores frescos e suaves, coberto com chantilly, Uma opção doce e deliciosa !
+      </Text>
     </View>
   );
 }
@@ -70,10 +72,12 @@ const styles = StyleSheet.create({
   },
 
   txtcupcake: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cupcakedemorango: {

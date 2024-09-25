@@ -31,7 +31,7 @@ export default function CupcakeFV() {
         source={require("../assets/image/cupcakemor.png")}
       />
 
-      <Text style={styles.txtcupcake}>blablabla</Text>
+      <Text style={styles.txtcupcake}>Um sabor fresco e tem o equilíbrio perfeito entre doçura e acidez, com uma cobertura suave que realça o sabor das frutas !</Text>
     </View>
   );
 }
@@ -70,10 +70,12 @@ const styles = StyleSheet.create({
   },
 
   txtcupcake: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cupcakedefrutas: {

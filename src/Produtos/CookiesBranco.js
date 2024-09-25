@@ -31,7 +31,7 @@ export default function CookiesBranco() {
         source={require("../assets/image/ckbranco.png")}
       />
 
-      <Text style={styles.txtcookies}>blablabla</Text>
+      <Text style={styles.txtcookies}>Com pedaços generosos de chocolate branco derretido, esses cookies são uma opção doce e cremosa, que derrete na boca e encanta os amantes de chocolate !</Text>
     </View>
   );
 }
@@ -70,10 +70,12 @@ const styles = StyleSheet.create({
   },
 
   txtcookies: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cookiebranco: {

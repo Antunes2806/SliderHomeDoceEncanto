@@ -33,7 +33,9 @@ export default function CupcakeDocedeLeite() {
         source={require("../assets/image/cupcakedl.png")}
       />
 
-      <Text style={styles.txtcupcake}>blablabla</Text>
+      <Text style={styles.txtcupcake}>
+      Um clássico brasileiro, com uma massa leve combinada com um recheio generoso de doce de leite, coroado com uma cobertura que derrete na boca !
+      </Text>
     </View>
   );
 }
@@ -72,10 +74,12 @@ const styles = StyleSheet.create({
   },
 
   txtcupcake: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cupcakededocedeleite: {

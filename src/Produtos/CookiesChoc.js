@@ -31,7 +31,11 @@ export default function CookiesChoc() {
         source={require("../assets/image/ckchoc.png")}
       />
 
-      <Text style={styles.txtcookies}>blablabla</Text>
+      <Text style={styles.txtcookies}>
+        Para os verdadeiros chocólatras, esses cookies intensamente saborosos são
+        feitos com chocolate amargo, oferecendo um equilíbrio perfeito entre
+        doce e amargo.
+      </Text>
     </View>
   );
 }
@@ -70,10 +74,12 @@ const styles = StyleSheet.create({
   },
 
   txtcookies: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cookiechoc: {

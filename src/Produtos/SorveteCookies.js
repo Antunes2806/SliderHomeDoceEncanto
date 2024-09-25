@@ -1,11 +1,8 @@
 // Import react-native
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 
 // Import useFonts
 import { useFonts } from "expo-font";
-
-// Import AntDesign
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function SorveteCookies() {
   const [font] = useFonts({
@@ -18,6 +15,11 @@ export default function SorveteCookies() {
 
   return (
     <View style={styles.container}>
+       <ImageBackground
+        style={styles.fundo}
+        source={require("../assets/image/fundosvtcke.png")}
+      />
+
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
       <Text style={styles.txt}>SORVETE DE COOKIE</Text>
@@ -30,42 +32,7 @@ export default function SorveteCookies() {
 
       <Image style={styles.seta} source={require("../assets/image/seta.png")} />
 
-      <Text style={styles.txtsorvete}>blablabla</Text>
-
-      <Image
-        style={styles.sorvete1}
-        source={require("../assets/image/sorvetecokie.png")}
-      />
-
-      <Image
-        style={styles.sorvete2}
-        source={require("../assets/image/sorvetecokie.png")}
-      />
-
-      <Image
-        style={styles.sorvete3}
-        source={require("../assets/image/sorvetecokie.png")}
-      />
-
-      <Image
-        style={styles.sorvete4}
-        source={require("../assets/image/sorvetecokie.png")}
-      />
-
-      <Image
-        style={styles.sorvete5}
-        source={require("../assets/image/sorvetecokie.png")}
-      />
-
-      <View style={{ top: "55%", left: "10%" }}>
-        <AntDesign name="hearto" size={30} color="black" />
-
-        <Text style={styles.valor}> R$ 15,00</Text>
-
-        <View style={{ bottom: "50%", left: "32%", top: "-55%" }}>
-          <AntDesign name="shoppingcart" size={35} color="black" />
-        </View>
-      </View>
+      <Text style={styles.txtsorvete}>Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies, criando uma experiência saborosa e irresistível em cada colherada !</Text>
     </View>
   );
 }
@@ -78,10 +45,21 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: "15%",
+    width: "10%",
     height: "10%",
-    left: "35%",
+    left: "75%",
+    position: "absolute",
     top: "5%",
+  },
+  
+  txtsorvete: {
+    fontSize: 15,
+    top: "55%",
+    left: "55%",
+    width: "45%",
+    fontFamily: "Rokkitt",
+    position: "absolute",
+    textAlign: "center",
   },
 
   txt: {
@@ -92,24 +70,30 @@ const styles = StyleSheet.create({
     textAlign: "center",
     transform: [{ rotate: "-90deg" }],
     top: "50%",
-    right: "40%",
+    right: "60%",
+    position: "absolute",
   },
 
   row: {
-    width: "80%",
+    width: "75%",
     height: 2,
     backgroundColor: "brown",
     zIndex: 5,
     position: "absolute",
-    top: "61%",
-    right: "45%",
+    top: "52%",
+    right: "50%",
     transform: [{ rotate: "-90deg" }],
+  },
+
+  fundo: {
+    width: "100%",
+    height: "100%",
   },
 
   sorvetecokie: {
     width: "100%",
     height: "100%",
-    left: "10%",
+    left: 30,
     position: "absolute",
     top: "10%",
   },
@@ -118,64 +102,9 @@ const styles = StyleSheet.create({
     width: 450,
     height: 400,
     position: "absolute",
-    top: "25%",
+    top: "20%",
     left: "-0%",
   },
 
-  sorvete1: {
-    width: 150,
-    height: 250,
-    position: "absolute",
-    left: "-10%",
-  },
-
-  sorvete2: {
-    width: "15%",
-    height: "15%",
-    position: "absolute",
-    top: "85%",
-    right: "85%",
-    transform: [{ rotate: "20deg" }],
-  },
-
-  sorvete3: {
-    width: 150,
-    height: 300,
-    position: "absolute",
-    top: "75%",
-    left: "85%",
-  },
-
-  sorvete4: {
-    width: "15%",
-    height: "15%",
-    position: "absolute",
-    top: "20%",
-    left: "90%",
-    transform: [{ rotate: "-20deg" }],
-  },
-
-  sorvete5: {
-    width: "15%",
-    height: "15%",
-    position: "absolute",
-    left: "80%",
-    top: "-5%",
-    transform: [{ rotate: "-80deg" }],
-  },
-
-  txtsorvete: {
-    fontSize: 30,
-    position: "absolute",
-    top: "60%",
-    left: "70%",
-    fontFamily: "Rokkitt",
-  },
-
-  valor: {
-    fontSize: 25,
-    fontFamily: "Rokkitt",
-    position: "absolute",
-    left: 40,
-  },
 });
+

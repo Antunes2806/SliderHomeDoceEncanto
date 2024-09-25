@@ -12,45 +12,50 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
-import Entypo from "@expo/vector-icons/Entypo";
-import { stylesProdutos } from "../styles/StylesProdutos";
-import TxtComponent from "../Components/TxtComponents";
-import Sobre from "./Sobre";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Categorias, COLOURS } from "../database/items";
 import { useNavigation } from "@react-navigation/native";
-import { useFonts } from "expo-font";
+import { stylesProdutos } from "../styles/StylesProdutos";
 
 export default function Produtos() {
-  const [font] = useFonts({
-    League_Spartan: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
-    Nunito: require("../fontes/Nunito/static/Nunito-SemiBold.ttf"),
-    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
-  });
-
-  // Verifique se a fonte foi carregada
-  const [isFontLoaded, setIsFontLoaded] = useState(false);
-
-  useEffect(() => {
-    if (font) {
-      setIsFontLoaded(true);
-    }
-  }, [font]);
-  const [currentSelected, setcurrentSelected] = useState([0]);
+  const [searchQuery, setSearchQuery] = useState(""); // Estado para a pesquisa
+  const [filteredItems, setFilteredItems] = useState([]); // Estado para os itens filtrados
+  const [currentSelected, setcurrentSelected] = useState(0); // Estado para a categoria selecionada
   const widthAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
 
   useEffect(() => {
     const { width } = Dimensions.get("window");
 
+    // Animação da largura
     Animated.timing(widthAnim, {
       toValue: width,
       duration: 1500,
       easing: Easing.out(Easing.ease),
-      useNativeDriver: false,
+      useNativeDriver: false, // Não use o driver nativo para estilos não suportados
     }).start();
   }, [widthAnim]);
 
+  // Função para lidar com a pesquisa
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+
+    if (text === "") {
+      setFilteredItems([]); // Limpa a pesquisa e exibe os itens normais
+    } else {
+      // Filtra os itens em todas as categorias
+      const filtered = Categorias.reduce((acc, categoria) => {
+        const matchedItems = categoria.items.filter((item) =>
+          item.name.toLowerCase().includes(text.toLowerCase())
+        );
+        return [...acc, ...matchedItems]; // Adiciona os itens filtrados
+      }, []);
+
+      setFilteredItems(filtered); // Atualiza os itens filtrados
+    }
+  };
+
+  // Renderiza as categorias
   const renderCategorias = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -68,23 +73,23 @@ export default function Produtos() {
             borderRadius: 20,
             margin: 10,
             elevation: 5,
+            overflow: "hidden",
           }}
         >
-          <View style={{ width: 100, height: 100 }}>
-            <Image
-              source={item.image}
-              style={{
-                width: "100%",
-                height: "100%",
-                resizeMode: "center",
-              }}
-            />
-          </View>
+          <Image
+            source={item.image}
+            style={{
+              width: "100%",
+              height: "100%",
+              resizeMode: "contain",
+            }}
+          />
         </View>
       </TouchableOpacity>
     );
   };
 
+  // Renderiza os itens (todos ou filtrados)
   const renderItem = (data, index) => {
     return (
       <TouchableOpacity
@@ -106,6 +111,14 @@ export default function Produtos() {
                 width: "100%",
                 height: "100%",
                 resizeMode: "contain",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 3,
               }}
             />
           </View>
@@ -139,11 +152,11 @@ export default function Produtos() {
           },
         ]}
       >
-        {/*header*/}
-        {/* Nome e pesquisa*/}
+        {/* Nome e pesquisa */}
         <View style={stylesProdutos.ViewTxtNome}>
           <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
-          {/*View pesquisa*/}
+
+          {/* View pesquisa */}
           <View
             style={{
               paddingHorizontal: 20,
@@ -158,6 +171,8 @@ export default function Produtos() {
             />
             <TextInput
               placeholder="Search..."
+              value={searchQuery}
+              onChangeText={handleSearch}
               style={{
                 color: COLOURS.black,
                 fontSize: 16,
@@ -171,9 +186,9 @@ export default function Produtos() {
             />
           </View>
 
-          {/* Categorias*/}
+          {/* Categorias */}
           <View style={stylesProdutos.categorias}>
-            <Text style={stylesProdutos.txtcategorias}>categoria</Text>
+            <Text style={stylesProdutos.txtcategorias}>Categorias</Text>
             <FlatList
               horizontal={true}
               data={Categorias}
@@ -182,6 +197,7 @@ export default function Produtos() {
             />
           </View>
 
+          {/* Produtos */}
           <Text
             style={{
               paddingTop: 20,
@@ -194,8 +210,10 @@ export default function Produtos() {
             Produtos
           </Text>
 
-          {Categorias[currentSelected] &&
-            Categorias[currentSelected].items.map(renderItem)}
+          {/* Exibe itens filtrados ou os itens da categoria selecionada */}
+          {filteredItems.length > 0
+            ? filteredItems.map(renderItem)
+            : Categorias[currentSelected]?.items.map(renderItem)}
         </View>
       </Animated.View>
     </ScrollView>

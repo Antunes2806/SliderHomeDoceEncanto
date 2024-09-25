@@ -31,7 +31,11 @@ export default function DonutsChocolate() {
         source={require("../assets/image/dntchoc.png")}
       />
 
-      <Text style={styles.txtdonuts}>blablabla</Text>
+      <Text style={styles.txtdonuts}>
+        {" "}
+        Uma delícia intensa com cobertura cremosa de chocolate, perfeita para os
+        amantes do doce, com massa macia que torna cada mordida irresistível !
+      </Text>
     </View>
   );
 }
@@ -70,10 +74,12 @@ const styles = StyleSheet.create({
   },
 
   txtdonuts: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   donutschocolate: {

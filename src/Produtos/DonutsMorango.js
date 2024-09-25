@@ -31,7 +31,9 @@ export default function DonutsMorango() {
         source={require("../assets/image/donutsmorango.png")}
       />
 
-      <Text style={styles.txtcupcake}>blablabla</Text>
+      <Text style={styles.txtdnt}>
+      Um sabor fresco e doce, com cobertura de morango que combina perfeitamente com a massa fofinha, ideal para quem busca um sabor mais leve !
+      </Text>
     </View>
   );
 }
@@ -69,11 +71,13 @@ const styles = StyleSheet.create({
     top: "15%",
   },
 
-  txtcupcake: {
-    fontSize: 30,
+  txtdnt: {
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   donutsmorango: {

@@ -31,7 +31,12 @@ export default function CookiesDuo() {
         source={require("../assets/image/ckduo.png")}
       />
 
-      <Text style={styles.txtcookies}>blablabla</Text>
+      <Text style={styles.txtcookies}>
+        {" "}
+        Uma deliciosa mistura que combina diversos ingredientes, como pedaços de
+        chocolate ao leite, chocolate brando e nozes, criando uma explosão de
+        sabores a cada mordida !
+      </Text>
     </View>
   );
 }
@@ -70,10 +75,12 @@ const styles = StyleSheet.create({
   },
 
   txtcookies: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cookieduo: {

@@ -31,7 +31,7 @@ export default function CupcakeChocolate() {
         source={require("../assets/image/cupcakechoc.png")}
       />
 
-      <Text style={styles.txtcupcake}>blablabla</Text>
+      <Text style={styles.txtcupcake}>O sabor é perfeito para os apaixonados por sabores intensos, a cobertura cremosa com um sabor profundo do cacau !</Text>
     </View>
   );
 }
@@ -70,10 +70,12 @@ const styles = StyleSheet.create({
   },
 
   txtcupcake: {
-    fontSize: 30,
+    fontSize: 20,
     top: "65%",
     fontFamily: "Rokkitt",
     position: "absolute",
+    textAlign: "center",
+    width: 400,
   },
 
   cupcakedechocolate: {

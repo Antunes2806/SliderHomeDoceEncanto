@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 // Import useFonts
 import { useFonts } from "expo-font";
 
-export default function DonutsCookies() {
+export default function BoloCFV() {
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -17,22 +17,23 @@ export default function DonutsCookies() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntcke.png")}
+        source={require("../assets/image/fundocokbranco.png")}
       />
 
-      <Text style={styles.txt}>DONUTS DE COOKIES</Text>
+      <Text style={styles.txt}>BOLO DE FRUTAS VERMELHAS</Text>
 
       <Image style={styles.logo} source={require("../assets/image/4.png")} />
 
       <View style={styles.row}></View>
 
       <Image
-        style={styles.donutscookies}
-        source={require("../assets/image/dntck.png")}
+        style={styles.bolocfv}
+        source={require("../assets/image/boloCFV.png")}
       />
 
-      <Text style={styles.txtdonuts}>
-      Um sabor que combina com a maciez do donut com o crocante dos pedaços de cookies, criando uma sobremesa cheia de textura e sabor!
+      <Text style={styles.txtbolos}>
+        Um bolo suave e leve, com um toque cremoso e delicado de cream cheese,
+        ideal para quem prefere sabores mais refinados e menos doces !
       </Text>
     </View>
   );
@@ -48,17 +49,17 @@ const styles = StyleSheet.create({
   row: {
     width: "50%",
     height: 2,
-    backgroundColor: "saddlebrown",
+    backgroundColor: "red",
     position: "absolute",
-    top: "22%",
+    top: "17%",
   },
 
   logo: {
     width: "10%",
-    height: "15%",
-    left: "85%",
+    height: "10%",
+    left: "75%",
     position: "absolute",
-    top: "10%",
+    top: "5%",
   },
 
   txt: {
@@ -68,26 +69,24 @@ const styles = StyleSheet.create({
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "18%",
+    top: "10%",
   },
 
-  txtdonuts: {
+  txtbolos: {
     fontSize: 20,
-    top: "65%",
+    top: "55%",
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
     width: 400,
   },
 
-  donutscookies: {
-    width: 250,
-    height: 380,
+  bolocfv: {
+    width: 300,
+    height: 500,
     position: "absolute",
-    left: "20%",
-    top: "20%",
+    top: "10%",
   },
-
   fundo: {
     width: "100%",
     height: "100%",
