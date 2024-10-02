@@ -72,8 +72,11 @@ export default function Produtos() {
               currentSelected == index ? COLOURS.white : COLOURS.rosa,
             borderRadius: 20,
             margin: 10,
-            elevation: 5,
-            overflow: "hidden",
+            elevation: 5, // Elevação para Android
+            shadowColor: "#000", // Sombra para iOS
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
           }}
         >
           <Image
@@ -100,28 +103,33 @@ export default function Produtos() {
           height: 180,
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 50,
+          marginTop: 60,
+          marginVertical: 20,
         }}
       >
-        <View style={stylesProdutos.donuts}>
-          <View style={{ width: 150, height: 150 }}>
+        <View
+          style={[
+            stylesProdutos.donuts,
+            {
+              elevation: 5, // Elevação para Android
+              shadowColor: "#000", // Sombra para iOS
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+            },
+          ]}
+        >
+          <View style={{ width: 200, height: 230, top: 40 }}>
             <Image
               source={data.image}
               style={{
                 width: "100%",
                 height: "100%",
                 resizeMode: "contain",
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 3,
               }}
             />
           </View>
+
           <View
             style={{
               display: data.isTopOfTheWeek ? "flex" : "none",
@@ -131,7 +139,7 @@ export default function Produtos() {
             <Text style={{ fontSize: 20 }}>{data.name}</Text>
             <TouchableOpacity
               style={stylesProdutos.btnsaibamais}
-              onPress={() => navigation.navigate(data.routeName)} // Navegar para a rota específica
+              onPress={() => navigation.navigate(data.routeName)}
             >
               <Text style={{ color: "lightpink" }}>Saiba Mais</Text>
             </TouchableOpacity>

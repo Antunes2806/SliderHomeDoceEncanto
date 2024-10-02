@@ -1,41 +1,21 @@
-import { StylesCarrinho } from "../styles/StylesCarrinho";
-import {createSlice} from "@reduxjs/toolkit";
+import React from "react";
 
- export const cartSlice = createSlice({
-    name:"cart",
-    initialState:{
-        cart:[],
-    },
-    reducers:{
-        addToCart: (state,action) => {
-            const itemInCart = state.cart.find((item) => item.id == action.payload.id);
-            if(itemInCart){
-                itemInCart.quantity++;
-            }else{
-                state.cart.push({...action.payload,quantity:1})
-            }
-        },
-        removeFromCart : (state,action) => {
-            const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
-            state.cart = removeFromCart;
-        },
-        incrementQuantity : (state,action) => {
-            const itemInCart = state.cart.find((item) => item.id !== action.payload.id);
-            itemInCart++;
-        },
-        decrementQuantity : (state,action) => {
-            const itemInCart = state.cart.find((item) => item.id !== action.payload.id);
-            if(itemInCart.quantity == 1){
-                const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
-                state.cart = removeFromCart;
-            }else{
-                itemInCart.quantity--;
-            }
+import { View, Text, ImageBackground, StyleSheet } from "react-native";
 
-        }
-    }
- });
+export default function Carrinho() {
+  return (
+    <View>
+      <ImageBackground
+        style={styles.fundo}
+        source={require("../assets/image/fundocar1.png")}
+      />
+    </View>
+  );
+}
 
- export const { addToCart, removeFromCart, incrementQuantity,decrementQuantity} = cartSlice.actions;
-
- export default cartSlice.reducer;
+const styles = StyleSheet.create({
+  fundo: {
+    width: "100%",
+    height: "100%",
+  },
+});

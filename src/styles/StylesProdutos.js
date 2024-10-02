@@ -97,4 +97,5 @@ export const stylesProdutos = StyleSheet.create({
     backgroundColor: "green",
     borderRadius: 20,
   },
+
 });

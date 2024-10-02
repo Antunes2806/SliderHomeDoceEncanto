@@ -22,10 +22,10 @@ import CookiesChoc from "../Produtos/CookiesChoc";
 import Cookiesduo from "../Produtos/Cookiesduo";
 import Carrinho from "../pages/Carrinho";
 import Favoritos from "../pages/Favoritos";
-import Bolochoc from "../Produtos/Bolochoc";
-import Bolomorchoc from "../Produtos/Bolomorchoc";
-import BoloRed from "../Produtos/Bolored";
-import BoloCFV from "../Produtos/BoloCFV";
+import BrigNN from "../Produtos/BrigNN";
+import Brigtrad from "../Produtos/BrigTrad";
+import Briguva from "../Produtos/Briguva";
+import Brigchurros from "../Produtos/Brigchurros";
 
 const Stack = createNativeStackNavigator();
 
@@ -129,26 +129,26 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
-        name="Bolochoc"
-        component={Bolochoc}
+        name="Briguva"
+        component={Briguva}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="Bolomorchoc"
-        component={Bolomorchoc}
+        name="BrigNN"
+        component={BrigNN}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="BoloRed"
-        component={BoloRed}
+        name="Brigtrad"
+        component={Brigtrad}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="BoloCFV"
-        component={BoloCFV}
+        name="Brigchurros"
+        component={Brigchurros}
         options={{ headerShown: false }}
       />
 

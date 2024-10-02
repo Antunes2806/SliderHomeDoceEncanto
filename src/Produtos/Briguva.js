@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
-export default function SorveteMorango() {
+export default function Briguva() {
   const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
@@ -30,24 +30,23 @@ export default function SorveteMorango() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundosvtmor.png")}
+        source={require("../assets/image/fundbriguva.png")}
       />
 
-      <Text style={styles.txt}>SORVETE DE MORANGO</Text>
+      <Text style={styles.txt}>BRIGADEIRO DE UVA</Text>
+
       <View style={styles.row}></View>
 
       <Image
-        style={styles.sorvetemorango}
-        source={require("../assets/image/svtmor.png")}
+        style={styles.brigadeirouva}
+        source={require("../assets/image/briguva.png")}
       />
 
-      <Image style={styles.seta} source={require("../assets/image/seta.png")} />
-
-      <Text style={styles.txtsorvete}>
-        Um sabor refrescante feito com morangos frescos e maduros, esse sorvete
-        traz um sabor doce e natural, perfeito para quem ama frutas !
+      <Text style={styles.txtbrigadeiro}>
+        Uma combinação irresistível de massa macia de chocolate com pedaços de
+        morango, unindo o sabor intenso do chocolate com a frescura natural dos
+        morangos !
       </Text>
-
       <View style={styles.elementos}>
         <TouchableOpacity
           style={styles.car}
@@ -76,14 +75,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 
-  txtsorvete: {
-    fontSize: 15,
-    top: "55%",
-    left: "55%",
-    width: "45%",
-    fontFamily: "Rokkitt",
+  row: {
+    width: "50%",
+    height: 2,
+    backgroundColor: "darkred",
     position: "absolute",
-    textAlign: "center",
+    top: "19%",
   },
 
   txt: {
@@ -92,21 +89,24 @@ const styles = StyleSheet.create({
     zIndex: 5,
     width: "70%",
     textAlign: "center",
-    transform: [{ rotate: "-90deg" }],
-    top: "50%",
-    right: "55%",
     position: "absolute",
+    top: "12%",
   },
 
-  row: {
-    width: "75%",
-    height: 2,
-    backgroundColor: "lightpink",
-    zIndex: 5,
+  txtbrigadeiro: {
+    fontSize: 20,
+    top: "65%",
+    fontFamily: "Rokkitt",
     position: "absolute",
-    top: "52%",
-    right: "50%",
-    transform: [{ rotate: "-90deg" }],
+    textAlign: "center",
+    width: 300,
+  },
+
+  brigadeirouva: {
+    width: 300,
+    height: 400,
+    position: "absolute",
+    top: "20%",
   },
 
   fundo: {
@@ -114,21 +114,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  sorvetemorango: {
-    width: "90%",
-    height: "100%",
-    right: 50,
-    position: "absolute",
-    top: "5%",
-  },
-
-  seta: {
-    width: 450,
-    height: 400,
-    position: "absolute",
-    top: "20%",
-    left: "-0%",
-  },
   elementos: {
     position: "absolute",
     left: 0,

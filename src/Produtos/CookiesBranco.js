@@ -1,10 +1,16 @@
 // Import react-native
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from "react-native";
 
 // Import useFonts
 import { useFonts } from "expo-font";
 
+import { useNavigation } from "@react-navigation/native";
+
+import AntDesign from "@expo/vector-icons/AntDesign";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+
 export default function CookiesBranco() {
+  const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -22,8 +28,6 @@ export default function CookiesBranco() {
 
       <Text style={styles.txt}>COOKIES DE CHOCOLATE BRANCO</Text>
 
-      <Image style={styles.logo} source={require("../assets/image/4.png")} />
-
       <View style={styles.row}></View>
 
       <Image
@@ -32,6 +36,23 @@ export default function CookiesBranco() {
       />
 
       <Text style={styles.txtcookies}>Com pedaços generosos de chocolate branco derretido, esses cookies são uma opção doce e cremosa, que derrete na boca e encanta os amantes de chocolate !</Text>
+      <View style={styles.elementos}>
+        <TouchableOpacity
+          style={styles.car}
+          onPress={() => navigation.navigate("Carrinho")}
+        >
+          <AntDesign name="shoppingcart" size={55} color="black" />
+        </TouchableOpacity>
+
+        <Text style={styles.txtvalor}>$15,00</Text>
+
+        <TouchableOpacity
+          style={styles.heart}
+          onPress={() => navigation.navigate("Favoritos")}
+        >
+          <EvilIcons name="heart" size={70} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -49,14 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: "peachpuff",
     position: "absolute",
     top: "17%",
-  },
-
-  logo: {
-    width: "10%",
-    height: "10%",
-    left: "75%",
-    position: "absolute",
-    top: "5%",
   },
 
   txt: {
@@ -88,5 +101,21 @@ const styles = StyleSheet.create({
   fundo: {
     width: "100%",
     height: "100%",
+  },
+
+  elementos: {
+    position: "absolute",
+    left: 0,
+    bottom: 90,
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+
+  txtvalor: {
+    fontSize: 25,
+    fontWeight: "700",
   },
 });
