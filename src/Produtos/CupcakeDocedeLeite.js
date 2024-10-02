@@ -32,6 +32,13 @@ export default function CupcakeDocedeLeite() {
         style={styles.fundo}
         source={require("../assets/image/fundocupdl.png")}
       />
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
+
 
       <Text style={styles.txt}>CUPCAKE DE DOCE DE LEITE</Text>
       <View style={styles.row}></View>
@@ -127,5 +134,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

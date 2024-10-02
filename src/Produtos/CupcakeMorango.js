@@ -33,6 +33,13 @@ export default function CupcakeMorango() {
         source={require("../assets/image/fundocupmor.png")}
       />
 
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.txt}>CUPCAKE DE MORANGO</Text>
 
       <View style={styles.row}></View>
@@ -127,5 +134,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

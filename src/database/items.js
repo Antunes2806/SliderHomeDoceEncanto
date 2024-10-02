@@ -16,8 +16,8 @@ export const Categorias = [
     image: require("./images/pgdntcat.png"),
     items: [
       {
+        id: "0",
         name: "Donuts de Morango",
-
         weight: 120,
         rating: "5.0",
         price: 199,
@@ -27,8 +27,10 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 25,
         routeName: "DonutsMorango",
+        valor: "14,50"
       },
       {
+        id: "1",
         name: "Donuts de Chocolate",
         weight: 150,
         rating: "4.5",
@@ -39,8 +41,10 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 20,
         routeName: "DonutsChocolate",
+        valor: "14,50"
       },
       {
+        id: "2",
         name: "Donuts de Paçoca",
         weight: 250,
         rating: "4.2",
@@ -51,8 +55,10 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 35,
         routeName: "DonutsPacoca",
+        valor: "14,50"
       },
       {
+        id: "3",
         name: "Donuts de Cookies",
         weight: 250,
         rating: "4.2",
@@ -63,6 +69,7 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 35,
         routeName: "DonutsCookies",
+        valor: "14,50"
       },
     ],
   },
@@ -72,6 +79,7 @@ export const Categorias = [
     image: require("./images/svtcat.png"),
     items: [
       {
+        id: "4",
         name: "Sorvete de cookies",
         weight: 250,
         rating: "5.8",
@@ -82,9 +90,11 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 30,
         routeName: "SorveteCookies",
+        valor: "9,99"
       },
 
       {
+        id: "5",
         name: "Sorvete de morango",
         weight: 300,
         rating: "4.5",
@@ -95,9 +105,11 @@ export const Categorias = [
         crust: "Thin Cheese",
         delivery: 25,
         routeName: "SorveteMorango",
+        valor: "9,99"
       },
 
       {
+        id: "6",
         name: "Sorvete de Pistache",
         weight: 350,
         rating: "4.2",
@@ -108,9 +120,11 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 45,
         routeName: "SorvetePistache",
+        valor: "9,99"
       },
 
       {
+        id: "7",
         name: "Sorvete de Flocos",
         weight: 350,
         rating: "4.2",
@@ -121,6 +135,7 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 45,
         routeName: "SorveteFlocos",
+        valor: "9,99"
       },
     ],
   },
@@ -130,6 +145,7 @@ export const Categorias = [
     image: require("./images/cccat.png"),
     items: [
       {
+        id: "8",
         name: "Cupcake de morango",
         weight: 200,
         rating: "5.0",
@@ -140,9 +156,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "CupcakeMorango",
+        valor: "8,50"
       },
 
       {
+        id: "9",
         name: "Cupcake de chocolate",
         weight: 500,
         rating: "4.0",
@@ -153,9 +171,11 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "CupcakeChocolate",
+        valor: "8,50"
       },
 
       {
+        id: "10",
         name: "Cupcake de Doce de Leite",
         weight: 150,
         rating: "4.2",
@@ -166,9 +186,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CupcakeDocedeLeite",
+        valor: "8,50"
       },
 
       {
+        id: "11",
         name: "Cupcake de Frutas Vermelhas",
         weight: 150,
         rating: "4.2",
@@ -179,6 +201,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CupcakeFV",
+        valor: "8,50"
       },
     ],
   },
@@ -188,6 +211,7 @@ export const Categorias = [
     image: require("./images/brigadeiro.png"),
     items: [
       {
+        id: "12",
         name: "Brigadeiro Gourmet",
         weight: 200,
         rating: "5.0",
@@ -198,9 +222,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "Brigtrad",
+        valor: "4,99"
       },
 
       {
+        id: "13",
         name: "Brigadeiro de Ninho com Nutela",
         weight: 500,
         rating: "4.0",
@@ -211,9 +237,11 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "BrigNN",
+        valor: "4,99"
       },
 
       {
+        id: "14",
         name: "Brigadeiro surpresa de uva",
         weight: 150,
         rating: "4.2",
@@ -224,9 +252,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Briguva",
+        valor: "4,99"
       },
 
       {
+        id: "15",
         name: "Brigadeiro de Churros",
         weight: 150,
         rating: "4.2",
@@ -237,6 +267,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Brigchurros",
+        valor: "4,99"
       },
     ],
   },
@@ -246,6 +277,7 @@ export const Categorias = [
     image: require("./images/ckcat.png"),
     items: [
       {
+        id: "16",
         name: "Cookie Tradicional",
         weight: 200,
         rating: "5.0",
@@ -256,9 +288,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "CookiesTrad",
+        valor: "18,00"
       },
 
       {
+        id: "17",
         name: "Cookie Chocolate Branco",
         weight: 500,
         rating: "4.0",
@@ -269,9 +303,11 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "CookiesBranco",
+        valor: "18,00"
       },
 
       {
+        id: "17",
         name: "Cookie de Chocolate",
         weight: 150,
         rating: "4.2",
@@ -282,9 +318,11 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CookiesChoc",
+        valor: "18,00"
       },
 
       {
+        id: "18",
         name: "Cookie duo",
         weight: 150,
         rating: "4.2",
@@ -295,6 +333,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Cookiesduo",
+        valor: "18,00"
       },
     ],
   },

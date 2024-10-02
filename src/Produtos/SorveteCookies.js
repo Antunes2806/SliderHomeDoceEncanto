@@ -32,6 +32,12 @@ export default function SorveteCookies() {
         style={styles.fundo}
         source={require("../assets/image/fundosvtcke.png")}
       />
+      <TouchableOpacity
+        style={styles.seta1}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
 
       <Text style={styles.txt}>SORVETE DE COOKIE</Text>
       <View style={styles.row}></View>
@@ -144,5 +150,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta1: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

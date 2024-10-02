@@ -33,6 +33,13 @@ export default function Briguva() {
         source={require("../assets/image/fundbriguva.png")}
       />
 
+<TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.txt}>BRIGADEIRO DE UVA</Text>
 
       <View style={styles.row}></View>
@@ -43,9 +50,7 @@ export default function Briguva() {
       />
 
       <Text style={styles.txtbrigadeiro}>
-        Uma combinação irresistível de massa macia de chocolate com pedaços de
-        morango, unindo o sabor intenso do chocolate com a frescura natural dos
-        morangos !
+      Refrescante e suave, o brigadeiro de uva traz o doce clássico com o toque frutado da uva, garantindo um equilíbrio entre doçura e frescor !
       </Text>
       <View style={styles.elementos}>
         <TouchableOpacity
@@ -128,5 +133,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

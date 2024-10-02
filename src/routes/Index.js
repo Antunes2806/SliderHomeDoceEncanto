@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -10,10 +11,9 @@ import Produtos from "../pages/Produtos";
 import Sobre from "../pages/Sobre";
 import Favoritos from "../pages/Favoritos";
 import RoutesStack from "./RoutesStack";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Carrinho from "../pages/Carrinho";
 
-// Componente Customizado para DrawerContent
+// Componente Customizado para DrawerContent com a imagem no topo
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
@@ -32,7 +32,7 @@ function CustomDrawerContent(props) {
             width: "100%",
             height: "80%",
             resizeMode: "cover",
-          }} // Estilize conforme desejar
+          }}
         />
         <Text style={{ marginTop: 10, fontSize: 18 }}>Bem-vindo!</Text>
       </View>
@@ -41,35 +41,79 @@ function CustomDrawerContent(props) {
   );
 }
 
+// Ícone de menu fixo com header transparente
+function CustomMenuIcon({ navigation }) {
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.openDrawer()}
+      style={{
+        position: "absolute",
+        top: 40, // Ajuste conforme necessário
+        left: 10,
+        zIndex: 1, // Garante que o ícone fique acima dos outros elementos
+      }}
+    >
+      <Ionicons name="menu" size={30} color="black" />
+    </TouchableOpacity>
+  );
+}
+
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1 }}>
+      <CustomMenuIcon navigation={navigation} />
+      <RoutesStack />
+    </View>
+  );
+}
+
+function SobreScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1 }}>
+      <CustomMenuIcon navigation={navigation} />
+      <Sobre />
+    </View>
+  );
+}
+
+function FavoritosScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1 }}>
+      <CustomMenuIcon navigation={navigation} />
+      <Favoritos />
+    </View>
+  );
+}
+
+function CarrinhoScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1 }}>
+      <CustomMenuIcon navigation={navigation} />
+      <Carrinho />
+    </View>
+  );
+}
+
 const Drawer = createDrawerNavigator();
 
 export default function RoutesDrawer() {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={({ navigation }) => ({
+      drawerContent={(props) => <CustomDrawerContent {...props} />} // Inclui a imagem no Drawer
+      screenOptions={{
         drawerStyle: { backgroundColor: "white" },
         drawerActiveBackgroundColor: "#ed8e8e",
         drawerActiveTintColor: "white",
         drawerInactiveBackgroundColor: "white",
         drawerInactiveTintColor: "black",
-        headerTitle: "",
-        headerLeft: () => (
-          <Ionicons.Button
-            name="menu"
-            size={25}
-            backgroundColor="transparent"
-            color="black"
-            onPress={() => navigation.openDrawer()}
-          />
-        ),
-      })}
+        headerShown: false, // Remove o header padrão
+      }}
       initialRouteName="Home"
     >
-      <Drawer.Screen name="Home" component={RoutesStack} />
-      <Drawer.Screen name="Sobre" component={Sobre} />
-      <Drawer.Screen name="Favoritos" component={Favoritos} />
-      <Drawer.Screen name="Carrinho" component={Carrinho} />
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Sobre" component={SobreScreen} />
+      <Drawer.Screen name="Favoritos" component={FavoritosScreen} />
+      <Drawer.Screen name="Carrinho" component={CarrinhoScreen} />
     </Drawer.Navigator>
   );
 }

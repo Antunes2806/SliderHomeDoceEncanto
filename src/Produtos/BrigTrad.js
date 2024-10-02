@@ -33,6 +33,13 @@ export default function Brigtrad() {
         source={require("../assets/image/fundobrigtra.png")}
       />
 
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.txt}>BRIGADEIRO TRADICIONAL</Text>
 
       <View style={styles.row}></View>
@@ -43,8 +50,9 @@ export default function Brigtrad() {
       />
 
       <Text style={styles.txtbrigadeiro}>
-        Um bolo suave e leve, com um toque cremoso e delicado de cream cheese,
-        ideal para quem prefere sabores mais refinados e menos doces !
+        O clássico que nunca sai de moda! Feito com chocolate de alta qualidade,
+        é macio e cheio de sabor, ideal para quem busca o verdadeiro sabor do
+        brigadeiro !
       </Text>
 
       <View style={styles.elementos}>
@@ -128,5 +136,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

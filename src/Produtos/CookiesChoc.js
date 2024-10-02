@@ -1,5 +1,12 @@
 // Import react-native
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
 // Import useFonts
 import { useFonts } from "expo-font";
@@ -25,6 +32,12 @@ export default function CookiesChoc() {
         style={styles.fundo}
         source={require("../assets/image/fundocokchoc.png")}
       />
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
 
       <Text style={styles.txt}>COOKIES DE CHOCOLATE </Text>
 
@@ -36,8 +49,8 @@ export default function CookiesChoc() {
       />
 
       <Text style={styles.txtcookies}>
-        Para os verdadeiros chocólatras, esses cookies intensamente saborosos são
-        feitos com chocolate amargo, oferecendo um equilíbrio perfeito entre
+        Para os verdadeiros chocólatras, esses cookies intensamente saborosos
+        são feitos com chocolate amargo, oferecendo um equilíbrio perfeito entre
         doce e amargo.
       </Text>
       <View style={styles.elementos}>
@@ -121,5 +134,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

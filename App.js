@@ -6,9 +6,10 @@ import RoutesTab from "./src/routes/Index";
 import Animacao from "./src/pages/Animacao";
 
 
+
 export default function App() {
   const [start, setStart] = useState(false);
 
-  return <>{start ? <Onboarding /> : <Animacao setStart={setStart} />}</>;
+  return < >{start ? <Onboarding /> : <Animacao setStart={setStart} />}</>;
  
 }

@@ -32,6 +32,12 @@ export default function SorvetePistache() {
         style={styles.fundo}
         source={require("../assets/image/fundosvtpst.png")}
       />
+      <TouchableOpacity
+        style={styles.seta1}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
 
       <Text style={styles.txt}>SORVETE DE PISTACHE</Text>
       <View style={styles.row}></View>
@@ -143,5 +149,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta1: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

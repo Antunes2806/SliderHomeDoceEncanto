@@ -168,7 +168,7 @@ export default function Produtos() {
           <View
             style={{
               paddingHorizontal: 20,
-              paddingVertical: 20,
+              paddingVertical: 5,
               flexDirection: "row",
               alignItems: "center",
             }}

@@ -1,5 +1,12 @@
 // Import react-native
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
 // Import useFonts
 import { useFonts } from "expo-font";
@@ -25,6 +32,12 @@ export default function CookiesDuo() {
         style={styles.fundo}
         source={require("../assets/image/fundocokmisto.png")}
       />
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
 
       <Text style={styles.txt}>COOKIE MISTO </Text>
 
@@ -122,5 +135,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

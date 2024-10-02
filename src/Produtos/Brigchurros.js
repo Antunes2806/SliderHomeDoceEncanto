@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { Categorias } from "../database/items";
 
 export default function Brigchurros() {
   const navigation = useNavigation();
@@ -32,7 +33,13 @@ export default function Brigchurros() {
         style={styles.fundo}
         source={require("../assets/image/fundobrigchurros.png")}
       />
-
+      <TouchableOpacity
+        style={styles.seta}
+        key={item.id}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
       <Text style={styles.txt}>BRIGADEIRO DE CHURROS</Text>
 
       <View style={styles.row}></View>
@@ -43,8 +50,9 @@ export default function Brigchurros() {
       />
 
       <Text style={styles.txtbrigadeiro}>
-        Um clássico irresistível com massa úmida e uma cobertura cremosa de
-        chocolate, perfeito para quem adora intensos sabores de cacau !
+        Inspirado na sobremesa tradicional, o brigadeiro de churros é envolto em
+        açúcar e canela, com um recheio delicioso de doce de leite que remete ao
+        sabor do famoso doce espanhol !
       </Text>
 
       <View style={styles.elementos}>
@@ -128,5 +136,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

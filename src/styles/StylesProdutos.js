@@ -30,14 +30,18 @@ export const stylesProdutos = StyleSheet.create({
   containerpesquisa: {
     paddingHorizontal: 20,
   },
+  ViewTxtNome: {
+    marginTop: 70,
+  },
 
   txtNome: {
     fontSize: 30,
-    fontFamily: "Rokkitt",
+    fontFamily: "Rokkit",
     paddingHorizontal: 20,
   },
   categorias: {
     paddingHorizontal: 20,
+    paddingVertical: 5,
   },
 
   txtcategorias: {
@@ -97,5 +101,4 @@ export const stylesProdutos = StyleSheet.create({
     backgroundColor: "green",
     borderRadius: 20,
   },
-
 });

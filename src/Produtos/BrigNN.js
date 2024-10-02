@@ -33,6 +33,13 @@ export default function BrigNN() {
         source={require("../assets/image/fundobrigninhnt.png")}
       />
 
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
+
       <Text style={styles.txt}>BRIGADEIRO DE NINHO COM NUTELA</Text>
 
       <View style={styles.row}></View>
@@ -43,9 +50,9 @@ export default function BrigNN() {
       />
 
       <Text style={styles.txtbrigadeiro}>
-        Um bolo macio e aveludado, com sua coloração vibrante, acompanhado de
-        uma cobertura de cream cheese que equilibra perfeitamente o doce e o
-        azedinho !
+        Uma combinação perfeita entre a cremosidade do leite Ninho e o recheio
+        irresistível de Nutella, criando uma explosão de sabores a cada mordida
+        !
       </Text>
       <View style={styles.elementos}>
         <TouchableOpacity
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: "darkred",
     position: "absolute",
-    top: "19%",
+    top: "25%",
   },
 
   txt: {
@@ -128,5 +135,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });

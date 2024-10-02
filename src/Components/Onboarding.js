@@ -14,6 +14,8 @@ import ButtonComponent from "./ButtonComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import RoutesTab from "../routes/Index";
 import RoutesDrawer from "../routes/Index";
+import { Provider } from "react-redux";
+import store from "../../store";
 
 export default function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,9 +49,11 @@ export default function Onboarding() {
     <>
       {startHome ? (
         <View style={{ flex: 1 }}>
-          <NavigationContainer>
-            <RoutesDrawer />
-          </NavigationContainer>
+          <Provider store={store}>
+            <NavigationContainer>
+              <RoutesDrawer />
+            </NavigationContainer>
+          </Provider>
         </View>
       ) : (
         <View style={styles.container}>

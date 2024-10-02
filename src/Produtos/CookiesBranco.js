@@ -1,5 +1,12 @@
 // Import react-native
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
 // Import useFonts
 import { useFonts } from "expo-font";
@@ -25,6 +32,12 @@ export default function CookiesBranco() {
         style={styles.fundo}
         source={require("../assets/image/fundocokbranco.png")}
       />
+      <TouchableOpacity
+        style={styles.seta}
+        onPress={() => navigation.navigate("Produtos")}
+      >
+        <AntDesign name="left" size={24} color="black" />
+      </TouchableOpacity>
 
       <Text style={styles.txt}>COOKIES DE CHOCOLATE BRANCO</Text>
 
@@ -35,7 +48,11 @@ export default function CookiesBranco() {
         source={require("../assets/image/ckbranco.png")}
       />
 
-      <Text style={styles.txtcookies}>Com pedaços generosos de chocolate branco derretido, esses cookies são uma opção doce e cremosa, que derrete na boca e encanta os amantes de chocolate !</Text>
+      <Text style={styles.txtcookies}>
+        Com pedaços generosos de chocolate branco derretido, esses cookies são
+        uma opção doce e cremosa, que derrete na boca e encanta os amantes de
+        chocolate !
+      </Text>
       <View style={styles.elementos}>
         <TouchableOpacity
           style={styles.car}
@@ -117,5 +134,11 @@ const styles = StyleSheet.create({
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
+  },
+
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 });
