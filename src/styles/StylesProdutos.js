@@ -58,19 +58,12 @@ export const stylesProdutos = StyleSheet.create({
 
   donuts: {
     position: "relative",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ed8e8e",
-    height: 175,
-    width: 270,
+    height: 270,
+    width: 250,
     borderRadius: 40,
-    marginTop: 2, // pra descer a view
-    shadowOpacity: 0.1, //itencidade da sombra
-    shadowColor: "pink", // cor da sombra
-    shadowOffset: { width: 9, height: 9 },
-    shadowRadius: 100, //pra aparecer ao redor da view toda
-    elevation: 10,
-    paddingBottom: 10,
   },
 
   imgdonutspd: {

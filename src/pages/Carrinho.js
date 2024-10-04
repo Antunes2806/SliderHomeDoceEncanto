@@ -4,9 +4,9 @@ import {
   Text,
   FlatList,
   Image,
-  Pressable,
   ImageBackground,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -37,7 +37,6 @@ const CarrinhoScreen = () => {
   const calcularTotal = () => {
     return cart
       .reduce((total, item) => {
-        // Converter valor para número, assumindo que o valor está em formato de string
         const valorNumerico = parseFloat(item.valor.replace(",", "."));
         return total + valorNumerico * item.quantity; // Multiplica pelo quantity
       }, 0)
@@ -70,65 +69,13 @@ const CarrinhoScreen = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                padding: 40,
+                padding: 20,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <View style={{ flex: 1, marginRight: 10 }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text style={{ fontSize: 25 }}>{item.name}</Text>
-                </View>
-                <Text>Preço: R$ {item.valor}</Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 20,
-                    alignItems: "center",
-                    backgroundColor: "#ed8e8e",
-                    borderRadius: 30,
-                    width: 135,
-                  }}
-                >
-                  {/* Botão para diminuir a quantidade */}
-                  <Pressable onPress={() => decreaseQuantity(item)}>
-                    <Text
-                      style={{
-                        fontSize: 27,
-                        color: "black",
-                        paddingHorizontal: 15,
-                      }}
-                    >
-                      -
-                    </Text>
-                  </Pressable>
-
-                  {/* Exibe a quantidade */}
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "black",
-                      paddingHorizontal: 12,
-                    }}
-                  >
-                    {item.quantity}
-                  </Text>
-
-                  {/* Botão para aumentar a quantidade */}
-                  <Pressable onPress={() => increaseQuantity(item)}>
-                    <Text
-                      style={{
-                        fontSize: 25,
-                        color: "black",
-                        paddingHorizontal: 13,
-                      }}
-                    >
-                      +
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
+              {/* Exibe a imagem do produto */}
               <View
                 style={{
                   width: 120,
@@ -145,10 +92,16 @@ const CarrinhoScreen = () => {
                     width: 100,
                     height: 100,
                     borderRadius: 8,
-                    marginLeft: 10,
                   }}
-                  source={{ uri: item.image }}
+                  source={item.image} // Usando a imagem do item
                 />
+              </View>
+
+              {/* Exibe o valor do produto */}
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                  Preço: R$ {item.valor}
+                </Text>
               </View>
             </View>
           )}
@@ -157,7 +110,6 @@ const CarrinhoScreen = () => {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <View
                 style={{
-                  backgroundColor: "red",
                   backgroundColor: "#ed8e8e",
                   borderRadius: 80,
                   marginTop: 15,
@@ -186,7 +138,6 @@ const CarrinhoScreen = () => {
                 }}
               >
                 <TouchableOpacity
-                  style={{}}
                   onPress={() => navigation.navigate("Finalizarpdd")}
                 >
                   <Text style={{ fontSize: 20, fontWeight: "bold", right: 10 }}>
@@ -202,4 +153,5 @@ const CarrinhoScreen = () => {
     </View>
   );
 };
+
 export default CarrinhoScreen;

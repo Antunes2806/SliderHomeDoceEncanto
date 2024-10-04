@@ -17,6 +17,8 @@ import { Categorias, COLOURS } from "../database/items";
 import { useNavigation } from "@react-navigation/native";
 import { stylesProdutos } from "../styles/StylesProdutos";
 
+import AntDesign from "@expo/vector-icons/AntDesign";
+
 export default function Produtos() {
   const [searchQuery, setSearchQuery] = useState(""); // Estado para a pesquisa
   const [filteredItems, setFilteredItems] = useState([]); // Estado para os itens filtrados
@@ -103,7 +105,7 @@ export default function Produtos() {
           height: 180,
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 60,
+          marginTop: 140,
           marginVertical: 20,
         }}
       >
@@ -116,32 +118,70 @@ export default function Produtos() {
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
+              flexDirection: "row", // Exibe imagem e texto lado a lado
+              justifyContent: "center", // Centraliza os itens horizontalmente
+              alignItems: "center", // Centraliza verticalmente
             },
           ]}
         >
-          <View style={{ width: 200, height: 230, top: 40 }}>
+          {/* Imagem do produto */}
+          <View
+            style={{
+              width: 200,
+              height: 350,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Image
               source={data.image}
               style={{
-                width: "100%",
+                width: 300,
                 height: "100%",
                 resizeMode: "contain",
+               marginLeft: 60,
               }}
             />
           </View>
 
+          {/* Texto e botão ao lado da imagem */}
           <View
             style={{
-              display: data.isTopOfTheWeek ? "flex" : "none",
-              alignItems: "center",
+              width: 250,
+              alignItems: "flex-start", // Alinha o texto à esquerda
+              justifyContent: "space-between", // Distribui o texto e o botão
             }}
           >
-            <Text style={{ fontSize: 20 }}>{data.name}</Text>
+            {/* Texto na parte superior direita */}
+            <View
+              style={{
+                marginBottom: 50,
+                alignSelf: "flex-end", // Move o texto para a direita
+                marginRight: 110, // Distância da borda direita
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 30, // Tamanho do texto ajustado
+                  fontWeight: "bold", // Deixa o texto mais destacado
+                  color: "#FFFFFF", // Texto branco
+                }}
+              >
+                {data.name}
+              </Text>
+            </View>
+
+            {/* Botão de adicionar na parte inferior direita */}
             <TouchableOpacity
-              style={stylesProdutos.btnsaibamais}
+              style={{
+                alignSelf: "flex-end", // Move o botão para o canto direito
+                marginBottom: 10, // Posição na parte inferior
+                marginRight: 120, // Distância da borda direita
+                marginTop: 60,
+              }}
               onPress={() => navigation.navigate(data.routeName)}
             >
-              <Text style={{ color: "lightpink" }}>Saiba Mais</Text>
+              <AntDesign name="pluscircle" size={35} color="black" />
             </TouchableOpacity>
           </View>
         </View>

@@ -52,10 +52,6 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      <Text style={{ textAlign: "center", fontSize: 16 }}>
-        Sistema de Carrinho com Redux
-      </Text>
-
       {/* Lista de produtos */}
       {images.map((item) => (
         <Pressable
