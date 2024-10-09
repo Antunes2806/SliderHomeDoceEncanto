@@ -162,7 +162,7 @@ export default function Produtos() {
             >
               <Text
                 style={{
-                  fontSize: 30, // Tamanho do texto ajustado
+                  fontSize: 25, // Tamanho do texto ajustado
                   fontWeight: "bold", // Deixa o texto mais destacado
                   color: "#FFFFFF", // Texto branco
                 }}

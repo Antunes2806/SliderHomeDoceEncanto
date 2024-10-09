@@ -7,20 +7,36 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-
-// Import useFonts
 import { useFonts } from "expo-font";
-
 import { useNavigation } from "@react-navigation/native";
-
+import { useDispatch } from "react-redux";
+import { Categorias } from "../database/items";
+import { addToCart } from "../../CartReducer";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 export default function DonutsPacoca() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
+
+  if (!font) {
+    return null;
+  }
+  // Pega o item específico de "Donuts de Paçoca" e verifica se existe
+  const item = Categorias[0]?.items.find((product) => product.id === "2");
+
+  const handleAddToCart = () => {
+    if (item) {
+      // Verifica se o item não é undefined
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho"); // Navega para o carrinho
+    } else {
+      console.error("Item não encontrado");
+    }
+  };
 
   if (!font) {
     return null;
@@ -53,10 +69,7 @@ export default function DonutsPacoca() {
         experiência única e nostálgica para os fãs de sabores brasileiros !
       </Text>
       <View style={styles.elementos}>
-        <TouchableOpacity
-          style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
-        >
+        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
@@ -139,5 +152,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 100,
     left: 10,
+  },
+  addToCartButton: {
+    backgroundColor: "#ffc231",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+
+  addToCartText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#000",
   },
 });

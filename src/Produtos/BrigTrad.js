@@ -12,15 +12,31 @@ import {
 import { useFonts } from "expo-font";
 
 import { useNavigation } from "@react-navigation/native";
-
+import { useDispatch } from "react-redux";
+import { Categorias } from "../database/items";
+import { addToCart } from "../../CartReducer";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 export default function Brigtrad() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
+
+  // Pega o item específico de "Donuts de Morango" e verifica se existe
+  const item = Categorias[3]?.items.find((product) => product.id === "12");
+
+  const handleAddToCart = () => {
+    if (item) {
+      // Verifica se o item não é undefined
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho"); // Navega para o carrinho
+    } else {
+      console.error("Item não encontrado");
+    }
+  };
 
   if (!font) {
     return null;
@@ -56,10 +72,7 @@ export default function Brigtrad() {
       </Text>
 
       <View style={styles.elementos}>
-        <TouchableOpacity
-          style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
-        >
+        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 

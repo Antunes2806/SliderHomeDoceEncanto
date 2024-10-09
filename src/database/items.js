@@ -17,7 +17,7 @@ export const Categorias = [
     items: [
       {
         id: "0",
-        name: "Donuts de Morango",
+        name: "DONUTS DE MORANGO",
         weight: 120,
         rating: "5.0",
         price: 199,
@@ -27,11 +27,11 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 25,
         routeName: "DonutsMorango",
-        valor: "14,50"
+        valor: "14,50",
       },
       {
         id: "1",
-        name: "Donuts de Chocolate",
+        name: "DONUTS DE CHOCOLATE",
         weight: 150,
         rating: "4.5",
         price: 99,
@@ -41,11 +41,11 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 20,
         routeName: "DonutsChocolate",
-        valor: "14,50"
+        valor: "14,50",
       },
       {
         id: "2",
-        name: "Donuts de Paçoca",
+        name: "DONUTS DE PAÇOCA",
         weight: 250,
         rating: "4.2",
         price: 299,
@@ -55,11 +55,11 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 35,
         routeName: "DonutsPacoca",
-        valor: "14,50"
+        valor: "14,50",
       },
       {
         id: "3",
-        name: "Donuts de Cookies",
+        name: "DONUTS DE COOKIES",
         weight: 250,
         rating: "4.2",
         price: 299,
@@ -69,7 +69,7 @@ export const Categorias = [
         crust: "Thick Crust",
         delivery: 35,
         routeName: "DonutsCookies",
-        valor: "14,50"
+        valor: "14,50",
       },
     ],
   },
@@ -80,7 +80,7 @@ export const Categorias = [
     items: [
       {
         id: "4",
-        name: "Sorvete de cookies",
+        name: "SORVETE DE COOKIE",
         weight: 250,
         rating: "5.8",
         price: 199,
@@ -90,12 +90,12 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 30,
         routeName: "SorveteCookies",
-        valor: "9,99"
+        valor: "9,99",
       },
 
       {
         id: "5",
-        name: "Sorvete de morango",
+        name: "SORVETE DE MORANGO",
         weight: 300,
         rating: "4.5",
         price: 299,
@@ -105,12 +105,12 @@ export const Categorias = [
         crust: "Thin Cheese",
         delivery: 25,
         routeName: "SorveteMorango",
-        valor: "9,99"
+        valor: "9,99",
       },
 
       {
         id: "6",
-        name: "Sorvete de Pistache",
+        name: "SORVETE DE PISTACHE",
         weight: 350,
         rating: "4.2",
         price: 299,
@@ -120,12 +120,12 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 45,
         routeName: "SorvetePistache",
-        valor: "9,99"
+        valor: "9,99",
       },
 
       {
         id: "7",
-        name: "Sorvete de Flocos",
+        name: "SORVETE DE FLOCOS",
         weight: 350,
         rating: "4.2",
         price: 299,
@@ -135,7 +135,7 @@ export const Categorias = [
         crust: "Thin Crust",
         delivery: 45,
         routeName: "SorveteFlocos",
-        valor: "9,99"
+        valor: "9,99",
       },
     ],
   },
@@ -146,7 +146,7 @@ export const Categorias = [
     items: [
       {
         id: "8",
-        name: "Cupcake de morango",
+        name: "CUPCAKE DE MORANGO",
         weight: 200,
         rating: "5.0",
         price: 299,
@@ -156,12 +156,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "CupcakeMorango",
-        valor: "8,50"
+        valor: "8,50",
       },
 
       {
         id: "9",
-        name: "Cupcake de chocolate",
+        name: "CUPCAKE DE CHOCOLATE",
         weight: 500,
         rating: "4.0",
         price: 199,
@@ -171,12 +171,12 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "CupcakeChocolate",
-        valor: "8,50"
+        valor: "8,50",
       },
 
       {
         id: "10",
-        name: "Cupcake de Doce de Leite",
+        name: "CUPCAKE DE DOCE DE LEITE",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -186,12 +186,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CupcakeDocedeLeite",
-        valor: "8,50"
+        valor: "8,50",
       },
 
       {
         id: "11",
-        name: "Cupcake de Frutas Vermelhas",
+        name: "CUPCAKE DE FRUTAS VERMELHAS",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -201,7 +201,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CupcakeFV",
-        valor: "8,50"
+        valor: "8,50",
       },
     ],
   },
@@ -212,7 +212,7 @@ export const Categorias = [
     items: [
       {
         id: "12",
-        name: "Brigadeiro Gourmet",
+        name: "BRIGADEIRO GOURMET",
         weight: 200,
         rating: "5.0",
         price: 299,
@@ -222,12 +222,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "Brigtrad",
-        valor: "4,99"
+        valor: "4,99",
       },
 
       {
         id: "13",
-        name: "Brigadeiro de Ninho com Nutela",
+        name: "BRIGADEIRO NINHO COM NUTELA",
         weight: 500,
         rating: "4.0",
         price: 199,
@@ -237,12 +237,12 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "BrigNN",
-        valor: "4,99"
+        valor: "4,99",
       },
 
       {
         id: "14",
-        name: "Brigadeiro surpresa de uva",
+        name: "BRIGADEIRO SURPRESA DE UVA",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -252,12 +252,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Briguva",
-        valor: "4,99"
+        valor: "4,99",
       },
 
       {
         id: "15",
-        name: "Brigadeiro de Churros",
+        name: "BRIGADEIRO DE CHURROS",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -267,7 +267,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Brigchurros",
-        valor: "4,99"
+        valor: "4,99",
       },
     ],
   },
@@ -278,7 +278,7 @@ export const Categorias = [
     items: [
       {
         id: "16",
-        name: "Cookie Tradicional",
+        name: "COOKIE TRADICIONAL",
         weight: 200,
         rating: "5.0",
         price: 299,
@@ -288,12 +288,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 10,
         routeName: "CookiesTrad",
-        valor: "18,00"
+        valor: "18,00",
       },
 
       {
         id: "17",
-        name: "Cookie Chocolate Branco",
+        name: "COOKIE CHOCOLATE BRANCO",
         weight: 500,
         rating: "4.0",
         price: 199,
@@ -303,12 +303,12 @@ export const Categorias = [
         crust: "Large Ice",
         delivery: 8,
         routeName: "CookiesBranco",
-        valor: "18,00"
+        valor: "18,00",
       },
 
       {
         id: "17",
-        name: "Cookie de Chocolate",
+        name: "COOKIE CHOCOLATE",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -318,12 +318,12 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "CookiesChoc",
-        valor: "18,00"
+        valor: "18,00",
       },
 
       {
         id: "18",
-        name: "Cookie duo",
+        name: "COOKIE DUO",
         weight: 150,
         rating: "4.2",
         price: 99,
@@ -333,7 +333,7 @@ export const Categorias = [
         crust: "Small Ice",
         delivery: 5,
         routeName: "Cookiesduo",
-        valor: "18,00"
+        valor: "18,00",
       },
     ],
   },

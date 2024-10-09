@@ -7,21 +7,33 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-
-// Import useFonts
 import { useFonts } from "expo-font";
-
 import { useNavigation } from "@react-navigation/native";
-
+import { useDispatch } from "react-redux";
+import { Categorias } from "../database/items";
+import { addToCart } from "../../CartReducer";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 export default function DonutsCookies() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
 
+  const item = Categorias[0]?.items.find((product) => product.id === "3");
+
+  const handleAddToCart = () => {
+    if (item) {
+      // Verifica se o item não é undefined
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho"); // Navega para o carrinho
+    } else {
+      console.error("Item não encontrado");
+    }
+  };
   if (!font) {
     return null;
   }
@@ -55,7 +67,7 @@ export default function DonutsCookies() {
       <View style={styles.elementos}>
         <TouchableOpacity
           style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
+          onPress={handleAddToCart}
         >
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>

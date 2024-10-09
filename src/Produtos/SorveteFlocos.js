@@ -10,6 +10,9 @@ import {
 
 // Import useFonts
 import { useFonts } from "expo-font";
+import { useDispatch } from "react-redux";
+import { Categorias } from "../database/items";
+import { addToCart } from "../../CartReducer";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -17,10 +20,23 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 export default function SorveteFlocos() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
+  const item = Categorias[1]?.items.find((product) => product.id === "7");
+
+  const handleAddToCart = () => {
+    if (item) {
+      // Verifica se o item não é undefined
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho"); // Navega para o carrinho
+    } else {
+      console.error("Item não encontrado");
+    }
+  };
 
   if (!font) {
     return null;
@@ -56,10 +72,7 @@ export default function SorveteFlocos() {
       </Text>
 
       <View style={styles.elementos}>
-        <TouchableOpacity
-          style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
-        >
+        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
