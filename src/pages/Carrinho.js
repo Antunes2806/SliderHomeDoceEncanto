@@ -222,7 +222,6 @@ const CarrinhoScreen = () => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
       )}
     </View>
   );
