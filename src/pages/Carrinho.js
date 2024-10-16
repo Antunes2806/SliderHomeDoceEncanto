@@ -93,14 +93,8 @@ const CarrinhoScreen = () => {
                   flexDirection: "row",
                   justifyContent: "center", // Centraliza horizontalmente
                   alignItems: "center", // Centraliza verticalmente
-                  backgroundColor: "white",
                   borderRadius: 10,
                   marginBottom: 10,
-                  elevation: 5, // Elevação para Android
-                  shadowColor: "#000", // Sombra para iOS
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
                 }}
               >
                 <View
@@ -205,25 +199,26 @@ const CarrinhoScreen = () => {
               bottom: 0,
               width: "100%",
               height: "30%",
-              borderRadius: 50,
+              borderTopLeftRadius: 50,
+              borderTopRightRadius: 50,
               backgroundColor: "#ed8e8e",
               paddingVertical: 10,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text>Taxa de entrega: R$ 5,00</Text>
-            <Text
-              style={{ textAlign: "center", fontSize: 20, fontWeight: "bold" }}
-            >
-              Total: R$ {calcularTotal()}
+            <Text style={{ fontSize: 30, fontFamily:"League", }}>
+              Taxa de entrega: R$ 5,00
             </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Finalizarpdd")}
+            </View>
+            <Text
+              style={{ textAlign: "center", fontSize: 30, fontWeight: "bold" }}
             >
+              TOTAL: R$ {calcularTotal()}
+            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("CarrinhoFN")}>
               <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                FINALIZAR PEDIDO{" "}
-                <AntDesign name="right" size={20} color="black" />
+                CONTINUAR <AntDesign name="right" size={20} color="black" />
               </Text>
             </TouchableOpacity>
           </View>

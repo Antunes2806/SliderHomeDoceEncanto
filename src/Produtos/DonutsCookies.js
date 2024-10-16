@@ -87,70 +87,70 @@ export default function DonutsCookies() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, // Ocupa a tela inteira
     alignItems: "center",
     position: "relative",
   },
 
   row: {
-    width: "50%",
-    height: 2,
-    backgroundColor: "saddlebrown",
-    position: "absolute",
+    width: "50%", // Largura da linha
+    height: 2, // Grossura da linha
+    backgroundColor: "saddlebrown", // Cor da linha
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "22%",
   },
 
   txt: {
-    fontSize: 30,
-    fontFamily: "Rokkitt",
-    zIndex: 5,
-    width: "60%",
-    textAlign: "center",
-    position: "absolute",
+    fontSize: 30, // Tamanho do texto
+    fontFamily: "Rokkitt", // Fonte personalizada
+    zIndex: 5, // Garante que o texto fique na frente de outros elementos
+    width: "60%", // Largura do texto
+    textAlign: "center", // Centraliza o texto
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "18%",
   },
 
   txtdonuts: {
-    fontSize: 20,
-    top: "65%",
-    fontFamily: "Rokkitt",
-    position: "absolute",
-    textAlign: "center",
-    width: 400,
+    fontSize: 20, // Tamanho do texto
+    top: "65%", 
+    fontFamily: "Rokkitt", // Fonte personalizada
+    position: "absolute", // Posicionamento absoluto para controle preciso
+    textAlign: "center", // Centraliza o texto
+    width: 400, // Largura do texto
   },
 
   donutscookies: {
-    width: 250,
-    height: 380,
-    position: "absolute",
-    left: "20%",
+    width: 250, // Largura da imagem
+    height: 380, // Altura da imagem
+    position: "absolute", // Posicionamento absoluto para controle preciso
+    left: "20%", // Alinha a esquerda
     top: "20%",
   },
 
   fundo: {
-    width: "100%",
-    height: "100%",
+    width: "100%", // Largura da imagem de fundo
+    height: "100%", // Altura da imagem de fundo
   },
 
   elementos: {
-    position: "absolute",
-    left: 0,
+    position: "absolute", // Posicionamento absoluto para controle preciso
+    left: 0, // Alinha a esquerda
     bottom: 90,
-    height: 60,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    height: 60,  // Altura fixa
+    width: "100%", // Largura fixa
+    flexDirection: "row",  // Disposição dos elementos em linha
+    justifyContent: "space-evenly",  // Espaço igual entre os elementos
     alignItems: "center",
   },
 
   txtvalor: {
-    fontSize: 25,
-    fontWeight: "700",
+    fontSize: 25, // Tamanho do texto
+    fontWeight: "700", // Deixa o texto em negrito
   },
 
   seta: {
-    position: "absolute",
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: 100,
-    left: 10,
+    left: 10, // Alinha a esquerda
   },
 });

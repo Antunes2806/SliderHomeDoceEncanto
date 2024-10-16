@@ -20,7 +20,6 @@ export const Categorias = [
         name: "DONUTS DE MORANGO",
         weight: 120,
         rating: "5.0",
-        price: 199,
         isTopOfTheWeek: true,
         image: require("../assets/image/dnt.png"),
         size: 'Large 8"',
@@ -28,6 +27,8 @@ export const Categorias = [
         delivery: 25,
         routeName: "DonutsMorango",
         valor: "14,50",
+        description:
+          "Um sabor fresco e doce, com cobertura de morango que combina perfeitamente com a massa fofinha, ideal para quem busca um sabor mais leve!",
       },
       {
         id: "1",

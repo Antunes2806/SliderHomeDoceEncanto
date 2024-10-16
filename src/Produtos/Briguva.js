@@ -89,69 +89,69 @@ export default function Briguva() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, // Ocupa a tela inteira
     alignItems: "center",
     position: "relative",
   },
 
   row: {
-    width: "50%",
-    height: 2,
-    backgroundColor: "darkred",
-    position: "absolute",
+    width: "50%", // Largura da linha
+    height: 2, // Grossura da linha
+    backgroundColor: "darkred", // Cor da linha
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "19%",
   },
 
   txt: {
-    fontSize: 30,
-    fontFamily: "Rokkitt",
-    zIndex: 5,
-    width: "70%",
-    textAlign: "center",
-    position: "absolute",
+    fontSize: 30, // Tamanho do texto
+    fontFamily: "Rokkitt", // Fonte personalizada
+    zIndex: 5, // Garante que o texto fique na frente de outros elementos
+    width: "70%", // Largura do texto
+    textAlign: "center", // Centraliza o texto
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "12%",
   },
 
   txtbrigadeiro: {
-    fontSize: 20,
-    top: "65%",
-    fontFamily: "Rokkitt",
-    position: "absolute",
-    textAlign: "center",
-    width: 300,
+    fontSize: 20, // Tamanho do texto
+    top: "65%", 
+    fontFamily: "Rokkitt", // Fonte personalizada
+    position: "absolute", // Posicionamento absoluto para controle preciso
+    textAlign: "center", // Centraliza o texto
+    width: 300, // Largura do texto
   },
 
   brigadeirouva: {
-    width: 300,
-    height: 400,
-    position: "absolute",
+    width: 300, // Largura da imagem
+    height: 400, // Altura da imagem
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "20%",
   },
 
   fundo: {
-    width: "100%",
-    height: "100%",
+    width: "100%", // Largura da imagem de fundo
+    height: "100%", // Altura da imagem de fundo
   },
 
   elementos: {
     position: "absolute",
-    left: 0,
+    left: 0, // Alinha a esquerda
     bottom: 90,
-    height: 60,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    height: 60, // Altura fixa
+    width: "100%", // Largura fixa
+    flexDirection: "row",  // Disposição dos elementos em linha
+    justifyContent: "space-evenly",  // Espaço igual entre os elementos
     alignItems: "center",
   },
 
   txtvalor: {
-    fontSize: 25,
-    fontWeight: "700",
+    fontSize: 25, // Tamanho do texto
+    fontWeight: "700", // Deixa o texto em negrito
   },
 
   seta: {
-    position: "absolute",
+    position: "absolute", // Posicionamento absoluto para controle preciso
     top: 100,
-    left: 10,
+    left: 10, // Alinha a esquerda
   },
 });

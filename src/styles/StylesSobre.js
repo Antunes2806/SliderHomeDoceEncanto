@@ -15,9 +15,10 @@ export const stylesSobre = StyleSheet.create({
     borderColor: "black",
     borderWidth: 3,
     padding: 9,
+    
   },
   linha: {
-    top: 15,
+    top: 18,
     backgroundColor: "black",
     width: 150,
     height: 2,
@@ -30,7 +31,7 @@ export const stylesSobre = StyleSheet.create({
   },
   txt: {
     top: 30,
-    fontSize: 18,
+    fontSize: 23,
     fontFamily: "Nunito",
     margin:10,
     textAlign:"center",
@@ -41,7 +42,7 @@ export const stylesSobre = StyleSheet.create({
     fontFamily: "League_Spartan",
   },
   txtsubtitulo: {
-    top:9,
+    top:12,
     fontSize: 17,
     fontFamily: "League_Spartan",
   },
