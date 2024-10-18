@@ -26,9 +26,9 @@ const DATA = [
 
 export const Carousel = () => {
   const [activeBanner, setActiveBanner] = useState(0);
-  const FlatlistRef = useRef(null);
-
-  const onViewableItemsChanged = ({ viewableItems }) => {
+  
+  const FlatlistRef = useRef(null);   
+  const onViewableItemsChanged = ({ viewableItems }) => {    
     if (viewableItems[0] !== undefined) {
       setActiveBanner(viewableItems[0]?.index);
     }
@@ -60,8 +60,8 @@ export const Carousel = () => {
   return (
     <View style={{ alignItems: "center" }}>
       <FlatList
-        ref={FlatlistRef}
-        data={DATA}
+        ref={FlatlistRef}  
+        data={DATA}   
         renderItem={({ item, index }) => (
           <View
             style={{

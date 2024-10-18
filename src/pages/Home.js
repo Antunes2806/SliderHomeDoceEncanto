@@ -1,23 +1,20 @@
 import { View, Image, TouchableOpacity } from "react-native";
-
 import { styles } from "../styles/Styles";
-//Import de components
 import TxtComponent from "../Components/TxtComponents";
-
-//Import Vector Icons
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 export default function Home({}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.viewLogoEscrita}>
-          <Image
+          <Image 
             style={styles.imgEscrita}
             source={require("../assets/image/5.png")}
           />
         </View>
+
         <View style={styles.viewLogo}>
-          <Image
+          <Image 
             style={styles.imgLogo}
             source={require("../assets/image/4.png")}
           />

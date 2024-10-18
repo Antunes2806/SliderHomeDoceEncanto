@@ -3,15 +3,15 @@ import { View, Animated } from "react-native";
 import { stylesAnimacao } from "../styles/StylesAnimacao";
 
 export default function Animacao({ setStart }) {
-  const [fadeAnim] = useState(new Animated.Value(0)); // Valor inicial ajustado
+  const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 5000, // Tempo de duração da animação
+      duration: 5000,
       useNativeDriver: true,
     }).start(() => {
-      setStart(true); // Atualiza o estado para mostrar o componente Onboarding
+      setStart(true);
     });
   }, [fadeAnim, setStart]);
 

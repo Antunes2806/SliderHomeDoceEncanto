@@ -6,7 +6,7 @@ export default function ButtonComponent({ onPress }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
-        <AntDesign name="arrowright" size={24} color="pink" />
+        <AntDesign name="arrowright" size={24} color="pink" /> 
       </TouchableOpacity>
     </View>
   );
@@ -15,6 +15,6 @@ export default function ButtonComponent({ onPress }) {
 const styles = StyleSheet.create({
   button: {
     left: "35%",
-    bottom: "200%",
+    bottom: "200%", 
   },
 });

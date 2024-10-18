@@ -105,7 +105,7 @@ export default function Produtos() {
           height: 180,
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 140,
+          marginTop: 100,
           marginVertical: 20,
         }}
       >
@@ -124,7 +124,6 @@ export default function Produtos() {
             },
           ]}
         >
-          {/* Imagem do produto */}
           <View
             style={{
               width: 200,
@@ -139,12 +138,11 @@ export default function Produtos() {
                 width: 300,
                 height: "100%",
                 resizeMode: "contain",
-               marginLeft: 60,
+                marginLeft: 60,
               }}
             />
           </View>
 
-          {/* Texto e botão ao lado da imagem */}
           <View
             style={{
               width: 250,
@@ -152,7 +150,6 @@ export default function Produtos() {
               justifyContent: "space-between", // Distribui o texto e o botão
             }}
           >
-            {/* Texto na parte superior direita */}
             <View
               style={{
                 marginBottom: 50,
@@ -171,7 +168,6 @@ export default function Produtos() {
               </Text>
             </View>
 
-            {/* Botão de adicionar na parte inferior direita */}
             <TouchableOpacity
               style={{
                 alignSelf: "flex-end", // Move o botão para o canto direito
@@ -196,15 +192,12 @@ export default function Produtos() {
           styles.viewBtnModal,
           {
             width: widthAnim,
-            marginBottom: 200,
+            marginBottom: 70,
           },
         ]}
       >
-        {/* Nome e pesquisa */}
         <View style={stylesProdutos.ViewTxtNome}>
           <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
-
-          {/* View pesquisa */}
           <View
             style={{
               paddingHorizontal: 20,
@@ -233,8 +226,6 @@ export default function Produtos() {
               }}
             />
           </View>
-
-          {/* Categorias */}
           <View style={stylesProdutos.categorias}>
             <Text style={stylesProdutos.txtcategorias}>Categorias</Text>
             <FlatList
@@ -245,7 +236,6 @@ export default function Produtos() {
             />
           </View>
 
-          {/* Produtos */}
           <Text
             style={{
               paddingTop: 20,
@@ -258,7 +248,6 @@ export default function Produtos() {
             Produtos
           </Text>
 
-          {/* Exibe itens filtrados ou os itens da categoria selecionada */}
           {filteredItems.length > 0
             ? filteredItems.map(renderItem)
             : Categorias[currentSelected]?.items.map(renderItem)}

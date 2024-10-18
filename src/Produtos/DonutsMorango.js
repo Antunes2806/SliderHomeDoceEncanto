@@ -17,6 +17,7 @@ import { firestore } from "../services/firebase"; // Importe o Firestore
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../CartReducer";
 import { useNavigation } from "@react-navigation/native";
+import { Categorias } from "../database/items";
 
 export default function DonutsMorango() {
   const [imageUrl, setImageUrl] = useState(null);
@@ -27,10 +28,10 @@ export default function DonutsMorango() {
   const navigation = useNavigation();
 
   // Defina o item como o produto que você quer mostrar
-  const item = {
+  const itemfav = {
     id: "0", // Exemplo de ID do produto
     name: "Donuts de Morango",
-    valor: 15.0,
+    valor: 14.5,
     description: "Um sabor fresco e doce com cobertura de morango.",
   };
 
@@ -50,7 +51,7 @@ export default function DonutsMorango() {
 
     const checkFavoriteStatus = async () => {
       try {
-        const favoriteRef = doc(firestore, "favorites", item.id);
+        const favoriteRef = doc(firestore, "favorites", itemfav.id);
         const docSnap = await getDoc(favoriteRef);
         setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
       } catch (error) {
@@ -62,6 +63,8 @@ export default function DonutsMorango() {
     checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
   }, []);
 
+  // Pega o item específico de "Donuts de Morango" e verifica se existe
+  const item = Categorias[0]?.items.find((product) => product.id === "0");
   const handleAddToCart = () => {
     if (item) {
       dispatch(addToCart(item));
@@ -73,7 +76,7 @@ export default function DonutsMorango() {
 
   const handleToggleFavorite = async () => {
     try {
-      const favoriteRef = doc(firestore, "favorites", item.id);
+      const favoriteRef = doc(firestore, "favorites", itemfav.id);
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
@@ -83,10 +86,10 @@ export default function DonutsMorango() {
       } else {
         // Adiciona o item aos favoritos com a URL da imagem
         await setDoc(favoriteRef, {
-          name: item.name,
-          valor: item.valor,
+          name: itemfav.name,
+          valor: itemfav.valor,
           image: imageUrl, // Adiciona a URL da imagem
-          description: item.description,
+          description: itemfav.description,
         });
         setIsFavorite(true); // Atualiza o estado
       }

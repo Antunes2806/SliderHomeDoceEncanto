@@ -2,96 +2,96 @@ import { StyleSheet } from "react-native";
 
 export const stylesProdutos = StyleSheet.create({
   icon: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    width: "20%",
+    alignItems: "flex-start", // Alinha o ícone no início horizontalmente
+    justifyContent: "center", // Centraliza verticalmente
+    width: "20%", // Define a largura do ícone
   },
   viewtitulo: {
-    justifyContent: "center",
+    justifyContent: "center", // Centraliza verticalmente
   },
   titulopd: {
-    color: "#4d2929",
-    right: "10%",
+    color: "#4d2929", // Define a cor do texto
+    right: "10%", // Alinha o texto a direita
   },
 
   viewLogopd: {
-    width: "20%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "flex-end",
+    width: "20%", // Defina a largura
+    height: "100%", // Define a altura
+    justifyContent: "center", // Centraliza verticalmente
+    alignItems: "flex-end",  // Alinha o conteúdo à direita
   },
 
   imgLogopd: {
-    width: 120,
-    height: 100,
-    left: "15%",
+    width: 120,  // Define a largura da logo
+    height: 100, // Define a altura da logo
+    left: "15%", // Move a imagem à esquerda
   },
 
   containerpesquisa: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 20, // Adiciona espaço horizontal
   },
   ViewTxtNome: {
-    marginTop: 70,
+    marginTop: 70, // Adiciona uma margem superior
   },
 
   txtNome: {
-    fontSize: 30,
-    fontFamily: "Rokkit",
-    paddingHorizontal: 20,
+    fontSize: 30, // Tamanho do texto
+    fontFamily: "Rokkit", // Fonte personalizada
+    paddingHorizontal: 20, // Adiciona espaço horizontal
   },
   categorias: {
-    paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingHorizontal: 20, // Espaço horizontal
+    paddingVertical: 5, // Espaço vertical
   },
 
   txtcategorias: {
-    fontSize: 30,
-    fontWeight: "500",
+    fontSize: 30, // Tamanho do texto
+    fontWeight: "500", // Deixa a fonte mais grossa
   },
   Viewprodutos: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 100,
-    paddingBottom: 30,
-    position: "relative",
+    alignItems: "center", // Centraliza horizontalmente
+    justifyContent: "center", // Centraliza verticalmente
+    paddingTop: 100, // Adiciona um espaço no topo
+    paddingBottom: 30, // Adiciona espaço na parte inferior
+    position: "relative",  // Deixa a posição relativa
   },
 
   donuts: {
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ed8e8e",
-    height: 270,
-    width: 250,
-    borderRadius: 40,
+    position: "relative", // Deixa a posição relativa
+    justifyContent: "center", // Centraliza verticalmente
+    alignItems: "center", // Centraliza horizontalmente
+    backgroundColor: "#ed8e8e", // Define a cor do fundo
+    height: 270, // Define a altura
+    width: 250, // Define a largura
+    borderRadius: 40, // Deixa a borda arredondada
   },
 
   imgdonutspd: {
-    width: 350,
-    height: 350,
-    position: "absolute",
-    top: -150,
-    left: -20,
+    width: 350, // Largura da imagem
+    height: 350, // Altura da imagem
+    position: "absolute", // Posição absoluta
+    top: -150, // Move para cima
+    left: -20, // Move a imagem para a esquerda
   },
 
   txtdonuts: {
-    fontSize: 25,
-    marginBottom: 10,
+    fontSize: 25, // Tamanho da fonte
+    marginBottom: 10, // Espaço inferior
   },
 
   btnsaibamais: {
-    backgroundColor: "black",
-    alignItems: "center",
-    borderRadius: 20,
-    height: 30,
-    width: 80,
+    backgroundColor: "black", // Cor de fundo
+    alignItems: "center", // Centraliza horizontalmente
+    borderRadius: 20, // Deixa a borda arredondada
+    height: 30, // Define a altura do botão
+    width: 80, // Define a largura do botão
   },
 
   btncarrinho: {
-    alignItems: "center",
-    height: 30,
-    width: 80,
-    backgroundColor: "green",
-    borderRadius: 20,
+    alignItems: "center", // Centraliza horizontalmente
+    height: 30, // Define a altura do carrinho 
+    width: 80, // Define a largura do carrinho
+    backgroundColor: "green", // Cor de fundo
+    borderRadius: 20, // Deixa a borda arredondada
   },
 });

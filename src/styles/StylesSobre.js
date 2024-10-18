@@ -2,73 +2,73 @@ import { StyleSheet } from "react-native";
 
 export const stylesSobre = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flex: 1, // Ocupa a tela inteira 
+    justifyContent: "center", // Centraliza o conteúdo verticalmente
+    alignItems: "center", // Centraliza o conteúdo horizontalmente
   },
   Viewtexto: {
     justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "white",
-    width: "82%",
-    height: "78%",
-    borderColor: "black",
-    borderWidth: 3,
-    padding: 9,
+    alignItems: "center", // Centraliza horizontalmente
+    backgroundColor: "white", // Define a cor
+    width: "82%", // Define a largura 
+    height: "78%", // Define a altura
+    borderColor: "black", // Cor da borda
+    borderWidth: 3,  // Define a largura da borda
+    padding: 9, // Espaço interno em todos os lados
     
   },
   linha: {
-    top: 18,
-    backgroundColor: "black",
-    width: 150,
-    height: 2,
+    top: 18, // Move para baixo
+    backgroundColor: "black", // Define a cor
+    width: 150, // Define a largura 
+    height: 2, // Define a altura
   },
   linha2: {
-    top:40,
-    backgroundColor: "black",
-    width: 150,
-    height: 2,
+    top:40, /// Move para baixo
+    backgroundColor: "black", // Define a cor
+    width: 150, // Define a largura 
+    height: 2, // Define a altura
   },
   txt: {
-    top: 30,
-    fontSize: 23,
-    fontFamily: "Nunito",
-    margin:10,
-    textAlign:"center",
+    top: 30, // Move para baixo
+    fontSize: 23, // Tamanho do texto
+    fontFamily: "Nunito", // Fonte personalizada
+    margin:10,  // Margem em todos os lados
+    textAlign:"center", // Centraliza o texto
   },
   txtsobre: {
-    top:10,
-    fontSize: 30,
-    fontFamily: "League_Spartan",
+    top:10, // Move para baixo
+    fontSize: 30, // Tamanho do texto
+    fontFamily: "League_Spartan", // Fonte personalizada
   },
   txtsubtitulo: {
-    top:12,
-    fontSize: 17,
-    fontFamily: "League_Spartan",
+    top:12, // Move para baixo
+    fontSize: 17, // Tamanho do texto
+    fontFamily: "League_Spartan", // Fonte personalizada
   },
 
   ImgFundo: {
-    width: "100%",
-    height: "100%",
+    width: "100%", // Define a largura da imagem
+    height: "100%", // Define a altura da imagem
   },
 
   Viewcontato:{
-    width:"100%",
-    height:"20%",
-    justifyContent:"flex-end",
+    width:"100%", // Define a largura
+    height:"20%", // Define a altura
+    justifyContent:"flex-end", // Alinha o conteúdo final (embaixo)
   },
 
   Viewinsta:{
-    bottom:9,
-    left:5,
-    flexDirection: "row",
+    bottom:9, // Move para cima
+    left:5, // Move para a esquerda
+    flexDirection: "row", // Alinha os elementos em linha
   },
   Viewlocalizacao:{
-    flexDirection: "row",
-    alignItems:"center",
+    flexDirection: "row", // Alinha os elementos em linha
+    alignItems:"center", // Centraliza os itens verticalmente
   },
   txtendereco:{
-    left:5,
-    fontFamily: "Nunito",
+    left:5, // Move para a esquerda
+    fontFamily: "Nunito", // Fonte personalizada
   },
 });

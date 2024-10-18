@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Pressable,
+  Modal,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -17,12 +18,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
-
+import { useState } from "react";
 const CarrinhoScreen = () => {
   const navigation = useNavigation();
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
+  const [modalVisible, setModalVisible] = useState(false);
   const increaseQuantity = (item) => {
     dispatch(incrementQuantity(item));
   };
@@ -40,7 +42,7 @@ const CarrinhoScreen = () => {
       const valorNumerico = parseFloat(item.valor.replace(",", "."));
       return total + valorNumerico * item.quantity;
     }, 0);
-    return (total + 5).toFixed(2); // Adiciona a taxa de entrega de R$ 5,00
+    return (total + 5).toFixed(2); 
   };
 
   const [font] = useFonts({
@@ -84,6 +86,7 @@ const CarrinhoScreen = () => {
       ) : (
         <View style={{ flex: 1 }}>
           <FlatList
+          style={{marginBottom:120,}}
             data={cart}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
@@ -91,8 +94,8 @@ const CarrinhoScreen = () => {
                 style={{
                   padding: 20,
                   flexDirection: "row",
-                  justifyContent: "center", // Centraliza horizontalmente
-                  alignItems: "center", // Centraliza verticalmente
+                  justifyContent: "center", 
+                  alignItems: "center", 
                   borderRadius: 10,
                   marginBottom: 10,
                 }}
@@ -192,36 +195,112 @@ const CarrinhoScreen = () => {
             )}
           />
 
-          {/* Componente fixo no final da tela */}
           <View
             style={{
               position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: "30%",
-              borderTopLeftRadius: 50,
-              borderTopRightRadius: 50,
+              bottom: 60,
+              width: "90%",
+              height: "10%",
+              borderRadius:50,
               backgroundColor: "#ed8e8e",
-              paddingVertical: 10,
+              left:18,
               justifyContent: "center",
-              alignItems: "center",
+              
             }}
           >
-            <Text style={{ fontSize: 30, fontFamily:"League", }}>
-              Taxa de entrega: R$ 5,00
-            </Text>
-            </View>
-            <Text
-              style={{ textAlign: "center", fontSize: 30, fontWeight: "bold" }}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingHorizontal: 60,
+              }}
             >
-              TOTAL: R$ {calcularTotal()}
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("CarrinhoFN")}>
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                CONTINUAR <AntDesign name="right" size={20} color="black" />
+              <Text style={{ fontSize: 20, textAlign: "center" }}>
+                TAXA DE ENTREGA: R$ 5,00
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <AntDesign name="exclamationcircle" size={15} color="black" />
+              </TouchableOpacity>
+            </View>
+            <View style={{}}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 22,
+                  fontWeight: "bold",
+                }}
+              >
+                TOTAL: R$ {calcularTotal()}
+              </Text>
+            </View>
+            
           </View>
+          <View style={{bottom:30, alignItems:"flex-end", right:25}}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("CarrinhoFN")} style={{  width:"40%",}}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color:"black",
+                  }}
+                >
+                  CONTINUAR <AntDesign name="right" size={20} color="black" />
+                </Text>
+              </TouchableOpacity>
+            </View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgba(0,0,0,0.5)",
+              }}
+            >
+              <View
+                style={{
+                  width: 300,
+                  padding: 20,
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                }}
+              >
+                <Text style={{ fontSize: 20, textAlign: "center" }}>
+                  A taxa de entrega é aplicada para garantir o envio eficiente
+                  dos seus produtos. Na nossa loja esse valor é fixo!
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: "#ed8e8e",
+                    padding: 10,
+                    borderRadius: 5,
+                  }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "white",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Fechar
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </View>
       )}
     </View>
   );

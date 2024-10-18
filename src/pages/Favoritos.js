@@ -4,19 +4,18 @@ import {
   View,
   Image,
   FlatList,
-  ImageBackground,
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import { styles } from "../styles/Styles";
 import { firestore } from "../services/firebase";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"; // Firestore imports
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native"; // Importando useFocusEffect
 
 export default function Favoritos() {
   const [favorites, setFavorites] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado de carregamento
+  const [loading, setLoading] = useState(true);
 
-  // Função para buscar os favoritos no Firestore
   const fetchFavorites = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, "favorites"));
@@ -28,17 +27,19 @@ export default function Favoritos() {
     } catch (error) {
       console.error("Erro ao buscar favoritos: ", error);
     } finally {
-      setLoading(false); // Finaliza o carregamento
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchFavorites(); // Carrega os favoritos ao iniciar a tela
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchFavorites(); // Fetch favorites whenever the screen is focused
+    }, [])
+  );
 
   const handleRemoveFavorite = async (id) => {
     try {
-      const favoriteRef = doc(firestore, "favorites", id); // Referência ao documento do Firestore
+      const favoriteRef = doc(firestore, "favorites", id);
       await deleteDoc(favoriteRef);
       console.log("Produto removido dos favoritos");
       fetchFavorites(); // Atualiza a lista após remoção
@@ -48,7 +49,6 @@ export default function Favoritos() {
   };
 
   const renderItem = ({ item }) => {
-    // Verifica se o valor é um número, caso contrário define como 0
     const price = typeof item.valor === "number" ? item.valor : 0;
 
     return (
@@ -63,13 +63,13 @@ export default function Favoritos() {
           source={{ uri: item.image }}
           style={{ width: 100, height: 100 }}
         />
+
         <View style={{ marginLeft: 10 }}>
           <Text>{item.name}</Text>
           <Text>{`R$ ${price.toFixed(2)}`}</Text>
-          {/* Exibe o preço formatado */}
+
           <TouchableOpacity onPress={() => handleRemoveFavorite(item.id)}>
             <Text style={{ color: "red" }}>Remover</Text>
-            {/* Botão para remover */}
           </TouchableOpacity>
         </View>
       </View>
@@ -84,21 +84,26 @@ export default function Favoritos() {
     );
   }
 
-  return (
-    <ImageBackground
-      style={styles.fundofv}
-      source={require("../assets/image/fundofv.jpg")}
-      blurRadius={9}
-    >
-      <View>
-        <Text>Meus Favoritos</Text>
-        <FlatList
-          data={favorites}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false} // Adicionado
+  // Renderiza a imagem se não houver favoritos
+  if (favorites.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Image
+          source={require("../assets/image/imgfav.png")}
+          style={{ width: "100%", height: "100%" }}
         />
       </View>
-    </ImageBackground>
+    );
+  }
+
+  return (
+    <View>
+      <FlatList
+        data={favorites}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }

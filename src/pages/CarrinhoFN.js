@@ -5,16 +5,22 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Modal,
+  Pressable,
 } from "react-native";
 import axios from "axios";
 
 export default function CarrinhoFN() {
   const [cep, setCep] = useState("");
-  const [logradouro, setLogradouro] = useState('');
+  const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
   const [error, setError] = useState("");
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [valorPago, setValorPago] = useState("");
+
+  const [pagamentoSelecionado, setPagamentoSelecionado] = useState(null); // Estado para controlar o método de pagamento
 
   const buscarCep = () => {
     setError("");
@@ -29,7 +35,6 @@ export default function CarrinhoFN() {
         if (response.data.erro) {
           setError("CEP não encontrado.");
         } else {
-          // Atualiza os campos com os dados da busca
           setLogradouro(response.data.logradouro);
           setBairro(response.data.bairro);
           setCidade(response.data.localidade);
@@ -38,6 +43,11 @@ export default function CarrinhoFN() {
       .catch(() => {
         setError("Erro ao buscar o CEP. Tente novamente mais tarde.");
       });
+  };
+
+  const handleConfirmarPagamento = () => {
+    console.log(`Valor pago: R$ ${valorPago}`);
+    setModalVisible(false); // Fecha o modal
   };
 
   return (
@@ -66,7 +76,7 @@ export default function CarrinhoFN() {
       <View style={styles.container}>
         <Text
           style={{
-            fontSize: 25, // Tamanho da fonte
+            fontSize: 25,
             fontFamily: "League",
             padding: 20,
           }}
@@ -89,14 +99,13 @@ export default function CarrinhoFN() {
             onChangeText={setCep}
           />
 
-          {/* Botão personalizado com TouchableOpacity */}
           <TouchableOpacity style={styles.button} onPress={buscarCep}>
             <Text style={styles.buttonText}>BUSCAR</Text>
           </TouchableOpacity>
         </View>
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
-        {/* Campos de endereço fixos e editáveis */}
+        {/* Campos de endereço */}
         <View
           style={{
             justifyContent: "space-between",
@@ -108,7 +117,7 @@ export default function CarrinhoFN() {
             style={styles.resultInput}
             value={logradouro}
             placeholder="Rua"
-            onChangeText={setLogradouro} // Permite a edição manual
+            onChangeText={setLogradouro}
             editable={true}
           />
           <TextInput
@@ -147,15 +156,90 @@ export default function CarrinhoFN() {
           />
         </View>
       </View>
-      <Text
-        style={{
-          fontSize: 25, // Tamanho da fonte
-          fontFamily: "League",
-          paddingHorizontal: 40,
-        }}
+
+      {/* Pagar na entrega */}
+      <View>
+        <Text
+          style={{
+            fontSize: 25,
+            fontFamily: "League",
+            paddingHorizontal: 40,
+          }}
+        >
+          Pagar na entrega:
+        </Text>
+        <View
+          style={{
+            justifyContent: "space-around",
+            flexDirection: "column",
+            height: "50%",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+  onPress={() => setModalVisible(true)}
+  style={[
+    styles.pagamentoButton,
+    pagamentoSelecionado === "dinheiro" && styles.pagamentoSelecionado, // Altera a cor se selecionado
+  ]}
+>
+  <Text style={styles.pagamentoText}>DINHEIRO</Text>
+</TouchableOpacity>
+
+<TouchableOpacity
+  onPress={() => setPagamentoSelecionado("credito")}
+  style={[
+    styles.pagamentoButton,
+    pagamentoSelecionado === "credito" && styles.pagamentoSelecionado, // Altera a cor se selecionado
+  ]}
+>
+  <Text style={styles.pagamentoText}>CARTÃO DE CRÉDITO</Text>
+</TouchableOpacity>
+
+<TouchableOpacity
+  onPress={() => setPagamentoSelecionado("debito")}
+  style={[
+    styles.pagamentoButton,
+    pagamentoSelecionado === "debito" && styles.pagamentoSelecionado, // Altera a cor se selecionado
+  ]}
+>
+  <Text style={styles.pagamentoText}>CARTÃO DE DÉBITO</Text>
+</TouchableOpacity>
+
+        </View>
+      </View>
+
+      {/* Modal de pagamento */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
       >
-        Pagar na entrega:
-      </Text>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Vai precisar de troco?</Text>
+            <Text style={styles.modalText2}>
+              Digite o valor que você vai pagar em dinheiro, para nossa loja
+              calcular o troco.
+            </Text>
+            <TextInput
+              style={styles.inputModal}
+              placeholder="R$___"
+              keyboardType="numeric"
+              value={valorPago}
+              onChangeText={setValorPago}
+              placeholderTextColor="#888" // Cor do placeholder
+            />
+            <Pressable
+              style={[styles.buttonModal, styles.buttonClose]}
+              onPress={handleConfirmarPagamento}
+            >
+              <Text style={styles.textStyle}>Confirmar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -174,16 +258,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: "#ed8e8e", // Cor de fundo do botão
+    backgroundColor: "#ed8e8e",
     justifyContent: "center",
-    borderRadius: 10, // Arredondamento dos cantos
-    alignItems: "center", // Centraliza o texto no botão
+    borderRadius: 10,
+    alignItems: "center",
     height: 40,
     width: "35%",
   },
   buttonText: {
-    color: "#fff", // Cor do texto
-    fontSize: 20, // Tamanho da fonte
+    color: "#fff",
+    fontSize: 20,
     fontFamily: "League",
   },
   error: {
@@ -200,6 +284,74 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   resultInput2: {
+    height: 40,
+    width: "100%",
+    borderColor: "black",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  pagamentoButton: {
+    padding: 20,
+    backgroundColor: "#f5f5f5", // Cor padrão do botão
+    alignItems: "center",
+    borderRadius: 30,
+    width: "70%",
+  },
+  pagamentoSelecionado: {
+    backgroundColor: "#ed8e8e", // Cor quando selecionado
+  },
+  pagamentoText: {
+    fontSize: 20,
+    fontFamily: "League",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonModal: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: "#ed8e8e",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    fontSize: 20,
+    marginBottom: 15,
+    textAlign: "center",
+    fontFamily: "League",
+  },
+  modalText2: {
+    fontSize: 20,
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  inputModal: {
     height: 40,
     width: "100%",
     borderColor: "black",
