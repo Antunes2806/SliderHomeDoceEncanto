@@ -19,6 +19,8 @@ import { stylesProdutos } from "../styles/StylesProdutos";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 
+import { useFonts } from "expo-font";
+
 export default function Produtos() {
   const [searchQuery, setSearchQuery] = useState(""); // Estado para a pesquisa
   const [filteredItems, setFilteredItems] = useState([]); // Estado para os itens filtrados
@@ -37,6 +39,15 @@ export default function Produtos() {
       useNativeDriver: false, // Não use o driver nativo para estilos não suportados
     }).start();
   }, [widthAnim]);
+
+  const [font] = useFonts({
+    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
+    League: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
+  });
+
+  if (!font) {
+    return null;
+  }
 
   // Função para lidar com a pesquisa
   const handleSearch = (text) => {
@@ -66,7 +77,7 @@ export default function Produtos() {
       >
         <View
           style={{
-            width: 70,
+            width: 80,
             height: 80,
             justifyContent: "space-evenly",
             alignItems: "center",
@@ -74,11 +85,12 @@ export default function Produtos() {
               currentSelected == index ? COLOURS.white : COLOURS.rosa,
             borderRadius: 20,
             margin: 10,
+            top: 9,
             elevation: 5, // Elevação para Android
             shadowColor: "#000", // Sombra para iOS
-            shadowOffset: { width: 0, height: 2 },
+            shadowOffset: { width: 0, height: 1 },
             shadowOpacity: 0.25,
-            shadowRadius: 3.84,
+            shadowRadius: 3.85,
           }}
         >
           <Image
@@ -135,7 +147,7 @@ export default function Produtos() {
             <Image
               source={data.image}
               style={{
-                width: 300,
+                width: 500,
                 height: "100%",
                 resizeMode: "contain",
                 marginLeft: 60,
@@ -161,7 +173,9 @@ export default function Produtos() {
                 style={{
                   fontSize: 25, // Tamanho do texto ajustado
                   fontWeight: "bold", // Deixa o texto mais destacado
-                  color: "#FFFFFF", // Texto branco
+                  color: "#FFFFFF", // Cor da fonte
+                  textAlign: "center", // Centraliza o texto
+                  fontFamily: "Rokkitt", // Fonte personalizada
                 }}
               >
                 {data.name}
@@ -177,7 +191,7 @@ export default function Produtos() {
               }}
               onPress={() => navigation.navigate(data.routeName)}
             >
-              <AntDesign name="pluscircle" size={35} color="black" />
+              <AntDesign name="pluscircle" size={35} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -201,7 +215,7 @@ export default function Produtos() {
           <View
             style={{
               paddingHorizontal: 20,
-              paddingVertical: 5,
+              paddingVertical: 10,
               flexDirection: "row",
               alignItems: "center",
             }}
@@ -216,7 +230,8 @@ export default function Produtos() {
               onChangeText={handleSearch}
               style={{
                 color: COLOURS.black,
-                fontSize: 16,
+                fontFamily: "Rokkitt", // Fonte personalizada
+                fontSize: 20, // Tamanho da fonte
                 paddingVertical: 5,
                 borderBottomWidth: 1,
                 borderBottomColor: COLOURS.black + 20,
@@ -238,11 +253,12 @@ export default function Produtos() {
 
           <Text
             style={{
-              paddingTop: 20,
+              paddingTop: 10,
               paddingHorizontal: 20,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: "700",
               color: COLOURS.black,
+              fontFamily: "Rokkitt", // Fonte personalizada
             }}
           >
             Produtos

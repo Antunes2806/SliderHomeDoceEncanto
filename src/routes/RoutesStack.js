@@ -27,6 +27,8 @@ import Brigtrad from "../Produtos/BrigTrad";
 import Briguva from "../Produtos/Briguva";
 import Brigchurros from "../Produtos/Brigchurros";
 import CarrinhoFN from "../pages/CarrinhoFN";
+import Login from "../pages/Login";
+import Cadastro from "../pages/Cadastro";
 
 const Stack = createNativeStackNavigator();
 
@@ -180,6 +182,18 @@ export default function RoutesStack() {
       <Stack.Screen
         name="CarrinhoFN"
         component={CarrinhoFN}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Cadastro"
+        component={Cadastro}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

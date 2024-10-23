@@ -7,10 +7,15 @@ import {
   StyleSheet,
   Modal,
   Pressable,
+  ScrollView,
+  Button,
 } from "react-native";
 import axios from "axios";
+import QRCode from "react-native-qrcode-svg";
 
 export default function CarrinhoFN() {
+  const [inputText, setInputText] = useState("");
+  const [qrValue, setQrValue] = useState("");
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
@@ -72,142 +77,198 @@ export default function CarrinhoFN() {
         </Text>
       </View>
 
-      {/* Buscador de CEP */}
-      <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 25,
-            fontFamily: "League",
-            padding: 20,
-          }}
-        >
-          Entregar no endereço:
-        </Text>
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            padding: 20,
-          }}
-        >
-          <TextInput
-            style={styles.input}
-            placeholder="Digite o CEP"
-            value={cep}
-            keyboardType="numeric"
-            maxLength={8}
-            onChangeText={setCep}
-          />
+      <ScrollView style={{ flex: 1 }}>
+        {/* Buscador de CEP */}
+        <View style={styles.container}>
+          <Text
+            style={{
+              fontSize: 25,
+              fontFamily: "League",
+              padding: 20,
+            }}
+          >
+            Entregar no endereço:
+          </Text>
+          <View
+            style={{
+              justifyContent: "space-between",
+              flexDirection: "row",
+              padding: 20,
+              bottom: 20,
+            }}
+          >
+            <TextInput
+              style={styles.input}
+              placeholder="Digite o CEP"
+              value={cep}
+              keyboardType="numeric"
+              maxLength={8}
+              onChangeText={setCep}
+            />
 
-          <TouchableOpacity style={styles.button} onPress={buscarCep}>
-            <Text style={styles.buttonText}>BUSCAR</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={buscarCep}>
+              <Text style={styles.buttonText}>BUSCAR</Text>
+            </TouchableOpacity>
+          </View>
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+
+          {/* Campos de endereço */}
+          <View
+            style={{
+              justifyContent: "space-between",
+              flexDirection: "row",
+              paddingHorizontal: 20,
+              bottom: 20,
+            }}
+          >
+            <TextInput
+              style={styles.resultInput}
+              value={logradouro}
+              placeholder="Rua"
+              onChangeText={setLogradouro}
+              editable={true}
+            />
+            <TextInput
+              style={styles.resultInput}
+              value={bairro}
+              placeholder="Bairro"
+              onChangeText={setBairro}
+              editable={true}
+            />
+          </View>
+          <View
+            style={{
+              justifyContent: "space-between",
+              flexDirection: "row",
+              padding: 20,
+              bottom: 20,
+            }}
+          >
+            <TextInput
+              style={styles.resultInput}
+              value={cidade}
+              placeholder="Cidade"
+              onChangeText={setCidade}
+              editable={true}
+            />
+            <TextInput
+              style={styles.resultInput}
+              placeholder="Numero"
+              editable={true}
+            />
+          </View>
+          <View style={{ paddingHorizontal: 20, bottom: 20 }}>
+            <TextInput
+              style={styles.resultInput2}
+              placeholder="Complemento"
+              editable={true}
+            />
+          </View>
         </View>
-        {error ? <Text style={styles.error}>{error}</Text> : null}
 
-        {/* Campos de endereço */}
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            paddingHorizontal: 20,
-          }}
-        >
-          <TextInput
-            style={styles.resultInput}
-            value={logradouro}
-            placeholder="Rua"
-            onChangeText={setLogradouro}
-            editable={true}
-          />
-          <TextInput
-            style={styles.resultInput}
-            value={bairro}
-            placeholder="Bairro"
-            onChangeText={setBairro}
-            editable={true}
-          />
+        {/* Pagar na entrega */}
+        <View>
+          <Text
+            style={{
+              fontSize: 25,
+              fontFamily: "League",
+              paddingHorizontal: 40,
+              bottom: 20,
+            }}
+          >
+            Pagar na entrega:
+          </Text>
+          <View
+            style={{
+              justifyContent: "space-around",
+              flexDirection: "column",
+              height: "30%",
+              alignItems: "center",
+              bottom: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setPagamentoSelecionado("dinheiro"); // Define o método de pagamento como "dinheiro"
+                setModalVisible(true); // Abre o modal
+              }}
+              style={[
+                styles.pagamentoButton,
+                pagamentoSelecionado === "dinheiro" &&
+                  styles.pagamentoSelecionado, // Altera a cor se selecionado
+              ]}
+            >
+              <Text style={styles.pagamentoText}>DINHEIRO</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setPagamentoSelecionado("credito")}
+              style={[
+                styles.pagamentoButton,
+                pagamentoSelecionado === "credito" &&
+                  styles.pagamentoSelecionado, // Altera a cor se selecionado
+              ]}
+            >
+              <Text style={styles.pagamentoText}>CARTÃO DE CRÉDITO</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setPagamentoSelecionado("debito")}
+              style={[
+                styles.pagamentoButton,
+                pagamentoSelecionado === "debito" &&
+                  styles.pagamentoSelecionado, // Altera a cor se selecionado
+              ]}
+            >
+              <Text style={styles.pagamentoText}>CARTÃO DE DÉBITO</Text>
+            </TouchableOpacity>
+          </View>
+          
+            <Text
+              style={{
+                fontSize: 25,
+                fontFamily: "League",
+                paddingHorizontal: 40,
+                bottom: 20,
+              }}
+            >
+              Pagar agora:
+            </Text>
+            <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <View style={{ width: "70%",  }}>
+              <Text style={{ fontSize: 18, textAlign: "center", bottom:10, }}>
+                Rápido, seguro e sem complicação: pague com Pix e finalize sua
+                compra em segundos!
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 30,
+                bottom: 20,
+              }}
+            >
+              <QRCode
+                value={qrValue ? qrVlue : "Pagamento efetuado"}
+                size={250}
+                color="black"
+                backgroundColor="white"
+                logoSize={30}
+                logoMargin={2}
+                logoBorderRadius={15}
+                logoBackgroundColor="yellow"
+              />
+            </View>
+          </View>
         </View>
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            padding: 20,
-          }}
-        >
-          <TextInput
-            style={styles.resultInput}
-            value={cidade}
-            placeholder="Cidade"
-            onChangeText={setCidade}
-            editable={true}
-          />
-          <TextInput
-            style={styles.resultInput}
-            placeholder="Numero"
-            editable={true}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <TextInput
-            style={styles.resultInput2}
-            placeholder="Complemento"
-            editable={true}
-          />
-        </View>
-      </View>
-
-      {/* Pagar na entrega */}
-      <View>
-        <Text
-          style={{
-            fontSize: 25,
-            fontFamily: "League",
-            paddingHorizontal: 40,
-          }}
-        >
-          Pagar na entrega:
-        </Text>
-        <View
-          style={{
-            justifyContent: "space-around",
-            flexDirection: "column",
-            height: "50%",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-  onPress={() => setModalVisible(true)}
-  style={[
-    styles.pagamentoButton,
-    pagamentoSelecionado === "dinheiro" && styles.pagamentoSelecionado, // Altera a cor se selecionado
-  ]}
->
-  <Text style={styles.pagamentoText}>DINHEIRO</Text>
-</TouchableOpacity>
-
-<TouchableOpacity
-  onPress={() => setPagamentoSelecionado("credito")}
-  style={[
-    styles.pagamentoButton,
-    pagamentoSelecionado === "credito" && styles.pagamentoSelecionado, // Altera a cor se selecionado
-  ]}
->
-  <Text style={styles.pagamentoText}>CARTÃO DE CRÉDITO</Text>
-</TouchableOpacity>
-
-<TouchableOpacity
-  onPress={() => setPagamentoSelecionado("debito")}
-  style={[
-    styles.pagamentoButton,
-    pagamentoSelecionado === "debito" && styles.pagamentoSelecionado, // Altera a cor se selecionado
-  ]}
->
-  <Text style={styles.pagamentoText}>CARTÃO DE DÉBITO</Text>
-</TouchableOpacity>
-
-        </View>
-      </View>
+      </ScrollView>
 
       {/* Modal de pagamento */}
       <Modal
@@ -297,14 +358,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5", // Cor padrão do botão
     alignItems: "center",
     borderRadius: 30,
-    width: "70%",
+    width: "60%",
+    height: "30%",
   },
   pagamentoSelecionado: {
     backgroundColor: "#ed8e8e", // Cor quando selecionado
   },
   pagamentoText: {
     fontSize: 20,
-    fontFamily: "League",
   },
   modalContainer: {
     flex: 1,
