@@ -1,9 +1,148 @@
-import { View, Text } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  Image,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
-export default function LogCat(){
-    return(
-        <View>
-            <Text>Pagina de Login e Cadastro</Text>
+import AntDesign from "@expo/vector-icons/AntDesign";
+
+export default function LogCad() {
+  const navigation = useNavigation();
+
+  const [font] = useFonts({
+    League: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
+  });
+  if (!font) {
+    return null;
+  }
+
+  return (
+    <ImageBackground
+      resizeMode="cover"
+      source={require("../assets/image/imgLogCad.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/image/4.png")}
+          />
+          <Text style={styles.title}>Doce Encanto</Text>
         </View>
-    );
+
+        <Text style={{ fontSize: 30, top: 30 }}>
+          Faça login ou cadastre-se para descobrir suas delícias favoritas
+        </Text>
+
+        <View
+          style={{
+            backgroundColor: "#ed8e8e",
+            width: "70%",
+            height: 2,
+            top: 20,
+          }}
+        ></View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.buttonCD}
+            onPress={() => navigation.navigate("Cadastro")}
+          >
+            <Text style={styles.buttonTextCD}>Cadastre-se</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonLG}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.buttonTextLG}>Login</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.skipContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ProdutosDrawer")}
+          >
+            <Text style={styles.buttonTextPD}>Entrar sem login</Text>
+          </TouchableOpacity>
+          <AntDesign name="arrowright" size={12} color="#ed8e8e" />
+        </View>
+      </View>
+    </ImageBackground>
+  );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    width: "100%",
+    height: "100%",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  imageContainer: {
+    width: "100%", // largura ajustada para centralizar melhor
+    height: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: "100%", // largura ajustada para centralizar melhor
+    height: "100%", // altura definida
+    resizeMode: "contain",
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "League",
+    textAlign: "center",
+    bottom: 110,
+  },
+  buttonContainer: {
+    width: "100%",
+    alignItems: "center",
+    paddingBottom: 30,
+  },
+  buttonCD: {
+    backgroundColor: "#ed8e8e",
+    paddingVertical: 10,
+    borderRadius: 50,
+    marginVertical: 10,
+    width: "50%",
+    height: 50,
+    bottom: 10,
+  },
+  buttonTextCD: {
+    color: "#fff",
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  buttonTextLG: {
+    color: "#ed8e8e",
+    fontSize: 30,
+    bottom: 20,
+  },
+
+  buttonTextPD: {
+    color: "#ed8e8e",
+  },
+  skipContainer: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});

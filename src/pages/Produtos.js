@@ -85,7 +85,6 @@ export default function Produtos() {
               currentSelected == index ? COLOURS.white : COLOURS.rosa,
             borderRadius: 20,
             margin: 10,
-            top: 9,
             elevation: 5, // Elevação para Android
             shadowColor: "#000", // Sombra para iOS
             shadowOffset: { width: 0, height: 1 },
@@ -210,32 +209,57 @@ export default function Produtos() {
           },
         ]}
       >
-        <View style={stylesProdutos.ViewTxtNome}>
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            top: 20,
+          }}
+        >
           <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
+          <Image
+            style={{ height: 90, width: 90, top: 20 }} // Ajuste conforme necessário
+            source={require("../assets/image/4.png")}
+          />
+        </View>
+
+        <View style={stylesProdutos.ViewTxtNome}>
           <View
             style={{
+              top: 30,
               paddingHorizontal: 20,
               paddingVertical: 10,
               flexDirection: "row",
               alignItems: "center",
             }}
           >
-            <Ionicons
-              name="search"
-              style={{ fontSize: 20, color: COLOURS.black, opacity: 0.8 }}
-            />
+            <View
+              style={{
+                backgroundColor: "#ed8e8e",
+                borderRadius: 9,
+                height: 25,
+                width: 25,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name="search"
+                style={{ fontSize: 20, color: COLOURS.black, opacity: 0.8 }}
+              />
+            </View>
             <TextInput
-              placeholder="Search..."
+              placeholder="Buscar produtos..."
               value={searchQuery}
               onChangeText={handleSearch}
               style={{
                 color: COLOURS.black,
-                fontFamily: "Rokkitt", // Fonte personalizada
-                fontSize: 20, // Tamanho da fonte
+                fontSize: 18, // Tamanho da fonte
                 paddingVertical: 5,
                 borderBottomWidth: 1,
                 borderBottomColor: COLOURS.black + 20,
-                width: "90%",
+                width: "80%",
                 marginLeft: 10,
                 letterSpacing: 1,
               }}
@@ -253,9 +277,9 @@ export default function Produtos() {
 
           <Text
             style={{
-              paddingTop: 10,
+              paddingTop: 30,
               paddingHorizontal: 20,
-              fontSize: 20,
+              fontSize: 25,
               fontWeight: "700",
               color: COLOURS.black,
               fontFamily: "Rokkitt", // Fonte personalizada

@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 export const stylesProdutos = StyleSheet.create({
+  logo: {
+    width: "10%",
+    height: "10%",
+  },
   icon: {
     alignItems: "flex-start", // Alinha o ícone no início horizontalmente
     justifyContent: "center", // Centraliza verticalmente
@@ -31,7 +35,7 @@ export const stylesProdutos = StyleSheet.create({
     paddingHorizontal: 20, // Adiciona espaço horizontal
   },
   ViewTxtNome: {
-    marginTop: 70, // Adiciona uma margem superior
+    
   },
 
   txtNome: {
@@ -40,14 +44,15 @@ export const stylesProdutos = StyleSheet.create({
     fontFamily: "Rokkitt", // Fonte personalizada
   },
   categorias: {
-    paddingHorizontal: 20, // Espaço horizontal
-    paddingVertical: 25, // Espaço vertical
+    top: 30,
+    padding:20, // Espaço vertical
   },
 
   txtcategorias: {
-    fontSize: 20, // Tamanho do texto
+    fontSize: 25, // Tamanho do texto
     fontWeight: "500", // Deixa a fonte mais grossa
     fontFamily: "Rokkitt", // Fonte personalizada
+    bottom: 15,
   },
   Viewprodutos: {
     alignItems: "center", // Centraliza horizontalmente

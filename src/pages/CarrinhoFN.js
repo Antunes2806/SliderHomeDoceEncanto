@@ -257,7 +257,7 @@ export default function CarrinhoFN() {
             >
               <QRCode
                 value={qrValue ? qrVlue : "Pagamento efetuado"}
-                size={250}
+                size={150}
                 color="black"
                 backgroundColor="white"
                 logoSize={30}
@@ -354,18 +354,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   pagamentoButton: {
-    padding: 20,
+    justifyContent:"center",
     backgroundColor: "#f5f5f5", // Cor padrão do botão
     alignItems: "center",
     borderRadius: 30,
     width: "60%",
-    height: "30%",
+    height: "20%",
   },
   pagamentoSelecionado: {
     backgroundColor: "#ed8e8e", // Cor quando selecionado
   },
   pagamentoText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   modalContainer: {
     flex: 1,
