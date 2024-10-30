@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
-  Button,
   Text,
   Alert,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
+  Image,
 } from "react-native";
 import {
   getAuth,
@@ -17,7 +18,7 @@ import {
 } from "firebase/auth";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
-import Icon from "react-native-vector-icons/FontAwesome"; // Importar a biblioteca de ícones
+import Icon from "react-native-vector-icons/FontAwesome";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -70,72 +71,116 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bem-vindo(a) de volta!</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
-        />
-      </View>
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={styles.input} // Mantendo o mesmo estilo
-          placeholder="Senha"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon
-            name={showPassword ? "eye" : "eye-slash"}
-            size={20}
-            color="gray"
+    <ImageBackground
+      resizeMode="cover"
+      source={require("../assets/image/fundologcad.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <View style={styles.viewtitle}>
+          <Text style={styles.title}>Bem-vindo(a) de volta!</Text>
+          <Text style={styles.title2}>Faça login para continuar!</Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
+        </View>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Senha"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Icon
+              name={showPassword ? "eye" : "eye-slash"}
+              size={20}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.bttentrar}
+          onPress={handleEmailPasswordLogin}
+        >
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.bttgoogle}
+          onPress={() => promptAsync()}
+        >
+          <View style={styles.googleButtonContent}>
+            <Image
+              style={styles.Googlelogo}
+              source={require("../assets/image/googlelogo.png")}
+            />
+            <Text style={styles.buttonTextG}>Entrar com Google</Text>
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={styles.registerText}
+          onPress={() => navigation.navigate("Cadastro")}
+        >
+          Não tem uma conta? Cadastre-se
+        </Text>
       </View>
-      <Button title="Entrar" onPress={handleEmailPasswordLogin} />
-      <Button title="Entrar com Google" onPress={() => promptAsync()} />
-      <Text
-        style={styles.registerText}
-        onPress={() => navigation.navigate("Cadastro")}
-      >
-        Não tem uma conta? Cadastre-se
-      </Text>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
-    backgroundColor: "#fff",
+  },
+  viewtitle: {
+    alignItems: "center",
+    bottom: 50,
   },
   title: {
-    fontSize: 24,
+    fontSize: 33,
     fontWeight: "bold",
-    marginBottom: 16,
     textAlign: "center",
+  },
+  title2: {
+    fontSize: 20,
+    color: "gray",
   },
   inputContainer: {
     marginBottom: 12,
-    width: '100%', // Definindo uma largura de 100% para o contêiner
+    width: "90%",
   },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
     padding: 10,
     borderRadius: 8,
-    width: '100%', // Definindo uma largura de 100% para o campo de entrada
+    width: "100%",
   },
   registerText: {
-    color: "blue",
+    color: "black",
     textAlign: "center",
     marginTop: 16,
   },
@@ -143,7 +188,59 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
-    width: '100%', // Definindo uma largura de 100% para o contêiner
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 10,
+  },
+  iconContainer: {
+    padding: 5,
+  },
+  bttentrar: {
+    backgroundColor: "#ed8e8e",
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    marginTop: 10,
+    alignItems: "center",
+    width: "50%",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  bttgoogle: {
+    borderColor: "#ed8e8e",
+    borderWidth: 2,
+    backgroundColor: "white",
+    borderRadius: 50,
+    paddingVertical: 12,
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "50%",
+    height: 50,
+  },
+  googleButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  Googlelogo: {
+    width: 40,
+    height: 40,
+    bottom: 5,
+  },
+  buttonTextG: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

@@ -1,4 +1,3 @@
-// Cadastro.js
 import React, { useState } from "react";
 import {
   View,
@@ -7,6 +6,8 @@ import {
   Alert,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
+  Image,
 } from "react-native";
 import {
   getAuth,
@@ -16,22 +17,26 @@ import {
 } from "firebase/auth";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
-import Icon from "react-native-vector-icons/FontAwesome"; // Importar a biblioteca de ícones
+import Icon from "react-native-vector-icons/FontAwesome";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const Cadastro = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nickname, setNickname] = useState(""); // Estado para o apelido
   const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
+  const db = getFirestore();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: "<SEU_CLIENT_ID>",
     scopes: ["profile", "email"],
   });
 
-  const handleEmailPasswordSignup = () => {
+  const handleSignUp = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
       Alert.alert("Erro", "Por favor, insira um email válido.");
       return;
@@ -42,15 +47,28 @@ const Cadastro = ({ navigation }) => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-        navigation.navigate("Login");
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar:", error.message);
-        Alert.alert("Erro", "Não foi possível cadastrar. Tente novamente.");
+    if (password !== confirmPassword) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        nickname: nickname,
       });
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+      navigation.navigate("ProdutosDrawer", { userId: user.uid });
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error.message);
+      Alert.alert("Erro", "Não foi possível cadastrar. Tente novamente.");
+    }
   };
 
   React.useEffect(() => {
@@ -59,9 +77,10 @@ const Cadastro = ({ navigation }) => {
       const credential = GoogleAuthProvider.credential(id_token);
 
       signInWithCredential(auth, credential)
-        .then(() => {
+        .then(async (userCredential) => {
+          const userId = userCredential.user.uid;
           Alert.alert("Sucesso", "Login com Google realizado com sucesso!");
-          navigation.navigate("ProdutosDrawer");
+          navigation.navigate("ProdutosDrawer", { userId }); // Passando userId
         })
         .catch((error) => {
           console.error("Erro ao fazer login com Google:", error.message);
@@ -71,93 +90,192 @@ const Cadastro = ({ navigation }) => {
   }, [response]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Crie sua conta</Text>
-      <TextInput
-        style={styles.inputEmail}
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={styles.inputSenha} // Novo estilo para senha
-          placeholder="Senha"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon
-            name={showPassword ? "eye" : "eye-slash"}
-            size={20}
-            color="gray"
+    <ImageBackground
+      resizeMode="cover"
+      source={require("../assets/image/fundologcad.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <View style={styles.viewtitle}>
+          <Text style={styles.title}> Vamos criar sua conta!</Text>
+          <Text style={styles.title2}>Apenas alguns passos para começar</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Apelido"
+            value={nickname}
+            onChangeText={setNickname} // Atualizando o apelido
           />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Senha"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Icon
+              name={showPassword ? "eye" : "eye-slash"}
+              size={20}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Confirme sua Senha"
+            secureTextEntry={!showPassword}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.bttCadastrar} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.bttGoogle}
+          onPress={() => promptAsync()}
+        >
+          <View style={styles.googleButtonContent}>
+            <Image
+              style={styles.Googlelogo}
+              source={require("../assets/image/googlelogo.png")}
+            />
+            <Text style={styles.buttonTextG}>Entrar com Google</Text>
+          </View>
+        </TouchableOpacity>
+
+        <Text
+          style={styles.loginText}
+          onPress={() => navigation.navigate("Login")}
+        >
+          Já tem uma conta? Entre
+        </Text>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleEmailPasswordSignup}
-      >
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
-        <Text style={styles.buttonText}>Entrar com Google</Text>
-      </TouchableOpacity>
-      <Text
-        style={styles.loginText}
-        onPress={() => navigation.navigate("Login")}
-      >
-        Já tem uma conta? Entre
-      </Text>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
-    backgroundColor: "#fff",
+  },
+  viewtitle: {
+    alignItems: "center",
+    bottom: 50,
   },
   title: {
-    fontSize: 24,
+    fontSize: 33,
     fontWeight: "bold",
-    marginBottom: 16,
     textAlign: "center",
   },
-  inputEmail: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 12,
-    borderRadius: 8,
+  title2: {
+    fontSize: 15,
+    color: "gray",
   },
-  inputSenha: {
+  inputContainer: {
+    marginBottom: 12,
+    width: "90%",
+  },
+  input: {
     borderWidth: 1,
     borderColor: "#ccc",
     padding: 10,
-    marginBottom: 12,
     borderRadius: 8,
-    flex: 1,
+    width: "100%",
+  },
+  loginText: {
+    color: "black",
+    textAlign: "center",
+    marginTop: 16,
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    padding: 15,
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
     borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 10,
+    paddingHorizontal: 10,
   },
-  buttonText: { color: "#fff", fontSize: 16 },
-  loginText: { color: "blue", textAlign: "center", marginTop: 16 },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 10,
+  },
+  iconContainer: {
+    padding: 5,
+  },
+  bttCadastrar: {
+    backgroundColor: "#ed8e8e",
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    marginTop: 10,
+    alignItems: "center",
+    width: "50%",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  bttGoogle: {
+    borderColor: "#ed8e8e",
+    borderWidth: 2,
+    backgroundColor: "white",
+    borderRadius: 50,
+    paddingVertical: 12,
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "50%",
+    height: 50,
+  },
+  googleButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  Googlelogo: {
+    width: 40,
+    height: 40,
+    bottom: 5,
+  },
+  buttonTextG: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default Cadastro;

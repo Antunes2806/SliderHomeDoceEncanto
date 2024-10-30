@@ -24,6 +24,7 @@ import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import Sobre from "../pages/Sobre";
 import Favoritos from "../pages/Favoritos";
+import DonutsChocolate from "../Produtos/DonutsChocolate";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -95,9 +96,21 @@ const ProdutosDrawer = () => (
       component={Produtos}
       options={{ headerShown: false }}
     />
-    <Drawer.Screen name="Sobre" component={Sobre} />
-    <Drawer.Screen name="Favoritos" component={Favoritos} />
-    <Drawer.Screen name="Carrinho" component={CarrinhoScreen} />
+    <Drawer.Screen
+      name="Sobre"
+      component={Sobre}
+      options={{ headerShown: false }}
+    />
+    <Drawer.Screen
+      name="Favoritos"
+      component={Favoritos}
+      options={{ headerShown: false }}
+    />
+    <Drawer.Screen
+      name="Carrinho"
+      component={CarrinhoScreen}
+      options={{ headerShown: false }}
+    />
   </Drawer.Navigator>
 );
 
@@ -133,6 +146,12 @@ const AppNavigator = () => (
     <Stack.Screen
       name="DonutsMorango"
       component={DonutsMorango}
+      options={{ headerShown: false }}
+    />
+
+    <Stack.Screen
+      name="DonutsChocolate"
+      component={DonutsChocolate}
       options={{ headerShown: false }}
     />
     <Stack.Screen

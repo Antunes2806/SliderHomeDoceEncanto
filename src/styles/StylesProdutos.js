@@ -41,17 +41,17 @@ export const stylesProdutos = StyleSheet.create({
   txtNome: {
     fontSize: 35, // Tamanho do texto
     paddingHorizontal: 25, // Adiciona espaço horizontal
-    fontFamily: "Rokkitt", // Fonte personalizada
+    fontFamily: "League",// Fonte personalizada
   },
   categorias: {
     top: 30,
-    padding:20, // Espaço vertical
+    padding:30, // Espaço vertical
   },
 
   txtcategorias: {
     fontSize: 25, // Tamanho do texto
     fontWeight: "500", // Deixa a fonte mais grossa
-    fontFamily: "Rokkitt", // Fonte personalizada
+    fontFamily: "League", // Fonte personalizada
     bottom: 15,
   },
   Viewprodutos: {

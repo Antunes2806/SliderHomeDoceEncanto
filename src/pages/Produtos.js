@@ -16,64 +16,59 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Categorias, COLOURS } from "../database/items";
 import { useNavigation } from "@react-navigation/native";
 import { stylesProdutos } from "../styles/StylesProdutos";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
-
 import { useFonts } from "expo-font";
 
-export default function Produtos() {
-  const [searchQuery, setSearchQuery] = useState(""); // Estado para a pesquisa
-  const [filteredItems, setFilteredItems] = useState([]); // Estado para os itens filtrados
-  const [currentSelected, setcurrentSelected] = useState(0); // Estado para a categoria selecionada
+export default function Produtos({ user, nickname }) {
+  // Utilizando 'nickname' ao invés de 'apelido'
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [currentSelected, setCurrentSelected] = useState(0);
   const widthAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
 
   useEffect(() => {
     const { width } = Dimensions.get("window");
 
-    // Animação da largura
     Animated.timing(widthAnim, {
       toValue: width,
       duration: 1500,
       easing: Easing.out(Easing.ease),
-      useNativeDriver: false, // Não use o driver nativo para estilos não suportados
+      useNativeDriver: false,
     }).start();
   }, [widthAnim]);
 
-  const [font] = useFonts({
+  const [fontLoaded] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
     League: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
   });
 
-  if (!font) {
+  if (!fontLoaded) {
     return null;
   }
 
-  // Função para lidar com a pesquisa
   const handleSearch = (text) => {
     setSearchQuery(text);
 
     if (text === "") {
-      setFilteredItems([]); // Limpa a pesquisa e exibe os itens normais
+      setFilteredItems([]);
     } else {
-      // Filtra os itens em todas as categorias
       const filtered = Categorias.reduce((acc, categoria) => {
         const matchedItems = categoria.items.filter((item) =>
           item.name.toLowerCase().includes(text.toLowerCase())
         );
-        return [...acc, ...matchedItems]; // Adiciona os itens filtrados
+        return [...acc, ...matchedItems];
       }, []);
 
-      setFilteredItems(filtered); // Atualiza os itens filtrados
+      setFilteredItems(filtered);
     }
   };
 
-  // Renderiza as categorias
   const renderCategorias = ({ item, index }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={() => setcurrentSelected(index)}
+        onPress={() => setCurrentSelected(index)}
       >
         <View
           style={{
@@ -85,8 +80,8 @@ export default function Produtos() {
               currentSelected == index ? COLOURS.white : COLOURS.rosa,
             borderRadius: 20,
             margin: 10,
-            elevation: 5, // Elevação para Android
-            shadowColor: "#000", // Sombra para iOS
+            elevation: 5,
+            shadowColor: "#000",
             shadowOffset: { width: 0, height: 1 },
             shadowOpacity: 0.25,
             shadowRadius: 3.85,
@@ -105,7 +100,6 @@ export default function Produtos() {
     );
   };
 
-  // Renderiza os itens (todos ou filtrados)
   const renderItem = (data, index) => {
     return (
       <TouchableOpacity
@@ -124,14 +118,14 @@ export default function Produtos() {
           style={[
             stylesProdutos.donuts,
             {
-              elevation: 5, // Elevação para Android
-              shadowColor: "#000", // Sombra para iOS
+              elevation: 5,
+              shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
-              flexDirection: "row", // Exibe imagem e texto lado a lado
-              justifyContent: "center", // Centraliza os itens horizontalmente
-              alignItems: "center", // Centraliza verticalmente
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
             },
           ]}
         >
@@ -157,24 +151,23 @@ export default function Produtos() {
           <View
             style={{
               width: 250,
-              alignItems: "flex-start", // Alinha o texto à esquerda
-              justifyContent: "space-between", // Distribui o texto e o botão
+              alignItems: "flex-start",
+              justifyContent: "space-between",
             }}
           >
             <View
               style={{
                 marginBottom: 50,
-                alignSelf: "flex-end", // Move o texto para a direita
-                marginRight: 110, // Distância da borda direita
+                alignSelf: "flex-end",
+                marginRight: 110,
               }}
             >
               <Text
                 style={{
-                  fontSize: 25, // Tamanho do texto ajustado
-                  fontWeight: "bold", // Deixa o texto mais destacado
-                  color: "#FFFFFF", // Cor da fonte
-                  textAlign: "center", // Centraliza o texto
-                  fontFamily: "Rokkitt", // Fonte personalizada
+                  fontSize: 25,
+                  color: "#FFFFFF",
+                  textAlign: "center",
+                  fontFamily: "League",
                 }}
               >
                 {data.name}
@@ -183,9 +176,9 @@ export default function Produtos() {
 
             <TouchableOpacity
               style={{
-                alignSelf: "flex-end", // Move o botão para o canto direito
-                marginBottom: 10, // Posição na parte inferior
-                marginRight: 120, // Distância da borda direita
+                alignSelf: "flex-end",
+                marginBottom: 10,
+                marginRight: 120,
                 marginTop: 60,
               }}
               onPress={() => navigation.navigate(data.routeName)}
@@ -217,9 +210,9 @@ export default function Produtos() {
             top: 20,
           }}
         >
-          <Text style={stylesProdutos.txtNome}>Olá, Fulano</Text>
+          <Text style={stylesProdutos.txtNome}>Olá, {nickname}</Text>
           <Image
-            style={{ height: 90, width: 90, top: 20 }} // Ajuste conforme necessário
+            style={{ height: 90, width: 90, top: 20 }}
             source={require("../assets/image/4.png")}
           />
         </View>
@@ -255,7 +248,7 @@ export default function Produtos() {
               onChangeText={handleSearch}
               style={{
                 color: COLOURS.black,
-                fontSize: 18, // Tamanho da fonte
+                fontSize: 18,
                 paddingVertical: 5,
                 borderBottomWidth: 1,
                 borderBottomColor: COLOURS.black + 20,
@@ -265,6 +258,7 @@ export default function Produtos() {
               }}
             />
           </View>
+
           <View style={stylesProdutos.categorias}>
             <Text style={stylesProdutos.txtcategorias}>Categorias</Text>
             <FlatList
@@ -281,8 +275,7 @@ export default function Produtos() {
               paddingHorizontal: 20,
               fontSize: 25,
               fontWeight: "700",
-              color: COLOURS.black,
-              fontFamily: "Rokkitt", // Fonte personalizada
+              fontFamily: "League",
             }}
           >
             Produtos

@@ -234,6 +234,18 @@ export default function CarrinhoFN() {
             >
               Pagar agora:
             </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setPagamentoSelecionado("dinheiro"); // Define o método de pagamento como "dinheiro"
+                setModalVisible(true); // Abre o modal
+              }}
+              style={{ justifyContent:"center",
+              alignItems:"center",
+                backgroundColor:"red",
+              }}
+            >
+              <Text style={{fontFamily:"league"}}>pix</Text>
+            </TouchableOpacity>
             <View
             style={{
               justifyContent: "center",
@@ -301,6 +313,7 @@ export default function CarrinhoFN() {
           </View>
         </View>
       </Modal>
+      
     </View>
   );
 }
