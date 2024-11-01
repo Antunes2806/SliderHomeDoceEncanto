@@ -10,29 +10,18 @@ import Slides from "../../Slides";
 import OnboardingItem from "./OnboardingItem";
 import Paginator from "./Paginator";
 import ButtonComponent from "./ButtonComponent";
-import LogCad from "../pages/LogCad"; // Tela de LogCad
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Provider } from "react-redux";
 import store from "../../store";
-import Produtos from "../pages/Produtos";
-import DonutsMorango from "../Produtos/DonutsMorango";
-import CarrinhoFN from "../pages/CarrinhoFN";
-import CarrinhoScreen from "../pages/Carrinho";
-import Login from "../pages/Login";
-import Cadastro from "../pages/Cadastro";
-import Sobre from "../pages/Sobre";
-import Favoritos from "../pages/Favoritos";
-import DonutsChocolate from "../Produtos/DonutsChocolate";
+import RoutesStack from "../routes/RoutesStack";
+import { useNavigation } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-
-const Onboarding = ({ navigation }) => {
+export function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
+  const navigation = useNavigation();
 
   const viewableItemChanged = useRef(({ viewableItems }) => {
     setCurrentIndex(viewableItems[0].index);
@@ -52,7 +41,6 @@ const Onboarding = ({ navigation }) => {
     if (currentIndex < Slides.length - 1) {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      // Navegar para LogCad quando o último slide for alcançado
       navigation.navigate("LogCad");
     }
   };
@@ -86,94 +74,17 @@ const Onboarding = ({ navigation }) => {
       </View>
     </View>
   );
-};
+}
 
-// Configuração do Drawer Navigator
-const ProdutosDrawer = () => (
-  <Drawer.Navigator initialRouteName="Produtos">
-    <Drawer.Screen
-      name="Produtos"
-      component={Produtos}
-      options={{ headerShown: false }}
-    />
-    <Drawer.Screen
-      name="Sobre"
-      component={Sobre}
-      options={{ headerShown: false }}
-    />
-    <Drawer.Screen
-      name="Favoritos"
-      component={Favoritos}
-      options={{ headerShown: false }}
-    />
-    <Drawer.Screen
-      name="Carrinho"
-      component={CarrinhoScreen}
-      options={{ headerShown: false }}
-    />
-  </Drawer.Navigator>
-);
-
-// Configuração do Stack Navigator principal
-const AppNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Onboarding"
-      component={Onboarding}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="LogCad"
-      component={LogCad}
-      options={{ headerShown: false }}
-    />
-    {/* Adiciona o drawer como uma tela do stack */}
-    <Stack.Screen
-      name="ProdutosDrawer"
-      component={ProdutosDrawer}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="Cadastro"
-      component={Cadastro}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="DonutsMorango"
-      component={DonutsMorango}
-      options={{ headerShown: false }}
-    />
-
-    <Stack.Screen
-      name="DonutsChocolate"
-      component={DonutsChocolate}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="Carrinho"
-      component={CarrinhoScreen}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="CarrinhoFN"
-      component={CarrinhoFN}
-      options={{ headerShown: false }}
-    />
-  </Stack.Navigator>
-);
-
-export default function MainApp() {
+export function MainApp() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <RoutesStack />
+        </NavigationContainer>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
 

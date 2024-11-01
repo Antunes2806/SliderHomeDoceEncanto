@@ -110,7 +110,7 @@ export default function RoutesDrawer() {
       }}
       initialRouteName="Home"
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Home" component={Produtos} />
       <Drawer.Screen name="Sobre" component={SobreScreen} />
       <Drawer.Screen name="Favoritos" component={FavoritosScreen} />
       <Drawer.Screen name="Carrinho" component={CarrinhoScreen} />

@@ -59,12 +59,18 @@ const Cadastro = ({ navigation }) => {
         password
       );
       const user = userCredential.user;
+
+      // Armazenando apenas email e nickname no Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         nickname: nickname,
       });
-      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-      navigation.navigate("ProdutosDrawer", { userId: user.uid });
+
+      Alert.alert("Sucesso AMIGO!", "XXXX Cadastro realizado com sucesso!");
+      navigation.navigate("ProdutosDrawer", {
+        userId: user.uid,
+        nickname: nickname,
+      });
     } catch (error) {
       console.error("Erro ao cadastrar:", error.message);
       Alert.alert("Erro", "Não foi possível cadastrar. Tente novamente.");

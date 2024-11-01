@@ -18,8 +18,9 @@ import { useNavigation } from "@react-navigation/native";
 import { stylesProdutos } from "../styles/StylesProdutos";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
+import { DrawerActions } from "@react-navigation/native";
 
-export default function Produtos({ user, nickname }) {
+export default function Produtos() {
   // Utilizando 'nickname' ao invés de 'apelido'
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
@@ -73,7 +74,7 @@ export default function Produtos({ user, nickname }) {
         <View
           style={{
             width: 80,
-            height: 80,
+            height: 100,
             justifyContent: "space-evenly",
             alignItems: "center",
             backgroundColor:
@@ -91,7 +92,7 @@ export default function Produtos({ user, nickname }) {
             source={item.image}
             style={{
               width: "100%",
-              height: "100%",
+              height: "90%",
               resizeMode: "contain",
             }}
           />
@@ -204,27 +205,33 @@ export default function Produtos({ user, nickname }) {
       >
         <View
           style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            alignItems: "flex-end",
-            top: 20,
+            flexDirection: "column",
+            paddingTop: 40,
+            paddingLeft: 10,
           }}
         >
-          <Text style={stylesProdutos.txtNome}>Olá, {nickname}</Text>
-          <Image
-            style={{ height: 90, width: 90, top: 20 }}
-            source={require("../assets/image/4.png")}
-          />
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          >
+            <Ionicons name="menu" size={30} color="black" />
+          </TouchableOpacity>
+          <View style={stylesProdutos.Viewnomelogo}>
+            <Text>Olá</Text>
+            <Image
+              style={{ height: 90, width: 90 }}
+              source={require("../assets/image/4.png")}
+            />
+          </View>
         </View>
 
         <View style={stylesProdutos.ViewTxtNome}>
           <View
             style={{
-              top: 30,
               paddingHorizontal: 20,
               paddingVertical: 10,
               flexDirection: "row",
               alignItems: "center",
+              bottom: 30,
             }}
           >
             <View
@@ -260,7 +267,10 @@ export default function Produtos({ user, nickname }) {
           </View>
 
           <View style={stylesProdutos.categorias}>
-            <Text style={stylesProdutos.txtcategorias}>Categorias</Text>
+            <View style={stylesProdutos.namecategorias}>
+              <Text style={stylesProdutos.txtcategorias}>Categorias</Text>
+            </View>
+
             <FlatList
               horizontal={true}
               data={Categorias}

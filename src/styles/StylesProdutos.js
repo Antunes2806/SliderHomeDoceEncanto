@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 export const stylesProdutos = StyleSheet.create({
   logo: {
-    width: "10%",
-    height: "10%",
+    width: "10%", // Define a largura
+    height: "10%", // Define a altura
   },
   icon: {
     alignItems: "flex-start", // Alinha o ícone no início horizontalmente
@@ -34,18 +34,16 @@ export const stylesProdutos = StyleSheet.create({
   containerpesquisa: {
     paddingHorizontal: 20, // Adiciona espaço horizontal
   },
-  ViewTxtNome: {
-    
-  },
+  ViewTxtNome: {},
 
   txtNome: {
     fontSize: 35, // Tamanho do texto
     paddingHorizontal: 25, // Adiciona espaço horizontal
-    fontFamily: "League",// Fonte personalizada
+    fontFamily: "League", // Fonte personalizada
   },
-  categorias: {
-    top: 30,
-    padding:30, // Espaço vertical
+ 
+  namecategorias:{
+    paddingLeft: 30,
   },
 
   txtcategorias: {
@@ -99,5 +97,13 @@ export const stylesProdutos = StyleSheet.create({
     width: 80, // Define a largura do carrinho
     backgroundColor: "green", // Cor de fundo
     borderRadius: 20, // Deixa a borda arredondada
+  },
+
+  Viewnomelogo: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    bottom: 15,
   },
 });

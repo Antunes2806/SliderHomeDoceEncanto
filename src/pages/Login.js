@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -19,6 +18,8 @@ import {
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Importando Firestore
+
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -27,6 +28,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
+  const db = getFirestore(); // Inicializando Firestore
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: "<SEU_CLIENT_ID>",
@@ -50,24 +52,40 @@ const Login = ({ navigation }) => {
     }
   }, [response]);
 
-  const handleEmailPasswordLogin = () => {
+  const handleEmailPasswordLogin = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
       Alert.alert("Erro", "Por favor, insira um email válido.");
       return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        Alert.alert("Sucesso", "Login realizado com sucesso!");
-        navigation.navigate("ProdutosDrawer");
-      })
-      .catch((error) => {
-        console.error("Erro ao fazer login:", error.message);
-        Alert.alert(
-          "Erro",
-          "Não foi possível fazer login. Verifique suas credenciais."
-        );
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Buscar o nickname do usuário no Firestore
+      const userDoc = doc(db, "users", user.uid); // Caminho onde os dados do usuário estão
+      const snapshot = await getDoc(userDoc);
+
+      if (snapshot.exists()) {
+        const nickname = snapshot.data().nickname || "novo usuário";
+        Alert.alert("Sucesso", `Olá, ${nickname}!`);
+
+        // Passando o nickname para a página de produtos
+        navigation.navigate("ProdutosDrawer", { nickname });
+      } else {
+        Alert.alert("Erro", "Usuário não encontrado.");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error.message);
+      Alert.alert(
+        "Erro",
+        "Não foi possível fazer login. Verifique suas credenciais."
+      );
+    }
   };
 
   return (

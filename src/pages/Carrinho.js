@@ -19,7 +19,8 @@ import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
 import { useState } from "react";
-import { Swipeable } from "react-native-gesture-handler"; // Importação
+import { Swipeable } from "react-native-gesture-handler"; 
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const CarrinhoScreen = () => {
   const navigation = useNavigation();
@@ -61,17 +62,17 @@ const CarrinhoScreen = () => {
     return (
       <TouchableOpacity
         style={{
-          backgroundColor: "red",
+          backgroundColor: "#ed8e8e",
           justifyContent: "center",
           alignItems: "center",
-          width: 100,
-          height:100,
+          width: 90,
+          height:90,
           borderRadius: 8,
-          top:55,
+          top:65,
         }}
         onPress={() => dispatch(removeFromCart(item))} // Remove o item ao arrastar
       >
-        <Text style={{ color: "white", fontWeight: "bold" }}>Excluir</Text>
+        <FontAwesome5 name="trash-alt" size={40} color="white" />
       </TouchableOpacity>
     );
   };

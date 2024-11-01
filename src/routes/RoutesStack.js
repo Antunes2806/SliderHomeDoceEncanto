@@ -2,9 +2,9 @@ import React from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Details from "../Components/Details";
-import Produtos from "../pages/Produtos";
 import DonutsMorango from "../Produtos/DonutsMorango";
 import DonutsChocolate from "../Produtos/DonutsChocolate";
+import Produtos from "../pages/Produtos";
 import DonutsPacoca from "../Produtos/DonutsPacoca";
 import SorveteCookies from "../Produtos/SorveteCookies";
 import SorveteMorango from "../Produtos/SorveteMorango";
@@ -19,8 +19,6 @@ import CookiesTrad from "../Produtos/CookiesTrad";
 import CookiesBranco from "../Produtos/CookiesBranco";
 import CookiesChoc from "../Produtos/CookiesChoc";
 import Cookiesduo from "../Produtos/Cookiesduo";
-import Carrinho from "../pages/Carrinho";
-import Favoritos from "../pages/Favoritos";
 import BrigNN from "../Produtos/BrigNN";
 import Brigtrad from "../Produtos/BrigTrad";
 import Briguva from "../Produtos/Briguva";
@@ -28,6 +26,10 @@ import Brigchurros from "../Produtos/Brigchurros";
 import CarrinhoFN from "../pages/CarrinhoFN";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
+import LogCad from "../pages/LogCad";
+import RoutesDrawer from "./Index";
+import CarrinhoScreen from "../pages/Carrinho";
+import { Onboarding } from "../Components/Onboarding";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,29 +37,30 @@ export default function RoutesStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Produtos"
-        component={Produtos}
+        name="Onboarding"
+        component={Onboarding}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
-        name="Details"
-        component={Details}
+        name="LogCad"
+        component={LogCad}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
-        name="Favoritos"
-        component={Favoritos}
+        name="ProdutosDrawer"
+        component={RoutesDrawer}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
-        name="Carrinho"
-        component={Carrinho}
+        name="Login"
+        component={Login}
         options={{ headerShown: false }}
       />
-
+      <Stack.Screen
+        name="Cadastro"
+        component={Cadastro}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="DonutsMorango"
         component={DonutsMorango}
@@ -69,16 +72,32 @@ export default function RoutesStack() {
         component={DonutsChocolate}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
-        name="DonutsPacoca"
-        component={DonutsPacoca}
+        name="Carrinho"
+        component={CarrinhoScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CarrinhoFN"
+        component={CarrinhoFN}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="DonutsCookies"
-        component={DonutsCookies}
+        name="Details"
+        component={Details}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Produtos"
+        component={Produtos}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="DonutsPacoca"
+        component={DonutsPacoca}
         options={{ headerShown: false }}
       />
 
@@ -101,8 +120,8 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
-        name="SorveteFlocos"
-        component={SorveteFlocos}
+        name="CupcakeDocedeLeite"
+        component={CupcakeDocedeLeite}
         options={{ headerShown: false }}
       />
 
@@ -117,13 +136,6 @@ export default function RoutesStack() {
         component={CupcakeChocolate}
         options={{ headerShown: false }}
       />
-
-      <Stack.Screen
-        name="CupcakeDocedeLeite"
-        component={CupcakeDocedeLeite}
-        options={{ headerShown: false }}
-      />
-
       <Stack.Screen
         name="CupcakeFV"
         component={CupcakeFV}
@@ -131,26 +143,14 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
-        name="Briguva"
-        component={Briguva}
+        name="SorveteFlocos"
+        component={SorveteFlocos}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="BrigNN"
-        component={BrigNN}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="Brigtrad"
-        component={Brigtrad}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="Brigchurros"
-        component={Brigchurros}
+        name="DonutsCookies"
+        component={DonutsCookies}
         options={{ headerShown: false }}
       />
 
@@ -179,20 +179,25 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
-        name="CarrinhoFN"
-        component={CarrinhoFN}
+        name="BrigNN"
+        component={BrigNN}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Brigtrad"
+        component={Brigtrad}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="Login"
-        component={Login}
+        name="Briguva "
+        component={Briguva}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        name="Cadastro"
-        component={Cadastro}
+        name="Brigchurros"
+        component={Brigchurros}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

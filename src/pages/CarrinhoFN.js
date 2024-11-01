@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import QRCode from "react-native-qrcode-svg";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function CarrinhoFN() {
   const [inputText, setInputText] = useState("");
@@ -23,6 +25,7 @@ export default function CarrinhoFN() {
   const [error, setError] = useState("");
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [pixModalVisible, setPixModalVisible] = useState(false); 
   const [valorPago, setValorPago] = useState("");
 
   const [pagamentoSelecionado, setPagamentoSelecionado] = useState(null); // Estado para controlar o método de pagamento
@@ -182,7 +185,7 @@ export default function CarrinhoFN() {
             style={{
               justifyContent: "space-around",
               flexDirection: "column",
-              height: "30%",
+              height: "45%",
               alignItems: "center",
               bottom: 20,
             }}
@@ -198,9 +201,14 @@ export default function CarrinhoFN() {
                   styles.pagamentoSelecionado, // Altera a cor se selecionado
               ]}
             >
-              <Text style={styles.pagamentoText}>DINHEIRO</Text>
-            </TouchableOpacity>
+              <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+              <FontAwesome name="money" size={20} color="black"  style={{ marginRight: 10 }} />
+  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>DINHEIRO</Text>
+</View>
 
+              
+            </TouchableOpacity>
+           
             <TouchableOpacity
               onPress={() => setPagamentoSelecionado("credito")}
               style={[
@@ -209,9 +217,13 @@ export default function CarrinhoFN() {
                   styles.pagamentoSelecionado, // Altera a cor se selecionado
               ]}
             >
-              <Text style={styles.pagamentoText}>CARTÃO DE CRÉDITO</Text>
-            </TouchableOpacity>
+              <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+  <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
+  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE CRÉDITO</Text>
+</View>
 
+            </TouchableOpacity>
+            
             <TouchableOpacity
               onPress={() => setPagamentoSelecionado("debito")}
               style={[
@@ -220,7 +232,12 @@ export default function CarrinhoFN() {
                   styles.pagamentoSelecionado, // Altera a cor se selecionado
               ]}
             >
-              <Text style={styles.pagamentoText}>CARTÃO DE DÉBITO</Text>
+              <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+  <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
+  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE DÉBITO</Text>
+</View>
+
+              
             </TouchableOpacity>
           </View>
           
@@ -229,55 +246,72 @@ export default function CarrinhoFN() {
                 fontSize: 25,
                 fontFamily: "League",
                 paddingHorizontal: 40,
-                bottom: 20,
               }}
             >
-              Pagar agora:
+              Novo método de pagamento:
             </Text>
+            <View style={{  justifyContent:"center", alignItems:"center", top:10 }}>
+            <View style={{ width: "70%", justifyContent:"center", alignItems:"center", }}>
+              <Text style={{ fontSize: 18, textAlign: "center", }}>
+                Rápido, seguro e sem complicação: pague com Pix e finalize sua
+                compra em segundos!
+              </Text>
+            </View>
+            
             <TouchableOpacity
               onPress={() => {
-                setPagamentoSelecionado("dinheiro"); // Define o método de pagamento como "dinheiro"
-                setModalVisible(true); // Abre o modal
+                setPixModalVisible(true); // abre o modal do pix
               }}
               style={{ justifyContent:"center",
               alignItems:"center",
-                backgroundColor:"red",
+                backgroundColor: "#ed8e8e",
+                borderRadius: 10,
+                height:40,
+                width:"48%",
+                top:10,
               }}
             >
-              <Text style={{fontFamily:"league"}}>pix</Text>
+              <Text style={{fontFamily:"league", fontSize:17, color: "#fff", fontWeight: "bold",}}>PAGUE AGORA COM PIX</Text>
             </TouchableOpacity>
+            </View>
+            <Modal
+        animationType="slide"
+        transparent={true}
+        visible={pixModalVisible}
+        onRequestClose={() => setPixModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Pague com Pix</Text>
+            <Text style={styles.modalText2}>
+              Escaneie o QR Code abaixo para concluir seu pagamento.
+            </Text>
+            <QRCode
+              value={qrValue || "Pagamento efetuado"}
+              size={150}
+              color="black"
+              backgroundColor="white"
+              logoSize={30}
+              logoMargin={2}
+              logoBorderRadius={15}
+              logoBackgroundColor="yellow"
+            />
+            <Pressable
+              style={[styles.buttonModal, styles.buttonClose]}
+              onPress={() => setPixModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>Fechar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
             <View
             style={{
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <View style={{ width: "70%",  }}>
-              <Text style={{ fontSize: 18, textAlign: "center", bottom:10, }}>
-                Rápido, seguro e sem complicação: pague com Pix e finalize sua
-                compra em segundos!
-              </Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                margin: 30,
-                bottom: 20,
-              }}
-            >
-              <QRCode
-                value={qrValue ? qrVlue : "Pagamento efetuado"}
-                size={150}
-                color="black"
-                backgroundColor="white"
-                logoSize={30}
-                logoMargin={2}
-                logoBorderRadius={15}
-                logoBackgroundColor="yellow"
-              />
-            </View>
+            
           </View>
         </View>
       </ScrollView>
@@ -346,7 +380,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    marginBottom: 10,
+    bottom:40,
+    paddingHorizontal:20,
   },
   resultInput: {
     height: 40,
@@ -405,6 +440,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     elevation: 2,
+    top:10,
   },
   buttonClose: {
     backgroundColor: "#ed8e8e",
