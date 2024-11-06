@@ -1,20 +1,22 @@
-import * as React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, Image, TouchableOpacity, Button } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
 import Produtos from "../pages/Produtos";
 import Sobre from "../pages/Sobre";
 import Favoritos from "../pages/Favoritos";
 import RoutesStack from "./RoutesStack";
 import Carrinho from "../pages/Carrinho";
+import { AuthContext } from "../../AuthProvider";
 
 // Componente Customizado para DrawerContent com a imagem no topo
 function CustomDrawerContent(props) {
+  const { isLogged, logout } = useContext(AuthContext);
+
   return (
     <DrawerContentScrollView {...props}>
       <View
@@ -27,7 +29,7 @@ function CustomDrawerContent(props) {
         }}
       >
         <Image
-          source={require("../assets/image/4.png")} // Coloque o link ou use require para imagem local
+          source={require("../assets/image/4.png")}
           style={{
             width: "100%",
             height: "80%",
@@ -36,12 +38,34 @@ function CustomDrawerContent(props) {
         />
         <Text style={{ marginTop: 10, fontSize: 18 }}>Bem-vindo!</Text>
       </View>
+
+      {/* Sempre exibe as rotas, independentemente de estar logado ou não */}
       <DrawerItemList {...props} />
+
+      {isLogged ? (
+        // Se o usuário estiver logado, exibe as opções de logout
+        <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
+          <Button title="Logout" onPress={logout} color="#ed8e8e" />
+        </View>
+      ) : (
+        // Se o usuário não estiver logado, exibe os botões de login e cadastro
+        <View style={{ paddingHorizontal: 10, marginTop: 20 }}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
+            <Text style={{ fontSize: 18, color: "#ed8e8e" }}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Cadastro")}
+          >
+            <Text style={{ fontSize: 18, color: "#ed8e8e", marginTop: 10 }}>
+              Cadastro
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </DrawerContentScrollView>
   );
 }
 
-// Ícone de menu fixo com header transparente
 function CustomMenuIcon({ navigation }) {
   return (
     <TouchableOpacity
@@ -99,7 +123,7 @@ const Drawer = createDrawerNavigator();
 export default function RoutesDrawer() {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />} // Inclui a imagem no Drawer
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerStyle: { backgroundColor: "white" },
         drawerActiveBackgroundColor: "#ed8e8e",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,19 +8,26 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../AuthProvider"; // Importando o contexto
 import { useFonts } from "expo-font";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function LogCad() {
   const navigation = useNavigation();
+  const { enterWithoutLogin } = useContext(AuthContext); // Acessando a função do contexto
 
   const [font] = useFonts({
     League: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
   });
+
   if (!font) {
     return null;
   }
+
+  const handleEnterWithoutLogin = () => {
+    enterWithoutLogin(); // Atualiza o estado para não logado
+    navigation.navigate("ProdutosDrawer"); // Navega para a tela do Drawer
+  };
 
   return (
     <ImageBackground
@@ -66,9 +73,7 @@ export default function LogCad() {
         </View>
 
         <View style={styles.skipContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ProdutosDrawer")}
-          >
+          <TouchableOpacity onPress={handleEnterWithoutLogin}>
             <Text style={styles.buttonTextPD}>Entrar sem login</Text>
           </TouchableOpacity>
           <AntDesign name="arrowright" size={12} color="#ed8e8e" />
@@ -90,14 +95,14 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   imageContainer: {
-    width: "100%", // largura ajustada para centralizar melhor
+    width: "100%",
     height: "50%",
     justifyContent: "center",
     alignItems: "center",
   },
   logo: {
-    width: "100%", // largura ajustada para centralizar melhor
-    height: "100%", // altura definida
+    width: "100%",
+    height: "100%",
     resizeMode: "contain",
   },
   title: {
@@ -128,13 +133,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-
   buttonTextLG: {
     color: "#ed8e8e",
     fontSize: 30,
     bottom: 20,
   },
-
   buttonTextPD: {
     color: "#ed8e8e",
   },

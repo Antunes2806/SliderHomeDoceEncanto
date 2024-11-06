@@ -14,8 +14,10 @@ import axios from "axios";
 import QRCode from "react-native-qrcode-svg";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useNavigation } from "@react-navigation/native";
 
 export default function CarrinhoFN() {
+  const navigation = useNavigation();
   const [inputText, setInputText] = useState("");
   const [qrValue, setQrValue] = useState("");
   const [cep, setCep] = useState("");
@@ -305,14 +307,27 @@ export default function CarrinhoFN() {
           </View>
         </View>
       </Modal>
-            <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            
-          </View>
+      <View style={{ top: 35 ,alignItems: "flex-end", right: 25 }}>
+      <TouchableOpacity
+              onPress={() => navigation.navigate("NotaFiscal", {
+                valorPago: valorPago,
+                pagamentoSelecionado: pagamentoSelecionado,
+              })
+              }
+              style={{ width: "40%" }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  color: "black",
+                }}
+              >
+                CONTINUAR <AntDesign name="right" size={20} color="black" />
+              </Text>
+            </TouchableOpacity>
+        </View>
         </View>
       </ScrollView>
 
@@ -354,7 +369,7 @@ export default function CarrinhoFN() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 8,
   },
   input: {
     height: 40,

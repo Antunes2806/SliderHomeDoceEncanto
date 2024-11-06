@@ -16,6 +16,7 @@ import store from "../../store";
 import RoutesStack from "../routes/RoutesStack";
 import { useNavigation } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AuthProvider } from "../../AuthProvider";
 
 export function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,13 +79,15 @@ export function Onboarding() {
 
 export function MainApp() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Provider store={store}>
-        <NavigationContainer>
-          <RoutesStack />
-        </NavigationContainer>
-      </Provider>
-    </GestureHandlerRootView>
+    <AuthProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Provider store={store}>
+          <NavigationContainer>
+            <RoutesStack />
+          </NavigationContainer>
+        </Provider>
+      </GestureHandlerRootView>
+    </AuthProvider>
   );
 }
 

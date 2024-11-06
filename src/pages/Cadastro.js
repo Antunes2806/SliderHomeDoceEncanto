@@ -26,7 +26,7 @@ const Cadastro = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [nickname, setNickname] = useState(""); // Estado para o apelido
+  const [nickname, setNickname] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
   const db = getFirestore();
@@ -66,11 +66,8 @@ const Cadastro = ({ navigation }) => {
         nickname: nickname,
       });
 
-      Alert.alert("Sucesso AMIGO!", "XXXX Cadastro realizado com sucesso!");
-      navigation.navigate("ProdutosDrawer", {
-        userId: user.uid,
-        nickname: nickname,
-      });
+      Alert.alert("Sucesso!", "Cadastro realizado com sucesso!");
+      navigation.navigate("Login"); // Redirecionando para a tela de Login
     } catch (error) {
       console.error("Erro ao cadastrar:", error.message);
       Alert.alert("Erro", "Não foi possível cadastrar. Tente novamente.");
@@ -86,7 +83,7 @@ const Cadastro = ({ navigation }) => {
         .then(async (userCredential) => {
           const userId = userCredential.user.uid;
           Alert.alert("Sucesso", "Login com Google realizado com sucesso!");
-          navigation.navigate("ProdutosDrawer", { userId }); // Passando userId
+          navigation.navigate("ProdutosDrawer", { userId });
         })
         .catch((error) => {
           console.error("Erro ao fazer login com Google:", error.message);
@@ -111,7 +108,7 @@ const Cadastro = ({ navigation }) => {
             style={styles.input}
             placeholder="Apelido"
             value={nickname}
-            onChangeText={setNickname} // Atualizando o apelido
+            onChangeText={setNickname}
           />
         </View>
         <View style={styles.inputContainer}>

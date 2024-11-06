@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   TextInput,
@@ -14,16 +14,19 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithCredential,
+  onAuthStateChanged,
 } from "firebase/auth";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getFirestore, doc, getDoc } from "firebase/firestore"; // Importando Firestore
-
+import { AuthContext } from "../../AuthProvider";
 
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
+  const { setNickname } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +55,15 @@ const Login = ({ navigation }) => {
     }
   }, [response]);
 
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("TEM USUÁRIO LOGADO! xx");
+        console.log(user);
+      }
+    });
+  }, []);
+
   const handleEmailPasswordLogin = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
       Alert.alert("Erro", "Por favor, insira um email válido.");
@@ -72,10 +84,13 @@ const Login = ({ navigation }) => {
 
       if (snapshot.exists()) {
         const nickname = snapshot.data().nickname || "novo usuário";
-        Alert.alert("Sucesso", `Olá, ${nickname}!`);
+        setNickname(nickname); // Atualiza o nickname no contexto
 
-        // Passando o nickname para a página de produtos
-        navigation.navigate("ProdutosDrawer", { nickname });
+        // Aqui, chama a função `login()` para atualizar o estado de autenticação
+        login(nickname);
+
+        Alert.alert("Sucesso", `Olá, ${nickname}!`);
+        navigation.navigate("ProdutosDrawer");
       } else {
         Alert.alert("Erro", "Usuário não encontrado.");
       }

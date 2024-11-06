@@ -29,6 +29,7 @@ import Cadastro from "../pages/Cadastro";
 import LogCad from "../pages/LogCad";
 import RoutesDrawer from "./Index";
 import CarrinhoScreen from "../pages/Carrinho";
+import NotaFiscal from "../pages/NotaFIscal";
 import { Onboarding } from "../Components/Onboarding";
 
 const Stack = createNativeStackNavigator();
@@ -198,6 +199,11 @@ export default function RoutesStack() {
       <Stack.Screen
         name="Brigchurros"
         component={Brigchurros}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotaFiscal"
+        component={NotaFiscal}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

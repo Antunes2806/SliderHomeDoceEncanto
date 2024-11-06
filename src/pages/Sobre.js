@@ -15,6 +15,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Linking } from "react-native";
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 
+
 import { useIsFocused } from "@react-navigation/native";
 export default function Sobre() {
   //Fontes
@@ -42,6 +43,7 @@ export default function Sobre() {
       style={stylesSobre.ImgFundo}
       source={require("../assets/image/imagemfdsb.png")}
     >
+      
       <View style={stylesSobre.container}>
         <View style={stylesSobre.Viewtexto}>
           <Text style={stylesSobre.txtsobre}> SOBRE NÓS </Text>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import {
   Animated,
   View,
@@ -18,15 +18,21 @@ import { useNavigation } from "@react-navigation/native";
 import { stylesProdutos } from "../styles/StylesProdutos";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
-import { DrawerActions } from "@react-navigation/native";
+import { DrawerActions, useRoute } from "@react-navigation/native";
+import { AuthContext } from "../../AuthProvider";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Produtos() {
   // Utilizando 'nickname' ao invés de 'apelido'
+  const [email, setEmail] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [currentSelected, setCurrentSelected] = useState(0);
+  const auth = getAuth();
   const widthAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const { nickname } = useContext(AuthContext);
 
   useEffect(() => {
     const { width } = Dimensions.get("window");
@@ -38,6 +44,16 @@ export default function Produtos() {
       useNativeDriver: false,
     }).start();
   }, [widthAnim]);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("TEM USUÁRIO LOGADO!");
+        console.log(user);
+        setEmail(user.email);
+      }
+    });
+  }, []);
 
   const [fontLoaded] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
@@ -216,7 +232,7 @@ export default function Produtos() {
             <Ionicons name="menu" size={30} color="black" />
           </TouchableOpacity>
           <View style={stylesProdutos.Viewnomelogo}>
-            <Text>Olá</Text>
+            <Text style={styles.ola}>Olá, {nickname}</Text>
             <Image
               style={{ height: 90, width: 90 }}
               source={require("../assets/image/4.png")}
@@ -307,5 +323,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     overflow: "hidden",
+  },
+
+  ola: {
+    left: 20,
+    fontSize: 35,
+    fontFamily: "League",
   },
 });
