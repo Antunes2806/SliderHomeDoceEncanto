@@ -89,7 +89,6 @@ export default function CookiesBranco() {
     }
   };
 
-
   const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
@@ -182,11 +181,11 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt", // Fonte personalizada
     position: "absolute", // Posicionamento absoluto para controle preciso
     textAlign: "center",
-    width: 400, // Largura do texto
+    width: 350, // Largura do texto
   },
 
   cookiebranco: {
-    width: 300, // Largura da imagem
+    width: 350, // Largura da imagem
     height: 500, // Altura da imagem
     position: "absolute", // Posicionamento absoluto para controle preciso
     top: "15%",
@@ -203,8 +202,8 @@ const styles = StyleSheet.create({
     bottom: 90,
     height: 60, // Altura fixa
     width: "100%", // Largura fixa
-    flexDirection: "row",  // Disposição dos elementos em linha
-    justifyContent: "space-evenly",  // Espaço igual entre os elementos
+    flexDirection: "row", // Disposição dos elementos em linha
+    justifyContent: "space-evenly", // Espaço igual entre os elementos
     alignItems: "center",
   },
 

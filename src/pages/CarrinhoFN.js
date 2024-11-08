@@ -31,6 +31,7 @@ export default function CarrinhoFN() {
   const [valorPago, setValorPago] = useState("");
 
   const [pagamentoSelecionado, setPagamentoSelecionado] = useState(null); // Estado para controlar o método de pagamento
+  
 
   const buscarCep = () => {
     setError("");

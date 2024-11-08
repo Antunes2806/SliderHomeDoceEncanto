@@ -31,6 +31,7 @@ import RoutesDrawer from "./Index";
 import CarrinhoScreen from "../pages/Carrinho";
 import NotaFiscal from "../pages/NotaFIscal";
 import { Onboarding } from "../Components/Onboarding";
+import RecuperarSenha from "../pages/RecuperarSenha";
 
 const Stack = createNativeStackNavigator();
 
@@ -204,6 +205,12 @@ export default function RoutesStack() {
       <Stack.Screen
         name="NotaFiscal"
         component={NotaFiscal}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="RecuperarSenha"
+        component={RecuperarSenha}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

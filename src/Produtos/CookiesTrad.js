@@ -171,30 +171,31 @@ const styles = StyleSheet.create({
     zIndex: 5, // Garante que o texto fique na frente de outros elementos
     width: "60%",
     textAlign: "center", // Centraliza o texto
-    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "10%",
+    position: "absolute",
   },
 
   txtcookies: {
     fontSize: 20, // Tamanho da fonte
     fontFamily: "Rokkitt", // Fonte personalizada
-    position: "absolute", // Posicionamento absoluto para controle preciso
     textAlign: "center", // Centraliza o texto
-    width: 400, // Largura do texto
+    width: 350, // Largura do texto
     top: "65%",
+    position: "absolute",
   },
 
   cookietradicional: {
     width: 300, // Largura da imagem
     height: 500, // Altura da imagem
-    position: "absolute", // Posicionamento absoluto para controle preciso
     top: "15%",
+    position: "absolute",
   },
 
   fundo: {
     width: "100%", // Largura da imagem
     height: "100%", // Altura da imagem
   },
+
   elementos: {
     position: "absolute", // Posicionamento absoluto para controle preciso
     left: 0, // Alinha a esquerda

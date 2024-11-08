@@ -19,7 +19,7 @@ import {
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; // Importando Firestore
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../../AuthProvider";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -31,7 +31,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
-  const db = getFirestore(); // Inicializando Firestore
+  const db = getFirestore();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: "<SEU_CLIENT_ID>",
@@ -78,15 +78,13 @@ const Login = ({ navigation }) => {
       );
       const user = userCredential.user;
 
-      // Buscar o nickname do usuário no Firestore
-      const userDoc = doc(db, "users", user.uid); // Caminho onde os dados do usuário estão
+      const userDoc = doc(db, "users", user.uid);
       const snapshot = await getDoc(userDoc);
 
       if (snapshot.exists()) {
         const nickname = snapshot.data().nickname || "novo usuário";
-        setNickname(nickname); // Atualiza o nickname no contexto
+        setNickname(nickname);
 
-        // Aqui, chama a função `login()` para atualizar o estado de autenticação
         login(nickname);
 
         Alert.alert("Sucesso", `Olá, ${nickname}!`);
@@ -169,8 +167,13 @@ const Login = ({ navigation }) => {
           style={styles.registerText}
           onPress={() => navigation.navigate("Cadastro")}
         >
-          Não tem uma conta? Cadastre-se
+          Não tem uma conta?{" "}
+          <Text style={styles.registerTextLink}>Cadastre-se</Text>
         </Text>
+
+        <TouchableOpacity onPress={() => navigation.navigate("RecuperarSenha")}>
+          <Text style={styles.recoverPasswordText}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -216,6 +219,10 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
     marginTop: 16,
+  },
+  registerTextLink: {
+    color: "#ed8e8e", // Cor rosa para o "Cadastre-se"
+    fontWeight: "bold",
   },
   passwordContainer: {
     flexDirection: "row",
@@ -274,6 +281,12 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  recoverPasswordText: {
+    color: "#ed8e8e", // Cor rosa para o texto de recuperação
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 16,
   },
 });
 

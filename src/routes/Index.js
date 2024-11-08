@@ -1,5 +1,12 @@
-import React, { useContext } from "react";
-import { View, Text, Image, TouchableOpacity, Button } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   createDrawerNavigator,
@@ -16,9 +23,15 @@ import { AuthContext } from "../../AuthProvider";
 // Componente Customizado para DrawerContent com a imagem no topo
 function CustomDrawerContent(props) {
   const { isLogged, logout } = useContext(AuthContext);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // Função para abrir o modal de confirmação
+  const confirmLogout = () => {
+    setModalVisible(true);
+  };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View
         style={{
           width: "100%",
@@ -36,35 +49,207 @@ function CustomDrawerContent(props) {
             resizeMode: "cover",
           }}
         />
-        <Text style={{ marginTop: 10, fontSize: 18 }}>Bem-vindo!</Text>
+        <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
+          Bem-vindo!
+        </Text>
       </View>
 
-      {/* Sempre exibe as rotas, independentemente de estar logado ou não */}
       <DrawerItemList {...props} />
 
+      <View style={{ flex: 1 }} />
+
       {isLogged ? (
-        // Se o usuário estiver logado, exibe as opções de logout
-        <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
-          <Button title="Logout" onPress={logout} color="#ed8e8e" />
+        <View style={styles.logoutContainer}>
+          <TouchableOpacity onPress={confirmLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
         </View>
       ) : (
-        // Se o usuário não estiver logado, exibe os botões de login e cadastro
-        <View style={{ paddingHorizontal: 10, marginTop: 20 }}>
-          <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
-            <Text style={{ fontSize: 18, color: "#ed8e8e" }}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate("Cadastro")}
-          >
-            <Text style={{ fontSize: 18, color: "#ed8e8e", marginTop: 10 }}>
-              Cadastro
-            </Text>
-          </TouchableOpacity>
+        <View style={styles.authContainer}>
+          <Text style={styles.registerPrompt}>Não tem conta? Registre-se!</Text>
+          <View style={styles.authButtons}>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("Login")}
+              style={styles.loginButton}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("Cadastro")}
+              style={styles.signupButton}
+            >
+              <Text style={styles.signupText}>Cadastro</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
+
+      {/* Modal de confirmação de logout */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Tem certeza?</Text>
+            <Text style={styles.modalMessage}>
+              Deseja mesmo sair da sua conta?
+            </Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                style={styles.cancelButton}
+              >
+                <Text style={styles.cancelText}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(false);
+                  logout();
+                }}
+                style={styles.confirmButton}
+              >
+                <Text style={styles.confirmText}>Sim</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </DrawerContentScrollView>
   );
 }
+
+// Estilos personalizados
+const styles = StyleSheet.create({
+  logoutContainer: {
+    paddingHorizontal: 10,
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  logoutButton: {
+    backgroundColor: "white",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "80%",
+    borderColor: "#ed8e8e",
+    borderWidth: 2,
+  },
+  logoutText: {
+    fontSize: 18,
+    color: "#ed8e8e",
+    fontWeight: "bold",
+  },
+  authContainer: {
+    paddingHorizontal: 20,
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  registerPrompt: {
+    fontSize: 15,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 10,
+    fontStyle: "italic",
+  },
+  authButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  loginButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    borderColor: "#ed8e8e",
+    borderWidth: 1.5,
+    alignItems: "center",
+    flex: 1,
+    marginRight: 5,
+  },
+  loginText: {
+    fontSize: 16,
+    color: "#ed8e8e",
+    fontWeight: "bold",
+  },
+  signupButton: {
+    backgroundColor: "#ed8e8e",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    flex: 1,
+    marginLeft: 5,
+  },
+  signupText: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: "80%",
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ed8e8e",
+    marginBottom: 10,
+  },
+  modalMessage: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+  cancelButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    borderColor: "#ed8e8e",
+    borderWidth: 1.5,
+    alignItems: "center",
+    flex: 1,
+    marginRight: 5,
+  },
+  cancelText: {
+    fontSize: 16,
+    color: "#ed8e8e",
+    fontWeight: "bold",
+  },
+  confirmButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: "#ed8e8e",
+    alignItems: "center",
+    flex: 1,
+    marginLeft: 5,
+  },
+  confirmText: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
+  },
+});
 
 function CustomMenuIcon({ navigation }) {
   return (
@@ -117,7 +302,6 @@ function CarrinhoScreen({ navigation }) {
     </View>
   );
 }
-
 const Drawer = createDrawerNavigator();
 
 export default function RoutesDrawer() {

@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt", // Fonte personalizada
     position: "absolute", // Posicionamento absoluto para controle preciso
     textAlign: "center", // Centraliza o texto
-    width: 400, // Largura do texto
+    width: 350, // Largura do texto
   },
 
   cookieduo: {

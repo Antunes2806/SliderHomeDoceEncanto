@@ -152,7 +152,6 @@ export default function DonutsMorango() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa a tela inteira
     alignItems: "center",
     position: "relative",
   },
@@ -185,10 +184,9 @@ const styles = StyleSheet.create({
   },
 
   donutsmorango: {
-    width: 550, // Largura da imagem
-    height: 550, // Altura da imagem
+    width: 600, // Largura da imagem
+    height: 600, // Altura da imagem
     position: "absolute", // Posicionamento absoluto para controle preciso
-    left: "-18%", // Alinha a esquerda
     top: "25%",
   },
 
