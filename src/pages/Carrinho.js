@@ -277,17 +277,17 @@ const CarrinhoScreen = () => {
           <View style={{ bottom: 30, alignItems: "flex-end", right: 25 }}>
             <TouchableOpacity
               onPress={() => navigation.navigate("CarrinhoFN")}
-              style={{ width: "40%" }}
+              style={{ width: "30%", backgroundColor:"#ed8585", borderRadius:90, height:"24", justifyContent: "center",  }}
             >
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: "bold",
                   textAlign: "center",
-                  color: "black",
+                  color: "white",
                 }}
               >
-                CONTINUAR <AntDesign name="right" size={20} color="black" />
+                CONTINUAR 
               </Text>
             </TouchableOpacity>
           </View>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { firestore } from "../services/firebase";
+import { firestore, auth } from "../services/firebase"; // Certifique-se de importar o auth do firebase
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -18,9 +18,23 @@ export default function Favoritos() {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Função para buscar os favoritos do usuário logado
   const fetchFavorites = async () => {
     try {
-      const querySnapshot = await getDocs(collection(firestore, "favorites"));
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        console.log("Usuário não está logado");
+        return;
+      }
+
+      // Acessa a subcoleção de favoritos do usuário logado
+      const favoritesRef = collection(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites"
+      );
+      const querySnapshot = await getDocs(favoritesRef);
       const favItems = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -33,34 +47,52 @@ export default function Favoritos() {
     }
   };
 
+  // Usando o useFocusEffect para chamar fetchFavorites sempre que a tela for focada
   useFocusEffect(
     React.useCallback(() => {
       fetchFavorites();
     }, [])
   );
 
+  // Função para remover um item dos favoritos
   const handleRemoveFavorite = async (id) => {
     try {
-      const favoriteRef = doc(firestore, "favorites", id);
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        console.log("Usuário não está logado");
+        return;
+      }
+
+      // Remove da subcoleção de favoritos do usuário logado
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        id
+      );
       await deleteDoc(favoriteRef);
-      fetchFavorites();
+      fetchFavorites(); // Atualiza a lista de favoritos após remover
     } catch (error) {
       console.error("Erro ao remover favorito: ", error);
     }
   };
 
+  // Função para ir para o item anterior no carrossel
   const goToPrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     }
   };
 
+  // Função para ir para o item seguinte no carrossel
   const goToNext = () => {
     if (currentIndex < favorites.length - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
 
+  // Carregamento de fontes personalizadas
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
     League: require("../fontes/League_Spartan/static/LeagueSpartan-Bold.ttf"),
@@ -70,6 +102,7 @@ export default function Favoritos() {
     return null;
   }
 
+  // Renderização de cada item no carrossel de favoritos
   const renderCarouselItem = ({ item }) => {
     const price = typeof item.valor === "number" ? item.valor : 0;
 
@@ -196,9 +229,8 @@ export default function Favoritos() {
         />
       ) : (
         <Image
-        style={{width: "100%", height: "100%",}}
-        source={require("../assets/image/imgfav.png")} 
-       
+          style={{ width: "100%", height: "100%" }}
+          source={require("../assets/image/imgfav.png")}
         />
       )}
     </View>

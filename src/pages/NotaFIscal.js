@@ -2,12 +2,12 @@ import React from "react";
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useNavigation } from "@react-navigation/native";
 
 export default function NotaFiscal({ route }) {
-  // Recebendo o valor pago, a forma de pagamento e o endereço via route
-  const { valorPago, pagamentoSelecionado, logradouro, bairro, cidade, cep } = route.params;
-
-  // Acessando os itens do carrinho e calculando o total
+  // Recebendo os dados passados na navegação
+  const { valorPago, pagamentoSelecionado, logradouro, bairro, cidade, cep, numero, complemento} = route.params;
+  const navigation = useNavigation();
   const cart = useSelector((state) => state.cart.cart);
 
   const calcularTotal = () => {
@@ -20,6 +20,7 @@ export default function NotaFiscal({ route }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#f5f3f3", padding: 20 }}>
+     
       <View style={{ width: "100%", height: "10%", justifyContent: "flex-end", alignItems: "center" }}>
         <Text style={styles.title}>NOTA FISCAL</Text>
       </View>
@@ -27,8 +28,9 @@ export default function NotaFiscal({ route }) {
       {/* Exibindo o endereço */}
       <View style={styles.addressContainer}>
         <Text style={styles.addressText}>Endereço de Entrega:</Text>
-        <Text style={styles.addressText}>{logradouro}, {bairro}</Text>
-        <Text style={styles.addressText}>{cidade} - CEP: {cep}</Text>
+        <Text style={styles.addressText}>{logradouro}, {numero}, {bairro} </Text>
+        <Text style={styles.addressText}> {cidade} - CEP: {cep}</Text>
+        <Text style={styles.addressText}>Complemento: {complemento}</Text>
       </View>
 
       <FlatList
@@ -42,7 +44,6 @@ export default function NotaFiscal({ route }) {
           </View>
         )}
       />
-
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryText}>Pagamento</Text>
         <Text style={styles.summaryText}>Forma de Pagamento: {pagamentoSelecionado}</Text>
@@ -51,9 +52,11 @@ export default function NotaFiscal({ route }) {
       </View>
 
       <View style={{ bottom: 20, alignItems: "flex-end", right: 25 }}>
-        <TouchableOpacity style={{ width: "40%" }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: "black" }}>
-            CONTINUAR <AntDesign name="right" size={20} color="black" />
+        <TouchableOpacity style={{ width: "30%", backgroundColor:"#ed8585", borderRadius:90, height:"24", justifyContent: "center",  }}
+        onPress={() => navigation.navigate("Finalizado")}
+        >
+          <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "white" }}>
+            FINALIZAR
           </Text>
         </TouchableOpacity>
       </View>
@@ -62,12 +65,23 @@ export default function NotaFiscal({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   title: {
     fontSize: 30,
     fontFamily: "League",
     textAlign: "center",
+  },
+  addressContainer: {
+    marginVertical: 10,
+    padding: 10,
+    backgroundColor: "#ddd",
+    borderRadius: 5,
+  },
+  addressText: {
+    fontSize: 18,
+    color: "#333",
+    marginBottom: 5,
+    fontFamily: "League",
   },
   itemContainer: {
     padding: 10,
@@ -82,6 +96,7 @@ const styles = StyleSheet.create({
   itemDetails: {
     fontSize: 15,
     color: "#555",
+    fontFamily: "League",
   },
   summaryContainer: {
     marginBottom: 50,

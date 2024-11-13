@@ -1,4 +1,4 @@
-// Import react-native
+// Importações do React Native
 import {
   StyleSheet,
   Text,
@@ -6,78 +6,127 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 
-// Import useFonts
+// Importação da fonte personalizada
 import { useFonts } from "expo-font";
 
+// Navegação e ícones
 import { useNavigation } from "@react-navigation/native";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
+// Hooks, Firebase e Redux
 import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../services/firebase"; // Importe o Firestore
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { Categorias } from "../database/items";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../CartReducer";
+
+// Firebase Auth
+import { getAuth } from "firebase/auth";
+const auth = getAuth();
 
 export default function CookiesTrad() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false); // Adiciona o estado para verificar se é favorito
+  const [showAlert, setShowAlert] = useState(false); // Para mostrar um alerta caso não esteja logado
 
-  // Defina o item como o produto que você quer mostrar
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const item = Categorias[4]?.items.find((product) => product.id === "16");
+
   const itemfav = {
     id: "16", // Exemplo de ID do produto
     name: "Cookie Tradicional",
     valor: 15.0,
     description:
-      " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
+      "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
 
+  // Função para adicionar ao carrinho
+  const handleAddToCart = () => {
+    if (item) {
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho");
+    } else {
+      console.error("Item não encontrado");
+    }
+  };
+
+  // Carregamento da imagem do Firebase Storage
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const storage = getStorage(); // Inicializa o storage
-        const imageRef = ref(storage, "brigtrad.png"); // Referência à imagem no Firebase Storage
-        const url = await getDownloadURL(imageRef); // Obtém a URL da imagem
-        setImageUrl(url); // Armazena a URL da imagem no estado
-        setLoading(false); // Para o carregamento
+        const storage = getStorage();
+        const imageRef = ref(storage, "brigtrad.png");
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
       } catch (error) {
         console.error("Erro ao carregar a imagem do Firebase Storage:", error);
+      } finally {
         setLoading(false);
       }
     };
 
+    // Função para verificar se o item está nos favoritos
     const checkFavoriteStatus = async () => {
       try {
-        const favoriteRef = doc(firestore, "favorites", itemfav.id);
-        const docSnap = await getDoc(favoriteRef);
-        setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          const favoriteRef = doc(
+            firestore,
+            "users",
+            currentUser.uid,
+            "favorites",
+            itemfav.id
+          );
+          const docSnap = await getDoc(favoriteRef);
+          setIsFavorite(docSnap.exists());
+        } else {
+          setIsFavorite(false);
+        }
       } catch (error) {
         console.error("Erro ao verificar favoritos: ", error);
       }
     };
 
-    fetchImage(); // Busca a imagem ao carregar o componente
-    checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
+    fetchImage();
+    checkFavoriteStatus();
   }, []);
 
+  // Função para adicionar/remover favoritos
   const handleToggleFavorite = async () => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      setShowAlert(true);
+      return;
+    }
+
     try {
-      const favoriteRef = doc(firestore, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
-        // Se o item já existe nos favoritos, remove
-        await deleteDoc(favoriteRef);
+        await deleteDoc(favoriteRef); // Remove do favorito
         setIsFavorite(false); // Atualiza o estado
       } else {
-        // Adiciona o item aos favoritos com a URL da imagem
         await setDoc(favoriteRef, {
           name: itemfav.name,
           valor: itemfav.valor,
-          image: imageUrl, // Adiciona a URL da imagem
+          image: imageUrl, // Salva a URL da imagem no favorito
           description: itemfav.description,
         });
         setIsFavorite(true); // Atualiza o estado
@@ -89,7 +138,7 @@ export default function CookiesTrad() {
     }
   };
 
-  const navigation = useNavigation();
+  // Carrega a fonte personalizada
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
@@ -102,7 +151,7 @@ export default function CookiesTrad() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundocoktrad.png")}
+        source={require("../assets/image/cookietrad.png")}
       />
       <TouchableOpacity
         style={styles.seta}
@@ -111,25 +160,25 @@ export default function CookiesTrad() {
         <AntDesign name="left" size={24} color="black" />
       </TouchableOpacity>
 
-      <Text style={styles.txt}>COOKIES TRADICIONAIS </Text>
+      <Text style={styles.txt}>COOKIE TRADICIONAL</Text>
 
       <View style={styles.row}></View>
 
       <Image
         style={styles.cookietradicional}
-        source={require("../assets/image/cktrad.png")}
+        source={
+          imageUrl ? { uri: imageUrl } : require("../assets/image/cktrad.png")
+        }
       />
 
       <Text style={styles.txtcookies}>
-        Um sabor clássicos e irresistíveis, esses cookies são crocantes por fora
-        e macios por dentro, proporcionando uma combinação perfeita de textura e
-        sabor !
+        Um sabor clássico e irresistível, esses cookies são crocantes por fora e
+        macios por dentro, proporcionando uma combinação perfeita de textura e
+        sabor!
       </Text>
+
       <View style={styles.elementos}>
-        <TouchableOpacity
-          style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
-        >
+        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
@@ -146,75 +195,123 @@ export default function CookiesTrad() {
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Modal de Alerta para Login */}
+      <Modal
+        transparent={true}
+        visible={showAlert}
+        animationType="fade"
+        onRequestClose={() => setShowAlert(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>Atenção!</Text>
+            <Text style={styles.alertMessage}>
+              Você precisa estar logado para favoritar um produto.
+            </Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowAlert(false)}
+            >
+              <Text style={styles.alertButtonText}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa a tela inteira
+    flex: 1,
     alignItems: "center",
     position: "relative",
   },
-
   row: {
-    width: "50%", // Largura da linha
-    height: 2, // Grossura da linha
-    backgroundColor: "saddlebrown", // Cor da linha
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: "17%",
+    width: "70%",
+    height: 2,
+    backgroundColor: "saddlebrown",
+    position: "absolute",
+    top: "19%",
   },
-
   txt: {
-    fontSize: 30, // Tamanho da fonte
-    fontFamily: "Rokkitt", // Fonte personalizada
-    zIndex: 5, // Garante que o texto fique na frente de outros elementos
-    width: "60%",
-    textAlign: "center", // Centraliza o texto
-    top: "10%",
-    position: "absolute",
-  },
-
-  txtcookies: {
-    fontSize: 20, // Tamanho da fonte
-    fontFamily: "Rokkitt", // Fonte personalizada
-    textAlign: "center", // Centraliza o texto
-    width: 350, // Largura do texto
-    top: "65%",
-    position: "absolute",
-  },
-
-  cookietradicional: {
-    width: 300, // Largura da imagem
-    height: 500, // Altura da imagem
+    fontSize: 30,
+    fontFamily: "Rokkitt",
+    zIndex: 5,
+    width: "70%",
+    textAlign: "center",
     top: "15%",
     position: "absolute",
   },
-
-  fundo: {
-    width: "100%", // Largura da imagem
-    height: "100%", // Altura da imagem
+  txtcookies: {
+    fontSize: 20,
+    fontFamily: "Rokkitt",
+    textAlign: "center",
+    width: 350,
+    top: "65%",
+    position: "absolute",
   },
-
+  cookietradicional: {
+    width: 300,
+    height: 500,
+    top: "15%",
+    position: "absolute",
+  },
+  fundo: {
+    width: "100%",
+    height: "100%",
+  },
   elementos: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    left: 0, // Alinha a esquerda
+    position: "absolute",
+    left: 0,
     bottom: 90,
-    height: 60, // Altura fixa
-    width: "100%", // Largura fixa
-    flexDirection: "row", // Disposição dos elementos em linha
-    justifyContent: "space-evenly", // Espaço igual entre os elementos
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
-
   txtvalor: {
-    fontSize: 25, // Tamanho da fonte
-    fontWeight: "700", // Deixa o texto em negrito
+    fontSize: 25,
+    fontWeight: "700",
   },
-
   seta: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    position: "absolute",
     top: 100,
-    left: 10, // Alinha a esquerda
+    left: 10,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  alertBox: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#ed8e8e",
+  },
+  alertMessage: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  alertButton: {
+    backgroundColor: "#ed8e8e",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  alertButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

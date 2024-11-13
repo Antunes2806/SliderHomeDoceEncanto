@@ -32,6 +32,7 @@ import CarrinhoScreen from "../pages/Carrinho";
 import NotaFiscal from "../pages/NotaFIscal";
 import { Onboarding } from "../Components/Onboarding";
 import RecuperarSenha from "../pages/RecuperarSenha";
+import Finalizado from "../pages/Finalizado";
 
 const Stack = createNativeStackNavigator();
 
@@ -192,7 +193,7 @@ export default function RoutesStack() {
       />
 
       <Stack.Screen
-        name="Briguva "
+        name="Briguva"
         component={Briguva}
         options={{ headerShown: false }}
       />
@@ -211,6 +212,11 @@ export default function RoutesStack() {
       <Stack.Screen
         name="RecuperarSenha"
         component={RecuperarSenha}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Finalizado"
+        component={Finalizado}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -1,4 +1,3 @@
-// Import react-native
 import {
   StyleSheet,
   Text,
@@ -6,43 +5,55 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Modal,
 } from "react-native";
-
-// Import useFonts
 import { useFonts } from "expo-font";
-
 import { useNavigation } from "@react-navigation/native";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
-
 import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { firestore } from "../services/firebase"; // Importe o Firestore
+import { firestore, auth } from "../services/firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { Categorias } from "../database/items";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../CartReducer";
 
 export default function CookiesChoc() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false); // Adiciona o estado para verificar se é favorito
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  // Defina o item como o produto que você quer mostrar
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const itemfav = {
-    id: "17", // Exemplo de ID do produto
+    id: "17",
     name: "Cookie Chocolate",
     valor: 15.0,
     description:
-      " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
+      "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
+  };
+
+  const handleAddToCart = () => {
+    const item = Categorias[4]?.items.find((product) => product.id === "18");
+    if (item) {
+      dispatch(addToCart(item));
+      navigation.navigate("Carrinho");
+    } else {
+      console.error("Item não encontrado");
+    }
   };
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const storage = getStorage(); // Inicializa o storage
-        const imageRef = ref(storage, "ckchoc.png"); // Referência à imagem no Firebase Storage
-        const url = await getDownloadURL(imageRef); // Obtém a URL da imagem
-        setImageUrl(url); // Armazena a URL da imagem no estado
-        setLoading(false); // Para o carregamento
+        const storage = getStorage();
+        const imageRef = ref(storage, "ckchoc.png");
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar a imagem do Firebase Storage:", error);
         setLoading(false);
@@ -53,56 +64,63 @@ export default function CookiesChoc() {
       try {
         const favoriteRef = doc(firestore, "favorites", itemfav.id);
         const docSnap = await getDoc(favoriteRef);
-        setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
+        setIsFavorite(docSnap.exists());
       } catch (error) {
         console.error("Erro ao verificar favoritos: ", error);
       }
     };
 
-    fetchImage(); // Busca a imagem ao carregar o componente
-    checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
+    fetchImage();
+    checkFavoriteStatus();
   }, []);
 
   const handleToggleFavorite = async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      setShowAlert(true);
+      return;
+    }
+
     try {
-      const favoriteRef = doc(firestore, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
-        // Se o item já existe nos favoritos, remove
         await deleteDoc(favoriteRef);
-        setIsFavorite(false); // Atualiza o estado
+        setIsFavorite(false);
       } else {
-        // Adiciona o item aos favoritos com a URL da imagem
         await setDoc(favoriteRef, {
           name: itemfav.name,
           valor: itemfav.valor,
-          image: imageUrl, // Adiciona a URL da imagem
+          image: imageUrl,
           description: itemfav.description,
         });
-        setIsFavorite(true); // Atualiza o estado
+        setIsFavorite(true);
       }
 
-      navigation.navigate("Favoritos"); // Navega para a tela de favoritos
+      navigation.navigate("Favoritos");
     } catch (error) {
       console.error("Erro ao modificar favoritos: ", error);
     }
   };
 
-  const navigation = useNavigation();
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
   });
 
-  if (!font) {
-    return null;
-  }
+  if (!font) return null;
 
   return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundocokchoc.png")}
+        source={require("../assets/image/cookiechoc.png")}
       />
       <TouchableOpacity
         style={styles.seta}
@@ -111,110 +129,147 @@ export default function CookiesChoc() {
         <AntDesign name="left" size={24} color="black" />
       </TouchableOpacity>
 
-      <Text style={styles.txt}>COOKIES DE CHOCOLATE </Text>
-
+      <Text style={styles.txt}>COOKIE DE CHOCOLATE </Text>
       <View style={styles.row}></View>
-
       <Image
         style={styles.cookiechoc}
         source={require("../assets/image/ckchoc.png")}
       />
-
       <Text style={styles.txtcookies}>
         Para os verdadeiros chocólatras, esses cookies intensamente saborosos
         são feitos com chocolate amargo, oferecendo um equilíbrio perfeito entre
         doce e amargo.
       </Text>
+
       <View style={styles.elementos}>
-        <TouchableOpacity
-          style={styles.car}
-          onPress={() => navigation.navigate("Carrinho")}
-        >
+        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
         <Text style={styles.txtvalor}>$15,00</Text>
 
-        <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
-        >
+        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
+            <AntDesign name="heart" size={35} color="black" />
           ) : (
-            <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
+            <EvilIcons name="heart" size={55} color="black" />
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Modal de Alerta para Login */}
+      <Modal
+        transparent={true}
+        visible={showAlert}
+        animationType="fade"
+        onRequestClose={() => setShowAlert(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>Atenção!</Text>
+            <Text style={styles.alertMessage}>
+              Você precisa estar logado para favoritar um produto.
+            </Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowAlert(false)}
+            >
+              <Text style={styles.alertButtonText}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa a tela inteira
+    flex: 1,
     alignItems: "center",
     position: "relative",
   },
-
-  row: {
-    width: "50%", // Largura da linha
-    height: 2, // Grossura da linha
-    backgroundColor: "brown", // Cor da linha
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: "17%",
-  },
-
   txt: {
-    fontSize: 30, // Tamanho do texto
-    fontFamily: "Rokkitt", // Fonte personalizada
-    zIndex: 5, // Garante que o texto fique na frente de outros elementos
-    width: "60%", // Largura do texto
-    textAlign: "center", // Centraliza o texto
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    fontSize: 30,
+    fontFamily: "Rokkitt",
+    zIndex: 5,
+    width: "60%",
+    textAlign: "center",
+    position: "absolute",
     top: "10%",
   },
-
   txtcookies: {
-    fontSize: 20, // Tamanho do texto
+    fontSize: 20,
     top: "65%",
-    fontFamily: "Rokkitt", // Fonte personalizada
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    textAlign: "center", // Centraliza o texto
-    width: 350, // Largura do texto
+    fontFamily: "Rokkitt",
+    position: "absolute",
+    textAlign: "center",
+    width: 350,
   },
-
   cookiechoc: {
-    width: 300, // Largura da imagem
-    height: 500, // Altura da imagem
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: 300,
+    height: 500,
+    position: "absolute",
     top: "15%",
   },
-
   fundo: {
-    width: "100%", // Largura da imagem de fundo
-    height: "100%", // Altura da imagem de fundo
+    width: "100%",
+    height: "100%",
   },
-
   elementos: {
     position: "absolute",
-    left: 0, // Alinha a esquerda
+    left: 0,
     bottom: 90,
-    height: 60, // Altura fixa
-    width: "100%", // Largura fixa
-    flexDirection: "row", // Disposição dos elementos em linha
-    justifyContent: "space-evenly", // Espaço igual entre os elementos
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
-
   txtvalor: {
-    fontSize: 25, // Tamanho do texto
-    fontWeight: "700", // Fonte personalizada
+    fontSize: 25,
+    fontWeight: "700",
   },
-
   seta: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    position: "absolute",
     top: 100,
-    left: 10, // Alinha a esquerda
+    left: 10,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  alertBox: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    elevation: 5,
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#ed8e8e",
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 20,
+  },
+  alertButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ed8e8e",
+    borderRadius: 5,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

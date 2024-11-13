@@ -25,13 +25,15 @@ export default function CarrinhoFN() {
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [error, setError] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
+
 
   const [modalVisible, setModalVisible] = useState(false);
   const [pixModalVisible, setPixModalVisible] = useState(false); 
   const [valorPago, setValorPago] = useState("");
 
-  const [pagamentoSelecionado, setPagamentoSelecionado] = useState(null); // Estado para controlar o método de pagamento
-  
+  const [pagamentoSelecionado, setPagamentoSelecionado] = useState(null);
 
   const buscarCep = () => {
     setError("");
@@ -58,51 +60,31 @@ export default function CarrinhoFN() {
 
   const handleConfirmarPagamento = () => {
     console.log(`Valor pago: R$ ${valorPago}`);
-    setModalVisible(false); // Fecha o modal
+    setModalVisible(false);
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#f5f3f3" }}>
-      {/* Título do carrinho */}
-      <View
-        style={{
-          width: "100%",
-          height: "10%",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 30,
-            fontFamily: "League",
-            textAlign: "center",
-          }}
-        >
+      <View style={{
+        width: "100%", height: "10%", justifyContent: "flex-end", alignItems: "center",
+      }}>
+        <Text style={{
+          fontSize: 30, fontFamily: "League", textAlign: "center",
+        }}>
           MEU CARRINHO
         </Text>
       </View>
 
-      <ScrollView style={{ flex: 1 }}>
-        {/* Buscador de CEP */}
+      <View style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text
-            style={{
-              fontSize: 25,
-              fontFamily: "League",
-              padding: 20,
-            }}
-          >
+          <Text style={{
+            fontSize: 25, fontFamily: "League", padding: 20,
+          }}>
             Entregar no endereço:
           </Text>
-          <View
-            style={{
-              justifyContent: "space-between",
-              flexDirection: "row",
-              padding: 20,
-              bottom: 20,
-            }}
-          >
+          <View style={{
+            justifyContent: "space-between", flexDirection: "row", padding: 20, bottom: 20,
+          }}>
             <TextInput
               style={styles.input}
               placeholder="Digite o CEP"
@@ -111,22 +93,15 @@ export default function CarrinhoFN() {
               maxLength={8}
               onChangeText={setCep}
             />
-
             <TouchableOpacity style={styles.button} onPress={buscarCep}>
               <Text style={styles.buttonText}>BUSCAR</Text>
             </TouchableOpacity>
           </View>
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
-          {/* Campos de endereço */}
-          <View
-            style={{
-              justifyContent: "space-between",
-              flexDirection: "row",
-              paddingHorizontal: 20,
-              bottom: 20,
-            }}
-          >
+          <View style={{
+            justifyContent: "space-between", flexDirection: "row", paddingHorizontal: 20, bottom: 20,
+          }}>
             <TextInput
               style={styles.resultInput}
               value={logradouro}
@@ -142,14 +117,9 @@ export default function CarrinhoFN() {
               editable={true}
             />
           </View>
-          <View
-            style={{
-              justifyContent: "space-between",
-              flexDirection: "row",
-              padding: 20,
-              bottom: 20,
-            }}
-          >
+          <View style={{
+            justifyContent: "space-between", flexDirection: "row", padding: 20, bottom: 20,
+          }}>
             <TextInput
               style={styles.resultInput}
               value={cidade}
@@ -160,6 +130,7 @@ export default function CarrinhoFN() {
             <TextInput
               style={styles.resultInput}
               placeholder="Numero"
+              onChangeText={setNumero}
               editable={true}
             />
           </View>
@@ -167,33 +138,22 @@ export default function CarrinhoFN() {
             <TextInput
               style={styles.resultInput2}
               placeholder="Complemento"
+              onChangeText={setComplemento}
               editable={true}
             />
           </View>
         </View>
 
-        {/* Pagar na entrega */}
         <View>
-          <Text
-            style={{
-              fontSize: 25,
-              fontFamily: "League",
-              paddingHorizontal: 40,
-              bottom: 20,
-            }}
-          >
+          <Text style={{
+            fontSize: 25, fontFamily: "League", paddingHorizontal: 40, bottom: 20,
+          }}>
             Pagar na entrega:
           </Text>
-          <View
-            style={{
-              justifyContent: "space-around",
-              flexDirection: "column",
-              height: "45%",
-              alignItems: "center",
-              bottom: 20,
-            }}
-          >
-            <TouchableOpacity
+          <View style={{
+            justifyContent: "space-around", flexDirection: "column", height: "45%", alignItems: "center", bottom: 20,
+          }}>
+           <TouchableOpacity
               onPress={() => {
                 setPagamentoSelecionado("dinheiro"); // Define o método de pagamento como "dinheiro"
                 setModalVisible(true); // Abre o modal
@@ -205,133 +165,118 @@ export default function CarrinhoFN() {
               ]}
             >
               <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-              <FontAwesome name="money" size={20} color="black"  style={{ marginRight: 10 }} />
-  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>DINHEIRO</Text>
-</View>
-
-              
+                <FontAwesome name="money" size={20} color="black" style={{ marginRight: 10 }} />
+                <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>DINHEIRO</Text>
+              </View>
             </TouchableOpacity>
-           
+
             <TouchableOpacity
               onPress={() => setPagamentoSelecionado("credito")}
               style={[
                 styles.pagamentoButton,
-                pagamentoSelecionado === "credito" &&
-                  styles.pagamentoSelecionado, // Altera a cor se selecionado
+                pagamentoSelecionado === "credito" && styles.pagamentoSelecionado,
               ]}
             >
               <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-  <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
-  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE CRÉDITO</Text>
-</View>
-
+                <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
+                <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE CRÉDITO</Text>
+              </View>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               onPress={() => setPagamentoSelecionado("debito")}
               style={[
                 styles.pagamentoButton,
-                pagamentoSelecionado === "debito" &&
-                  styles.pagamentoSelecionado, // Altera a cor se selecionado
+                pagamentoSelecionado === "debito" && styles.pagamentoSelecionado,
               ]}
             >
               <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-  <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
-  <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE DÉBITO</Text>
-</View>
-
-              
+                <AntDesign name="creditcard" size={20} color="black" style={{ marginRight: 10 }} />
+                <Text style={[styles.pagamentoText, { marginLeft: 10 }]}>CARTÃO DE DÉBITO</Text>
+              </View>
             </TouchableOpacity>
           </View>
-          
-            <Text
-              style={{
-                fontSize: 25,
-                fontFamily: "League",
-                paddingHorizontal: 40,
-              }}
-            >
-              Novo método de pagamento:
-            </Text>
-            <View style={{  justifyContent:"center", alignItems:"center", top:10 }}>
-            <View style={{ width: "70%", justifyContent:"center", alignItems:"center", }}>
-              <Text style={{ fontSize: 18, textAlign: "center", }}>
-                Rápido, seguro e sem complicação: pague com Pix e finalize sua
-                compra em segundos!
+
+          <Text style={{
+            fontSize: 25, fontFamily: "League", paddingHorizontal: 40,
+          }}>
+            Novo método de pagamento:
+          </Text>
+          <View style={{ justifyContent: "center", alignItems: "center", top: 10 }}>
+            <View style={{ width: "70%", justifyContent: "center", alignItems: "center" }}>
+              <Text style={{ fontSize: 18, textAlign: "center" }}>
+                Rápido, seguro e sem complicação: pague com Pix e finalize sua compra em segundos!
               </Text>
             </View>
-            
             <TouchableOpacity
-              onPress={() => {
-                setPixModalVisible(true); // abre o modal do pix
-              }}
-              style={{ justifyContent:"center",
-              alignItems:"center",
-                backgroundColor: "#ed8e8e",
-                borderRadius: 10,
-                height:40,
-                width:"48%",
-                top:10,
+              onPress={() => setPixModalVisible(true)}
+              style={{
+                justifyContent: "center", alignItems: "center",
+                backgroundColor: "#ed8e8e", borderRadius: 10,
+                height: 40, width: "48%", top: 10,
               }}
             >
-              <Text style={{fontFamily:"league", fontSize:17, color: "#fff", fontWeight: "bold",}}>PAGUE AGORA COM PIX</Text>
+              <Text style={{ fontFamily: "League", fontSize: 17, color: "#fff", fontWeight: "bold" }}>
+                PAGUE AGORA COM PIX
+              </Text>
             </TouchableOpacity>
-            </View>
-            <Modal
-        animationType="slide"
-        transparent={true}
-        visible={pixModalVisible}
-        onRequestClose={() => setPixModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Pague com Pix</Text>
-            <Text style={styles.modalText2}>
-              Escaneie o QR Code abaixo para concluir seu pagamento.
-            </Text>
-            <QRCode
-              value={qrValue || "Pagamento efetuado"}
-              size={150}
-              color="black"
-              backgroundColor="white"
-              logoSize={30}
-              logoMargin={2}
-              logoBorderRadius={15}
-              logoBackgroundColor="yellow"
-            />
-            <Pressable
-              style={[styles.buttonModal, styles.buttonClose]}
-              onPress={() => setPixModalVisible(false)}
-            >
-              <Text style={styles.textStyle}>Fechar</Text>
-            </Pressable>
           </View>
-        </View>
-      </Modal>
-      <View style={{ top: 35 ,alignItems: "flex-end", right: 25 }}>
-      <TouchableOpacity
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={pixModalVisible}
+            onRequestClose={() => setPixModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Pague com Pix</Text>
+                <Text style={styles.modalText2}>
+                  Escaneie o QR Code abaixo para concluir seu pagamento.
+                </Text>
+                <QRCode
+                  value={qrValue || "Pagamento efetuado"}
+                  size={150}
+                  color="black"
+                  backgroundColor="white"
+                  logoSize={30}
+                  logoMargin={2}
+                  logoBorderRadius={15}
+                  logoBackgroundColor="yellow"
+                />
+                <Pressable
+                  style={[styles.buttonModal, styles.buttonClose]}
+                  onPress={() => setPixModalVisible(false)}
+                >
+                  <Text style={styles.textStyle}>Fechar</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+
+          <View style={{ top: 35, alignItems: "flex-end", right: 25 }}>
+            <TouchableOpacity
               onPress={() => navigation.navigate("NotaFiscal", {
                 valorPago: valorPago,
                 pagamentoSelecionado: pagamentoSelecionado,
-              })
-              }
-              style={{ width: "40%" }}
+                logradouro: logradouro,
+                bairro: bairro,
+                cidade: cidade,
+                cep: cep,
+                numero: numero,
+                complemento: complemento
+              })}
+              style={{ width: "30%", backgroundColor:"#ed8585", borderRadius:90, height:"24", justifyContent: "center", }}
             >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  color: "black",
-                }}
-              >
-                CONTINUAR <AntDesign name="right" size={20} color="black" />
+              <Text style={{
+                fontSize: 18, fontWeight: "bold", textAlign: "center", color: "white",
+              }}>
+                CONTINUAR 
               </Text>
             </TouchableOpacity>
+          </View>
         </View>
-        </View>
-      </ScrollView>
-
+      </View>
       {/* Modal de pagamento */}
       <Modal
         animationType="slide"
@@ -363,10 +308,12 @@ export default function CarrinhoFN() {
           </View>
         </View>
       </Modal>
-      
     </View>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {

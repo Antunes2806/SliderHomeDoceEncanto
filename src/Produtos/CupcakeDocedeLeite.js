@@ -1,4 +1,3 @@
-// Import react-native
 import {
   StyleSheet,
   Text,
@@ -6,111 +5,103 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Modal,
 } from "react-native";
-
-// Import useFonts
 import { useFonts } from "expo-font";
-
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { Categorias } from "../database/items";
 import { addToCart } from "../../CartReducer";
+import { Categorias } from "../database/items";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { firestore } from "../services/firebase"; // Importe o Firestore
+import { firestore, auth } from "../services/firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function CupcakeDocedeLeite() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false); // Adiciona o estado para verificar se é favorito
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // Alerta de login
 
-  // Defina o item como o produto que você quer mostrar
   const itemfav = {
-    id: "10", // Exemplo de ID do produto
+    id: "10", // ID do produto
     name: "Cupcake Doce de Leite",
     valor: 15.0,
     description:
-      " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
+      "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const storage = getStorage(); // Inicializa o storage
-        const imageRef = ref(storage, "cupcakedl.png"); // Referência à imagem no Firebase Storage
-        const url = await getDownloadURL(imageRef); // Obtém a URL da imagem
-        setImageUrl(url); // Armazena a URL da imagem no estado
-        setLoading(false); // Para o carregamento
+        const storage = getStorage();
+        const imageRef = ref(storage, "cupcakedl.png");
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar a imagem do Firebase Storage:", error);
         setLoading(false);
       }
     };
 
-    const checkFavoriteStatus = async () => {
-      try {
-        const favoriteRef = doc(firestore, "favorites", itemfav.id);
-        const docSnap = await getDoc(favoriteRef);
-        setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
-      } catch (error) {
-        console.error("Erro ao verificar favoritos: ", error);
-      }
-    };
-
-    fetchImage(); // Busca a imagem ao carregar o componente
-    checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
+    fetchImage(); // Chama a função para buscar a imagem
   }, []);
 
   const handleToggleFavorite = async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      setShowAlert(true); // Exibe o alerta se o usuário não estiver logado
+      return;
+    }
+
     try {
-      const favoriteRef = doc(firestore, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
-        // Se o item já existe nos favoritos, remove
         await deleteDoc(favoriteRef);
-        setIsFavorite(false); // Atualiza o estado
+        setIsFavorite(false);
       } else {
-        // Adiciona o item aos favoritos com a URL da imagem
         await setDoc(favoriteRef, {
           name: itemfav.name,
           valor: itemfav.valor,
-          image: imageUrl, // Adiciona a URL da imagem
+          image: imageUrl,
           description: itemfav.description,
         });
-        setIsFavorite(true); // Atualiza o estado
+        setIsFavorite(true);
       }
-
-      navigation.navigate("Favoritos"); // Navega para a tela de favoritos
     } catch (error) {
-      console.error("Erro ao modificar favoritos: ", error);
+      console.error("Erro ao modificar favoritos:", error);
     }
   };
 
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const [font] = useFonts({
-    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
-  });
-
-  // Pega o item específico de "Donuts de Morango" e verifica se existe
-  const item = Categorias[2]?.items.find((product) => product.id === "10");
-
   const handleAddToCart = () => {
+    const item = Categorias[2]?.items.find((product) => product.id === "10");
     if (item) {
-      // Verifica se o item não é undefined
-      dispatch(addToCart(item));
+      dispatch(addToCart(item)); // Adiciona o item ao carrinho
       navigation.navigate("Carrinho"); // Navega para o carrinho
     } else {
       console.error("Item não encontrado");
     }
   };
-  if (!font) {
-    return null;
-  }
+
+  const [font] = useFonts({
+    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
+  });
+
+  if (!font) return null;
 
   return (
     <View style={styles.container}>
@@ -135,9 +126,10 @@ export default function CupcakeDocedeLeite() {
 
       <Text style={styles.txtcupcake}>
         Um clássico brasileiro, com uma massa leve combinada com um recheio
-        generoso de doce de leite, coroado com uma cobertura que derrete na boca
-        !
+        generoso de doce de leite, coroado com uma cobertura que derrete na
+        boca!
       </Text>
+
       <View style={styles.elementos}>
         <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
@@ -145,86 +137,135 @@ export default function CupcakeDocedeLeite() {
 
         <Text style={styles.txtvalor}>$15,00</Text>
 
-        <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
-        >
+        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
+            <AntDesign name="heart" size={35} color="black" />
           ) : (
-            <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
+            <EvilIcons name="heart" size={55} color="black" />
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Modal de Alerta para Login */}
+      <Modal
+        transparent={true}
+        visible={showAlert}
+        animationType="fade"
+        onRequestClose={() => setShowAlert(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>Atenção!</Text>
+            <Text style={styles.alertMessage}>
+              Você precisa estar logado para favoritar um produto.
+            </Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowAlert(false)}
+            >
+              <Text style={styles.alertButtonText}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa a tela inteira
+    flex: 1,
     alignItems: "center",
     position: "relative",
   },
-
-  row: {
-    width: "50%", // Largura da linha
-    height: 2, // Grossura da linha
-    backgroundColor: "brown", // Cor da linha
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: "17%",
-  },
-
   txt: {
-    fontSize: 30, // Tamanho do texto
-    fontFamily: "Rokkitt", // Fonte personalizada
-    zIndex: 5, // Garante que o texto fique na frente de outros elementos
-    width: "60%", // Largura do texto
-    textAlign: "center", // Centraliza o texto
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    fontSize: 30,
+    fontFamily: "Rokkitt",
+    zIndex: 5,
+    width: "60%",
+    textAlign: "center",
+    position: "absolute",
     top: "10%",
+    color: "#333",
   },
-
   txtcupcake: {
-    fontSize: 20, // Tamanho do texto
+    fontSize: 20,
     top: "65%",
-    fontFamily: "Rokkitt", // Fonte personalizada
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    textAlign: "center", // Centraliza o texto
-    width: 400,
+    fontFamily: "Rokkitt",
+    position: "absolute",
+    textAlign: "center",
+    width: 350,
+    color: "#555",
   },
-
   cupcakededocedeleite: {
-    width: 300, // Largura da imagem
-    height: 500, // Altura da imagem
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: 300,
+    height: 500,
+    position: "absolute",
     top: "15%",
   },
-
   fundo: {
-    width: "100%", // Largura da imagem de fundo
-    height: "100%", // Altura da imagem de fundo
+    width: "100%",
+    height: "100%",
   },
-
   elementos: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    left: 0, // Alinha a esquerda
+    position: "absolute",
+    left: 0,
     bottom: 90,
-    height: 60, // Altura fixa
-    width: "100%", // Largura fixa
-    flexDirection: "row", // Disposição dos elementos em linha
-    justifyContent: "space-evenly", // Espaço igual entre os elementos
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
-
   txtvalor: {
-    fontSize: 25, // Tamanho do texto
-    fontWeight: "700", // Deixa o texto em negrito
+    fontSize: 25,
+    fontWeight: "700",
+    color: "#333",
   },
-
   seta: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    position: "absolute",
     top: 100,
-    left: 10, // Alinha a esquerda
+    left: 10,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 3,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  alertBox: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    elevation: 5,
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#ed8e8e",
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 20,
+  },
+  alertButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ed8e8e",
+    borderRadius: 5,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

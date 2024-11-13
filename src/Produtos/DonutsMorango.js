@@ -6,30 +6,30 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
-  Alert,
+  Modal,
   ImageBackground,
 } from "react-native";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { firestore } from "../services/firebase"; // Importe o Firestore
+import { firestore } from "../services/firebase";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../CartReducer";
 import { useNavigation } from "@react-navigation/native";
 import { Categorias } from "../database/items";
+import { auth } from "../services/firebase";
 
 export default function DonutsMorango() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false); // Adiciona o estado para verificar se é favorito
-
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // Estado para exibir alerta customizado
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  // Defina o item como o produto que você quer mostrar
   const itemfav = {
-    id: "0", // Exemplo de ID do produto
+    id: "0",
     name: "Donuts de Morango",
     valor: 14.5,
     description: "Um sabor fresco e doce com cobertura de morango.",
@@ -38,11 +38,11 @@ export default function DonutsMorango() {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const storage = getStorage(); // Inicializa o storage
-        const imageRef = ref(storage, "dnt.png"); // Referência à imagem no Firebase Storage
-        const url = await getDownloadURL(imageRef); // Obtém a URL da imagem
-        setImageUrl(url); // Armazena a URL da imagem no estado
-        setLoading(false); // Para o carregamento
+        const storage = getStorage();
+        const imageRef = ref(storage, "dnt.png");
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar a imagem do Firebase Storage:", error);
         setLoading(false);
@@ -53,17 +53,16 @@ export default function DonutsMorango() {
       try {
         const favoriteRef = doc(firestore, "favorites", itemfav.id);
         const docSnap = await getDoc(favoriteRef);
-        setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
+        setIsFavorite(docSnap.exists());
       } catch (error) {
         console.error("Erro ao verificar favoritos: ", error);
       }
     };
 
-    fetchImage(); // Busca a imagem ao carregar o componente
-    checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
+    fetchImage();
+    checkFavoriteStatus();
   }, []);
 
-  // Pega o item específico de "Donuts de Morango" e verifica se existe
   const item = Categorias[0]?.items.find((product) => product.id === "0");
   const handleAddToCart = () => {
     if (item) {
@@ -75,26 +74,40 @@ export default function DonutsMorango() {
   };
 
   const handleToggleFavorite = async () => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      setShowAlert(true); // Exibe o alerta customizado
+      return;
+    }
+
     try {
-      const favoriteRef = doc(firestore, "favorites", itemfav.id);
+      // Acesse a subcoleção "favorites" do usuário logado
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
-        // Se o item já existe nos favoritos, remove
+        // Se o item já está nos favoritos, remove-o
         await deleteDoc(favoriteRef);
-        setIsFavorite(false); // Atualiza o estado
+        setIsFavorite(false);
       } else {
-        // Adiciona o item aos favoritos com a URL da imagem
+        // Adiciona o item aos favoritos do usuário
         await setDoc(favoriteRef, {
           name: itemfav.name,
           valor: itemfav.valor,
-          image: imageUrl, // Adiciona a URL da imagem
+          image: imageUrl,
           description: itemfav.description,
         });
-        setIsFavorite(true); // Atualiza o estado
+        setIsFavorite(true);
       }
 
-      navigation.navigate("Favoritos"); // Navega para a tela de favoritos
+      navigation.navigate("Favoritos");
     } catch (error) {
       console.error("Erro ao modificar favoritos: ", error);
     }
@@ -104,7 +117,7 @@ export default function DonutsMorango() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntmor.png")}
+        source={require("../assets/image/donutsmor.png")}
       />
       <TouchableOpacity
         style={styles.seta}
@@ -135,17 +148,37 @@ export default function DonutsMorango() {
 
         <Text style={styles.txtvalor}>$15,00</Text>
 
-        <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
-        >
+        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
+            <AntDesign name="heart" size={35} color="black" />
           ) : (
-            <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
+            <EvilIcons name="heart" size={55} color="black" />
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Modal customizado para alerta */}
+      <Modal
+        transparent={true}
+        visible={showAlert}
+        animationType="fade"
+        onRequestClose={() => setShowAlert(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>Atenção!</Text>
+            <Text style={styles.alertMessage}>
+              Você precisa estar logado para favoritar um produto.
+            </Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowAlert(false)}
+            >
+              <Text style={styles.alertButtonText}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -155,65 +188,94 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
-
   row: {
-    width: "50%", // Largura da linha
-    height: 2, // Grossura da linha
-    backgroundColor: "lightpink", // Cor da linha
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: "50%",
+    height: 2,
+    backgroundColor: "lightpink",
+    position: "absolute",
     top: "22%",
   },
-
   txt: {
-    fontSize: 30, // Tamanho do texto
-    fontFamily: "Rokkitt", // Fonte personalizada
+    fontSize: 30,
+    fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "60%", // Largura do texto
-    textAlign: "center", // Centraliza o texto
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: "60%",
+    textAlign: "center",
+    position: "absolute",
     top: "15%",
   },
-
   txtdnt: {
-    fontSize: 20, // Tamanho da fonte
-    fontFamily: "Rokkitt", // Fonte personalizada
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    textAlign: "center", // Centraliza o texto
-    width: 350, // Largura do texto
+    fontSize: 20,
+    fontFamily: "Rokkitt",
+    position: "absolute",
+    textAlign: "center",
+    width: 350,
     top: "65%",
   },
-
   donutsmorango: {
-    width: 600, // Largura da imagem
-    height: 600, // Altura da imagem
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: "25%",
+    width: 600,
+    height: 550,
+    position: "absolute",
+    top: "30%",
+    right: "-15%",
   },
-
   fundo: {
-    width: "100%", // Largura da imagem de fundo
-    height: "100%", // Altura da imagem de fundo
+    width: "100%",
+    height: "100%",
   },
-
   elementos: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    left: 0, // Alinha a esquerda
+    position: "absolute",
+    left: 0,
     bottom: 90,
-    height: 60, // Altura fixa
-    width: "100%", // Largura fixa
-    flexDirection: "row", // Disposição dos elementos em linha
-    justifyContent: "space-evenly", // Espaço igual entre os elementos
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
-
   txtvalor: {
-    fontSize: 25, // Tamanho do texto
-    fontWeight: "700", // Fonte personalizada
+    fontSize: 25,
+    fontWeight: "700",
+  },
+  seta: {
+    position: "absolute",
+    top: 100,
+    left: 10,
   },
 
-  seta: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: 100,
-    left: 10, // Alinha a esquerda
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  alertBox: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#ed8e8e",
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 20,
+  },
+  alertButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ed8e8e",
+    borderRadius: 5,
+  },
+  alertButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

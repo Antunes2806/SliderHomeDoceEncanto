@@ -152,7 +152,7 @@ export const Categorias = [
         rating: "5.0",
         price: 299,
         isTopOfTheWeek: true,
-        image: require("../assets/image/cupcakemor.png"),
+        image: require("../assets/image/cupcake.png"),
         size: "Medium Glass",
         crust: "Small Ice",
         delivery: 10,
@@ -308,7 +308,7 @@ export const Categorias = [
       },
 
       {
-        id: "17",
+        id: "18",
         name: "COOKIE CHOCOLATE",
         weight: 150,
         rating: "4.2",
@@ -323,7 +323,7 @@ export const Categorias = [
       },
 
       {
-        id: "18",
+        id: "19",
         name: "COOKIE DUO",
         weight: 150,
         rating: "4.2",

@@ -1,4 +1,3 @@
-// Import react-native
 import {
   StyleSheet,
   Text,
@@ -6,110 +5,103 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Modal,
 } from "react-native";
-
-// Import useFonts
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { Categorias } from "../database/items";
 import { addToCart } from "../../CartReducer";
+import { Categorias } from "../database/items";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { firestore } from "../services/firebase"; // Importe o Firestore
+import { firestore, auth } from "../services/firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default function SorveteMorango() {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false); // Adiciona o estado para verificar se é favorito
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // Modal para alerta de login
 
-  // Defina o item como o produto que você quer mostrar
   const itemfav = {
-    id: "5", // Exemplo de ID do produto
+    id: "5",
     name: "Sorvete Morango",
     valor: 15.0,
     description:
-      " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
+      "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const storage = getStorage(); // Inicializa o storage
-        const imageRef = ref(storage, "svtmor.png"); // Referência à imagem no Firebase Storage
-        const url = await getDownloadURL(imageRef); // Obtém a URL da imagem
-        setImageUrl(url); // Armazena a URL da imagem no estado
-        setLoading(false); // Para o carregamento
+        const storage = getStorage();
+        const imageRef = ref(storage, "svtmor.png");
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar a imagem do Firebase Storage:", error);
         setLoading(false);
       }
     };
 
-    const checkFavoriteStatus = async () => {
-      try {
-        const favoriteRef = doc(firestore, "favorites", itemfav.id);
-        const docSnap = await getDoc(favoriteRef);
-        setIsFavorite(docSnap.exists()); // Atualiza o estado se o item está nos favoritos
-      } catch (error) {
-        console.error("Erro ao verificar favoritos: ", error);
-      }
-    };
-
-    fetchImage(); // Busca a imagem ao carregar o componente
-    checkFavoriteStatus(); // Verifica o status do favorito ao carregar o componente
+    fetchImage();
   }, []);
 
   const handleToggleFavorite = async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      setShowAlert(true);
+      return;
+    }
+
     try {
-      const favoriteRef = doc(firestore, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
-        // Se o item já existe nos favoritos, remove
         await deleteDoc(favoriteRef);
-        setIsFavorite(false); // Atualiza o estado
+        setIsFavorite(false);
       } else {
-        // Adiciona o item aos favoritos com a URL da imagem
         await setDoc(favoriteRef, {
           name: itemfav.name,
           valor: itemfav.valor,
-          image: imageUrl, // Adiciona a URL da imagem
+          image: imageUrl,
           description: itemfav.description,
         });
-        setIsFavorite(true); // Atualiza o estado
+        setIsFavorite(true);
       }
-
-      navigation.navigate("Favoritos"); // Navega para a tela de favoritos
     } catch (error) {
-      console.error("Erro ao modificar favoritos: ", error);
+      console.error("Erro ao modificar favoritos:", error);
     }
   };
 
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-
-  const [font] = useFonts({
-    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
-  });
-  const item = Categorias[1]?.items.find((product) => product.id === "5");
-
   const handleAddToCart = () => {
+    const item = Categorias[1]?.items.find((product) => product.id === "5");
     if (item) {
-      // Verifica se o item não é undefined
       dispatch(addToCart(item));
-      navigation.navigate("Carrinho"); // Navega para o carrinho
+      navigation.navigate("Carrinho");
     } else {
       console.error("Item não encontrado");
     }
   };
 
-  if (!font) {
-    return null;
-  }
+  const [font] = useFonts({
+    Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
+  });
+
+  if (!font) return null;
 
   return (
     <View style={styles.container}>
@@ -118,7 +110,7 @@ export default function SorveteMorango() {
         source={require("../assets/image/fundosvtmor.png")}
       />
       <TouchableOpacity
-        style={styles.seta1}
+        style={styles.seta}
         onPress={() => navigation.navigate("Produtos")}
       >
         <AntDesign name="left" size={24} color="black" />
@@ -126,17 +118,13 @@ export default function SorveteMorango() {
 
       <Text style={styles.txt}>SORVETE DE MORANGO</Text>
       <View style={styles.row}></View>
-
       <Image
         style={styles.sorvetemorango}
         source={require("../assets/image/svtmor.png")}
       />
-
-      <Image style={styles.seta} source={require("../assets/image/seta.png")} />
-
       <Text style={styles.txtsorvete}>
         Um sabor refrescante feito com morangos frescos e maduros, esse sorvete
-        traz um sabor doce e natural, perfeito para quem ama frutas !
+        traz um sabor doce e natural, perfeito para quem ama frutas!
       </Text>
 
       <View style={styles.elementos}>
@@ -146,100 +134,146 @@ export default function SorveteMorango() {
 
         <Text style={styles.txtvalor}>$15,00</Text>
 
-        <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
-        >
+        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
+            <AntDesign name="heart" size={35} color="black" />
           ) : (
-            <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
+            <EvilIcons name="heart" size={55} color="black" />
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Modal de Alerta para Login */}
+      <Modal
+        transparent={true}
+        visible={showAlert}
+        animationType="fade"
+        onRequestClose={() => setShowAlert(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>Atenção!</Text>
+            <Text style={styles.alertMessage}>
+              Você precisa estar logado para favoritar um produto.
+            </Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowAlert(false)}
+            >
+              <Text style={styles.alertButtonText}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa a tela inteira
+    flex: 1,
     alignItems: "center",
     position: "relative",
   },
-
-  txtsorvete: {
-    fontSize: 15, // Tamanho do texto
-    top: "55%",
-    left: "55%", // Alinha a esquerda
-    width: "45%", // Largura do texto
-    fontFamily: "Rokkitt", // Fonte personalizada
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    textAlign: "center", // Centraliza o texto
-  },
-
   txt: {
-    fontSize: 30, // Tamanho do texto
-    fontFamily: "Rokkitt", // Fonte personalizada
-    zIndex: 5, // Garante que o texto fique na frente de outros elementos
-    width: "70%", // Largura do texto
-    textAlign: "center", // Centraliza o texto
-    transform: [{ rotate: "-90deg" }], // Rotaciona o texto
+    fontSize: 30,
+    fontFamily: "Rokkitt",
+    zIndex: 5,
+    width: "70%",
+    textAlign: "center",
+    transform: [{ rotate: "-90deg" }],
     top: "50%",
-    right: "55%", // Alinha a direita
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    right: "55%",
+    position: "absolute",
   },
-
+  txtsorvete: {
+    fontSize: 15,
+    top: "55%",
+    left: "55%",
+    width: "45%",
+    fontFamily: "Rokkitt",
+    position: "absolute",
+    textAlign: "center",
+  },
   row: {
-    width: "75%", // Largura da linha
-    height: 2, // Grossura da linha
-    backgroundColor: "lightpink", // Cor da linha
-    zIndex: 5, // Garante que o texto fique na frente de outros elementos
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: "75%",
+    height: 2,
+    backgroundColor: "lightpink",
+    zIndex: 5,
+    position: "absolute",
     top: "52%",
-    right: "50%", // Alinha a direita
-    transform: [{ rotate: "-90deg" }], // Rotaciona a linha
+    right: "50%",
+    transform: [{ rotate: "-90deg" }],
   },
-
   fundo: {
-    width: "100%", // Largura da imagem de fundo
-    height: "100%", // Altura da imagem de fundo
+    width: "100%",
+    height: "100%",
   },
-
   sorvetemorango: {
-    width: "90%", // Largura da imagem
-    height: "100%", // Altura da imagem
-    right: 50, // Alinha a direita
-    position: "absolute", // Posicionamento absoluto para controle preciso
+    width: "90%",
+    height: "100%",
+    right: 50,
+    position: "absolute",
     top: "5%",
   },
-
-  seta: {
-    width: 450, // Largura da seta
-    height: 400, // Altura da seta
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    top: "20%",
-    left: "-0%", // Alinha a esquerda
-  },
   elementos: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
-    left: 0, // Alinha a esquerda
+    position: "absolute",
+    left: 0,
     bottom: 90,
-    height: 60, // Altura fixa
-    width: "100%", // Largura fixa
-    flexDirection: "row", // Disposição dos elementos em linha
-    justifyContent: "space-evenly", // Espaço igual entre os elementos
+    height: 60,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
-
   txtvalor: {
     fontSize: 25,
     fontWeight: "700",
   },
-
-  seta1: {
-    position: "absolute", // Posicionamento absoluto para controle preciso
+  seta: {
+    position: "absolute",
     top: 100,
-    left: 10, // Alinha a esquerda
+    left: 10,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 3,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  alertBox: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    elevation: 5,
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#ed8e8e",
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 20,
+  },
+  alertButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ed8e8e",
+    borderRadius: 5,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

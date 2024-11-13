@@ -76,7 +76,7 @@ export default function LogCad() {
           <TouchableOpacity onPress={handleEnterWithoutLogin}>
             <Text style={styles.buttonTextPD}>Entrar sem login</Text>
           </TouchableOpacity>
-          <AntDesign name="arrowright" size={12} color="#ed8e8e" />
+  
         </View>
       </View>
     </ImageBackground>
@@ -140,6 +140,9 @@ const styles = StyleSheet.create({
   },
   buttonTextPD: {
     color: "#ed8e8e",
+    fontSize:18,
+    bottom:20,
+    right:15,
   },
   skipContainer: {
     position: "absolute",
