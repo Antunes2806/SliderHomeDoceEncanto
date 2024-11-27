@@ -5,6 +5,6 @@ export default [
   },
   {
     id: "2",
-    image: require("../ProjetoDoceria/src/assets/image/3.png"),
+    image: require("../ProjetoDoceria/src/assets/image/pgcar.png"),
   },
 ];

@@ -28,7 +28,7 @@ export default function SorveteFlocos() {
   const itemfav = {
     id: "7", // ID do produto
     name: "Sorvete Flocos",
-    valor: 15.0,
+    valor: 9.99,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -150,7 +150,7 @@ export default function SorveteFlocos() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$9,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -194,14 +194,13 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
-    color: "#333",
+    top: "13%",
   },
   txtsorvete: {
     fontSize: 15,
@@ -213,14 +212,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   row: {
-    width: "75%",
+    width: "60%",
     height: 2,
-    backgroundColor: "burlywood",
+    backgroundColor: "lemonchiffon",
     zIndex: 5,
     position: "absolute",
-    top: "52%",
-    right: "50%",
-    transform: [{ rotate: "-90deg" }],
+    top: "15%",
   },
   fundo: {
     width: "100%",

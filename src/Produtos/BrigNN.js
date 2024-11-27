@@ -28,7 +28,7 @@ export default function BrigNN() {
   const itemfav = {
     id: "13", // Exemplo de ID
     name: "Brigadeiro Ninho com Nutela",
-    valor: 15.0,
+    valor: 4.99,
     description:
       " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -132,7 +132,7 @@ export default function BrigNN() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$4,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -180,16 +180,16 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: "darkred",
     position: "absolute",
-    top: "17%",
+    top: "20%",
   },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "15%",
   },
   txtbrigadeiro: {
     fontSize: 20,

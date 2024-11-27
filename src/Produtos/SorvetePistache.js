@@ -28,7 +28,7 @@ export default function SorvetePistache() {
   const itemfav = {
     id: "6", // ID do produto
     name: "Sorvete Pistache",
-    valor: 15.0,
+    valor: 9.99,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -134,7 +134,7 @@ export default function SorvetePistache() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$9,99</Text>
 
         <TouchableOpacity
           style={styles.heart}
@@ -181,15 +181,13 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "70%",
+    width: "60%",
     textAlign: "center",
-    transform: [{ rotate: "-90deg" }],
-    top: "50%",
-    right: "55%",
     position: "absolute",
+    top: "13%",
   },
   txtsorvete: {
     fontSize: 15,
@@ -201,14 +199,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   row: {
-    width: "75%",
+    width: "60%",
     height: 2,
-    backgroundColor: "lightgreen",
+    backgroundColor: "green",
     zIndex: 5,
     position: "absolute",
-    top: "52%",
-    right: "50%",
-    transform: [{ rotate: "-90deg" }],
+    top: "15%",
   },
   fundo: {
     width: "100%",

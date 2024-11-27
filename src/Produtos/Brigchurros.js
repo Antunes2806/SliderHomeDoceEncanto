@@ -28,7 +28,7 @@ export default function Brigchurros() {
   const itemfav = {
     id: "15", // Exemplo de ID
     name: "Brigadeiro Churros",
-    valor: 15.0,
+    valor: 4.99,
     description:
       " Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -61,7 +61,13 @@ export default function Brigchurros() {
     }
 
     try {
-      const favoriteRef = doc(firestore, "users", currentUser.uid, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
@@ -127,7 +133,7 @@ export default function Brigchurros() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$4,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -175,16 +181,16 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: "brown",
     position: "absolute",
-    top: "17%",
+    top: "20%",
   },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "15%",
   },
   txtbrigadeiro: {
     fontSize: 20,

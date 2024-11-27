@@ -29,7 +29,7 @@ export default function CupcakeChocolate() {
   const itemfav = {
     id: "9", // ID do produto
     name: "Cupcake Chocolate",
-    valor: 15.0,
+    valor: 8.5,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -139,7 +139,7 @@ export default function CupcakeChocolate() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$8,50</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -182,14 +182,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  row: {
+    width: "70%",
+    height: 2,
+    backgroundColor: "saddlebrown",
+    position: "absolute",
+    top: "17%",
+  },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "60%",
+    width: "70%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "15%",
   },
   txtcupcake: {
     fontSize: 20,
@@ -197,7 +204,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 400,
+    width: 300,
   },
   cupcakedechocolate: {
     width: 300,

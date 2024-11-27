@@ -28,7 +28,7 @@ export default function SorveteMorango() {
   const itemfav = {
     id: "5",
     name: "Sorvete Morango",
-    valor: 15.0,
+    valor: 9.99,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -132,7 +132,7 @@ export default function SorveteMorango() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$9,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (

@@ -44,7 +44,7 @@ export default function CookiesTrad() {
   const itemfav = {
     id: "16", // Exemplo de ID do produto
     name: "Cookie Tradicional",
-    valor: 15.0,
+    valor: 18.0,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -64,7 +64,7 @@ export default function CookiesTrad() {
     const fetchImage = async () => {
       try {
         const storage = getStorage();
-        const imageRef = ref(storage, "brigtrad.png");
+        const imageRef = ref(storage, "cktrad.png");
         const url = await getDownloadURL(imageRef);
         setImageUrl(url);
       } catch (error) {
@@ -148,77 +148,78 @@ export default function CookiesTrad() {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.fundo}
-        source={require("../assets/image/cookietrad.png")}
-      />
-      <TouchableOpacity
-        style={styles.seta}
-        onPress={() => navigation.navigate("Produtos")}
-      >
-        <AntDesign name="left" size={24} color="black" />
-      </TouchableOpacity>
-
-      <Text style={styles.txt}>COOKIE TRADICIONAL</Text>
-
-      <View style={styles.row}></View>
-
-      <Image
-        style={styles.cookietradicional}
-        source={
-          imageUrl ? { uri: imageUrl } : require("../assets/image/cktrad.png")
-        }
-      />
-
-      <Text style={styles.txtcookies}>
-        Um sabor clássico e irresistível, esses cookies são crocantes por fora e
-        macios por dentro, proporcionando uma combinação perfeita de textura e
-        sabor!
-      </Text>
-
-      <View style={styles.elementos}>
-        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
-          <AntDesign name="shoppingcart" size={55} color="black" />
-        </TouchableOpacity>
-
-        <Text style={styles.txtvalor}>$15,00</Text>
-
+    <ImageBackground
+      style={styles.fundo}
+      source={require("../assets/image/cookietrad.png")}
+    >
+      <View style={styles.container}>
         <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
+          style={styles.seta}
+          onPress={() => navigation.navigate("Produtos")}
         >
-          {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
-          ) : (
-            <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
-          )}
+          <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
-      </View>
 
-      {/* Modal de Alerta para Login */}
-      <Modal
-        transparent={true}
-        visible={showAlert}
-        animationType="fade"
-        onRequestClose={() => setShowAlert(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.alertBox}>
-            <Text style={styles.alertTitle}>Atenção!</Text>
-            <Text style={styles.alertMessage}>
-              Você precisa estar logado para favoritar um produto.
-            </Text>
-            <TouchableOpacity
-              style={styles.alertButton}
-              onPress={() => setShowAlert(false)}
-            >
-              <Text style={styles.alertButtonText}>Entendi</Text>
-            </TouchableOpacity>
-          </View>
+        <Text style={styles.txt}>COOKIE TRADICIONAL</Text>
+
+        <View style={styles.row}></View>
+
+        <Image
+          style={styles.cookietradicional}
+          source={
+            imageUrl ? { uri: imageUrl } : require("../assets/image/cktrad.png")
+          }
+        />
+
+        <Text style={styles.txtcookies}>
+          Um sabor clássico e irresistível, esses cookies são crocantes por fora
+          e macios por dentro, proporcionando uma combinação perfeita de textura
+          e sabor!
+        </Text>
+
+        <View style={styles.elementos}>
+          <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
+            <AntDesign name="shoppingcart" size={55} color="black" />
+          </TouchableOpacity>
+
+          <Text style={styles.txtvalor}>$18,00</Text>
+
+          <TouchableOpacity
+            style={styles.heart}
+            onPress={handleToggleFavorite} // Chama a função de favoritar ao clicar
+          >
+            {isFavorite ? (
+              <AntDesign name="heart" size={35} color="black" /> // Coração preenchido
+            ) : (
+              <EvilIcons name="heart" size={55} color="black" /> // Coração vazio
+            )}
+          </TouchableOpacity>
         </View>
-      </Modal>
-    </View>
+
+        {/* Modal de Alerta para Login */}
+        <Modal
+          transparent={true}
+          visible={showAlert}
+          animationType="fade"
+          onRequestClose={() => setShowAlert(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.alertBox}>
+              <Text style={styles.alertTitle}>Atenção!</Text>
+              <Text style={styles.alertMessage}>
+                Você precisa estar logado para favoritar um produto.
+              </Text>
+              <TouchableOpacity
+                style={styles.alertButton}
+                onPress={() => setShowAlert(false)}
+              >
+                <Text style={styles.alertButtonText}>Entendi</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -233,22 +234,22 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: "saddlebrown",
     position: "absolute",
-    top: "19%",
+    top: "20%",
   },
   txt: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "70%",
     textAlign: "center",
-    top: "15%",
+    top: "17%",
     position: "absolute",
   },
   txtcookies: {
     fontSize: 20,
     fontFamily: "Rokkitt",
     textAlign: "center",
-    width: 350,
+    width: 300,
     top: "65%",
     position: "absolute",
   },

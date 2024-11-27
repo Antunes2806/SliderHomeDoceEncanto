@@ -132,7 +132,7 @@ export default function DonutsCookies() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$14,50</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 400,
+    width: 300,
   },
   donutscookies: {
     width: 250,

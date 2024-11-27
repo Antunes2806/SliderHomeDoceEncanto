@@ -28,7 +28,7 @@ export default function CupcakeMorango() {
   const itemfav = {
     id: "8",
     name: "Cupcake Morango",
-    valor: 15.0,
+    valor: 8.50,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -132,7 +132,7 @@ export default function CupcakeMorango() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$8,50</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -175,14 +175,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  row: {
+    width: "70%",
+    height: 2,
+    backgroundColor: "lightpink",
+    position: "absolute",
+    top: "16%",
+  },
   txt: {
-    fontSize: 28,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "13%",
     color: "#333",
   },
   txtcupcake: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,10 +17,10 @@ import {
 } from "../../CartReducer";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useFonts } from "expo-font";
-import { useState } from "react";
-import { Swipeable } from "react-native-gesture-handler"; 
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Swipeable } from "react-native-gesture-handler";
+import { auth } from "../services/firebase"; // Certifique-se de importar corretamente o Firebase Auth
 
 const CarrinhoScreen = () => {
   const navigation = useNavigation();
@@ -28,6 +28,7 @@ const CarrinhoScreen = () => {
   const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // Controle do modal de alerta
 
   const increaseQuantity = (item) => {
     dispatch(incrementQuantity(item));
@@ -66,15 +67,28 @@ const CarrinhoScreen = () => {
           justifyContent: "center",
           alignItems: "center",
           width: 90,
-          height:90,
+          height: 90,
           borderRadius: 8,
-          top:65,
+          top: 65,
         }}
-        onPress={() => dispatch(removeFromCart(item))} // Remove o item ao arrastar
+        onPress={() => dispatch(removeFromCart(item))}
       >
         <FontAwesome5 name="trash-alt" size={40} color="white" />
       </TouchableOpacity>
     );
+  };
+
+  const handleContinue = () => {
+    const currentUser = auth.currentUser; // Verifica o usuário atual
+
+    if (!currentUser) {
+      // Usuário não está logado
+      setShowAlert(true);
+      return;
+    }
+
+    // Usuário está logado, pode continuar
+    navigation.navigate("CarrinhoFN");
   };
 
   return (
@@ -89,11 +103,7 @@ const CarrinhoScreen = () => {
           }}
         >
           <Text
-            style={{
-              fontSize: 30,
-              fontFamily: "League",
-              textAlign: "center",
-            }}
+            style={{ fontSize: 30, fontFamily: "League", textAlign: "center" }}
           >
             MEU CARRINHO
           </Text>
@@ -105,7 +115,7 @@ const CarrinhoScreen = () => {
           style={{ width: "100%", height: "100%", flex: 1 }}
           source={require("../assets/image/fundocar1.png")}
           resizeMode="cover"
-        ></ImageBackground>
+        />
       ) : (
         <View style={{ flex: 1 }}>
           <FlatList
@@ -113,9 +123,7 @@ const CarrinhoScreen = () => {
             data={cart}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Swipeable
-                renderRightActions={() => renderRightActions(item)} // Função de exclusão ao arrastar
-              >
+              <Swipeable renderRightActions={() => renderRightActions(item)}>
                 <View
                   style={{
                     padding: 30,
@@ -123,7 +131,7 @@ const CarrinhoScreen = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 10,
-                    marginBottom: 10, // Fundo do item
+                    marginBottom: 10,
                   }}
                 >
                   <View
@@ -133,7 +141,6 @@ const CarrinhoScreen = () => {
                       top: 30,
                       flexDirection: "column",
                       alignItems: "flex-start",
-                      position: "relative",
                     }}
                   >
                     <Text style={{ fontSize: 20, fontFamily: "League" }}>
@@ -163,39 +170,20 @@ const CarrinhoScreen = () => {
                       }}
                     >
                       <Pressable onPress={() => decreaseQuantity(item)}>
-                        <Text
-                          style={{
-                            fontSize: 30,
-                            color: "black",
-                            fontFamily: "League",
-                          }}
-                        >
+                        <Text style={{ fontSize: 30, fontFamily: "League" }}>
                           -
                         </Text>
                       </Pressable>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          color: "black",
-                          fontFamily: "League",
-                        }}
-                      >
+                      <Text style={{ fontSize: 20, fontFamily: "League" }}>
                         {item.quantity}
                       </Text>
                       <Pressable onPress={() => increaseQuantity(item)}>
-                        <Text
-                          style={{
-                            fontSize: 25,
-                            color: "black",
-                            fontFamily: "League",
-                          }}
-                        >
+                        <Text style={{ fontSize: 25, fontFamily: "League" }}>
                           +
                         </Text>
                       </Pressable>
                     </View>
                   </View>
-
                   <View
                     style={{
                       width: 100,
@@ -209,11 +197,7 @@ const CarrinhoScreen = () => {
                     }}
                   >
                     <Image
-                      style={{
-                        width: 90,
-                        height: 90,
-                        borderRadius: 8,
-                      }}
+                      style={{ width: 90, height: 90, borderRadius: 8 }}
                       source={item.image}
                     />
                   </View>
@@ -221,7 +205,7 @@ const CarrinhoScreen = () => {
               </Swipeable>
             )}
           />
-           <View
+          <View
             style={{
               bottom: 60,
               width: "100%",
@@ -260,24 +244,22 @@ const CarrinhoScreen = () => {
                   <AntDesign name="exclamationcircle" size={12} color="pink" />
                 </TouchableOpacity>
               </View>
-              <View style={{}}>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 20,
-                    fontWeight: "bold",
-                  }}
-                >
-                  TOTAL: R$ {calcularTotal()}
-                </Text>
-              </View>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                TOTAL: R$ {calcularTotal()}
+              </Text>
             </View>
           </View>
 
           <View style={{ bottom: 30, alignItems: "flex-end", right: 25 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("CarrinhoFN")}
-              style={{ width: "30%", backgroundColor:"#ed8585", borderRadius:90, height:"24", justifyContent: "center",  }}
+              onPress={handleContinue}
+              style={{
+                width: "30%",
+                backgroundColor: "#ed8585",
+                borderRadius: 90,
+                height: 24,
+                justifyContent: "center",
+              }}
             >
               <Text
                 style={{
@@ -287,10 +269,11 @@ const CarrinhoScreen = () => {
                   color: "white",
                 }}
               >
-                CONTINUAR 
+                CONTINUAR
               </Text>
             </TouchableOpacity>
           </View>
+
           <Modal
             animationType="slide"
             transparent={true}
@@ -330,6 +313,73 @@ const CarrinhoScreen = () => {
                     style={{
                       textAlign: "center",
                       color: "white",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Fechar
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            transparent={true}
+            visible={showAlert}
+            animationType="fade"
+            onRequestClose={() => setShowAlert(false)}
+          >
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: 300,
+                  padding: 20,
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  alignItems: "center",
+                  elevation: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    marginBottom: 10,
+                    color: "#ed8e8e",
+                  }}
+                >
+                  Atenção!
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    textAlign: "center",
+                    color: "#333",
+                    marginBottom: 20,
+                  }}
+                >
+                  Você precisa estar logado para continuar a compra.
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    backgroundColor: "#ed8e8e",
+                    borderRadius: 5,
+                  }}
+                  onPress={() => setShowAlert(false)}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 16,
                       fontWeight: "bold",
                     }}
                   >

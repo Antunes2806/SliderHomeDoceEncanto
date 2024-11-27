@@ -28,7 +28,7 @@ export default function CookiesBranco() {
   const itemfav = {
     id: "17",
     name: "Cookie chocolate branco",
-    valor: 15.0,
+    valor: 18.0,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -150,7 +150,7 @@ export default function CookiesBranco() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$18,00</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -193,14 +193,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  row: {
+    width: "80%",
+    height: 2,
+    backgroundColor: "peachpuff",
+    position: "absolute",
+    top: "23%",
+  },
   txt: {
-    fontSize: 28,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "60%",
+    width: "90%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "20%",
     color: "#333",
   },
   txtcookies: {

@@ -133,7 +133,7 @@ export default function SorveteCookies() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$9,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -176,6 +176,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  fundo: {
+    width: "100%",
+    height: "100%",
+  },
   txt: {
     fontSize: 25,
     fontFamily: "Rokkitt",
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
   row: {
     width: "60%",
     height: 2,
-    backgroundColor: "brown",
+    backgroundColor: "moccasin",
     zIndex: 5,
     position: "absolute",
     top: "15%",

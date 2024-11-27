@@ -103,68 +103,71 @@ export default function DonutsChocolate() {
   if (!font) return null;
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.fundo}
-        source={require("../assets/image/fundodntchc.png")}
-      />
-      <TouchableOpacity
-        style={styles.seta}
-        onPress={() => navigation.navigate("Produtos")}
-      >
-        <AntDesign name="left" size={24} color="black" />
-      </TouchableOpacity>
-
-      <Text style={styles.txt}>DONUTS DE CHOCOLATE</Text>
-      <View style={styles.row}></View>
-      <Image
-        style={styles.donutschocolate}
-        source={require("../assets/image/dntchoc.png")}
-      />
-      <Text style={styles.txtdonuts}>
-        Uma delícia intensa com cobertura cremosa de chocolate, perfeita para os
-        amantes do doce, com massa macia que torna cada mordida irresistível!
-      </Text>
-
-      <View style={styles.elementos}>
-        <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
-          <AntDesign name="shoppingcart" size={55} color="black" />
+    <ImageBackground
+      style={styles.fundo}
+      source={require("../assets/image/fundodntchoc.png")}
+      resizeMode="conver"
+    >
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.seta}
+          onPress={() => navigation.navigate("Produtos")}
+        >
+          <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txt}>DONUTS DE CHOCOLATE</Text>
+        <View style={styles.row}></View>
+        <Image
+          style={styles.donutschocolate}
+          source={require("../assets/image/dntchoc.png")}
+        />
+        <Text style={styles.txtdonuts}>
+          Uma delícia intensa com cobertura cremosa de chocolate, perfeita para
+          os amantes do doce, com massa macia que torna cada mordida
+          irresistível!
+        </Text>
 
-        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
-          {isFavorite ? (
-            <AntDesign name="heart" size={35} color="black" />
-          ) : (
-            <EvilIcons name="heart" size={55} color="black" />
-          )}
-        </TouchableOpacity>
-      </View>
+        <View style={styles.elementos}>
+          <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
+            <AntDesign name="shoppingcart" size={55} color="black" />
+          </TouchableOpacity>
 
-      {/* Modal de Alerta para Login */}
-      <Modal
-        transparent={true}
-        visible={showAlert}
-        animationType="fade"
-        onRequestClose={() => setShowAlert(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.alertBox}>
-            <Text style={styles.alertTitle}>Atenção!</Text>
-            <Text style={styles.alertMessage}>
-              Você precisa estar logado para favoritar um produto.
-            </Text>
-            <TouchableOpacity
-              style={styles.alertButton}
-              onPress={() => setShowAlert(false)}
-            >
-              <Text style={styles.alertButtonText}>Entendi</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.txtvalor}>$14,50</Text>
+
+          <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
+            {isFavorite ? (
+              <AntDesign name="heart" size={35} color="black" />
+            ) : (
+              <EvilIcons name="heart" size={55} color="black" />
+            )}
+          </TouchableOpacity>
         </View>
-      </Modal>
-    </View>
+
+        {/* Modal de Alerta para Login */}
+        <Modal
+          transparent={true}
+          visible={showAlert}
+          animationType="fade"
+          onRequestClose={() => setShowAlert(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.alertBox}>
+              <Text style={styles.alertTitle}>Atenção!</Text>
+              <Text style={styles.alertMessage}>
+                Você precisa estar logado para favoritar um produto.
+              </Text>
+              <TouchableOpacity
+                style={styles.alertButton}
+                onPress={() => setShowAlert(false)}
+              >
+                <Text style={styles.alertButtonText}>Entendi</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 400,
+    width: 300,
   },
   donutschocolate: {
     width: 250,
@@ -201,6 +204,7 @@ const styles = StyleSheet.create({
   fundo: {
     width: "100%",
     height: "100%",
+    flex: 1,
   },
   elementos: {
     position: "absolute",

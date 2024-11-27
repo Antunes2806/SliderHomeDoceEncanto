@@ -6,9 +6,10 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { firestore, auth } from "../services/firebase"; // Certifique-se de importar o auth do firebase
+import { firestore, auth } from "../services/firebase";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -103,7 +104,7 @@ export default function Favoritos() {
   }
 
   // Renderização de cada item no carrossel de favoritos
-  const renderCarouselItem = ({ item }) => {
+  const renderCarouselItem = ({ item, index }) => {
     const price = typeof item.valor === "number" ? item.valor : 0;
 
     return (
@@ -118,12 +119,12 @@ export default function Favoritos() {
         >
           AQUI ESTÃO SEUS PRODUTOS FAVORITOS!
         </Text>
-        <View style={{ alignItems: "center", borderRadius: 20, padding: 10 }}>
+        <View style={{ alignItems: "center", borderRadius: 20, padding: 10, width: 400, height: 580,}}>
           <Image
             source={{ uri: item.image }}
             style={{
               width: 250,
-              height: 450,
+              height: 480,
               borderRadius: 30,
             }}
           />
@@ -176,55 +177,41 @@ export default function Favoritos() {
         backgroundColor: "#F5F3F3",
       }}
     >
-      <TouchableOpacity
-        onPress={goToPrevious}
-        disabled={currentIndex === 0}
+      {/* Imagem de fundo */}
+      <View
         style={{
           position: "absolute",
-          left: 20,
-          top: "50%",
-          transform: [{ translateY: -25 }],
-          zIndex: 1,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
         }}
       >
-        <Icon
-          name="chevron-left"
-          size={40}
-          color={currentIndex === 0 ? "#ccc" : "#000"}
+        <Image
+          source={{
+            uri: favorites[currentIndex]?.image || "",
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+            opacity: 0.5, // Ajuste a opacidade conforme necessário
+          }}
         />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={goToNext}
-        disabled={currentIndex === favorites.length - 1}
-        style={{
-          position: "absolute",
-          right: 20,
-          top: "50%",
-          transform: [{ translateY: -25 }],
-          zIndex: 1,
-        }}
-      >
-        <Icon
-          name="chevron-right"
-          size={40}
-          color={currentIndex === favorites.length - 1 ? "#ccc" : "#000"}
-        />
-      </TouchableOpacity>
+      </View>
 
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : favorites.length > 0 ? (
         <FlatList
-          data={[favorites[currentIndex]]}
+          data={favorites}
           renderItem={renderCarouselItem}
           keyExtractor={(item) => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
-          scrollEnabled={false}
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-            alignItems: "center",
+          onMomentumScrollEnd={(e) => {
+            const contentOffsetX = e.nativeEvent.contentOffset.x;
+            const index = Math.floor(contentOffsetX / 250); // Ajuste conforme a largura do item
+            setCurrentIndex(index);
           }}
         />
       ) : (

@@ -28,7 +28,7 @@ export default function Briguva() {
   const itemfav = {
     id: "14",
     name: "Brigadeiro de Uva",
-    valor: 15.0,
+    valor: 4.99,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -132,7 +132,7 @@ export default function Briguva() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$4,99</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -175,14 +175,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  row: {
+    width: "50%",
+    height: 2,
+    backgroundColor: "green",
+    position: "absolute",
+    top: "18%",
+  },
   txt: {
-    fontSize: 28,
+    fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "10%",
+    top: "15%",
     color: "#333",
   },
   txtbrigadeiro: {

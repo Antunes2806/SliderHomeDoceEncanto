@@ -28,7 +28,7 @@ export default function CupcakeFV() {
   const itemfav = {
     id: "11",
     name: "Cupcake Frutas Vermelhas",
-    valor: 15.0,
+    valor: 8.5,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -53,7 +53,13 @@ export default function CupcakeFV() {
     const checkFavoriteStatus = async () => {
       const currentUser = auth.currentUser;
       if (currentUser) {
-        const favoriteRef = doc(firestore, "users", currentUser.uid, "favorites", itemfav.id);
+        const favoriteRef = doc(
+          firestore,
+          "users",
+          currentUser.uid,
+          "favorites",
+          itemfav.id
+        );
         const docSnap = await getDoc(favoriteRef);
         setIsFavorite(docSnap.exists());
       }
@@ -71,7 +77,13 @@ export default function CupcakeFV() {
     }
 
     try {
-      const favoriteRef = doc(firestore, "users", currentUser.uid, "favorites", itemfav.id);
+      const favoriteRef = doc(
+        firestore,
+        "users",
+        currentUser.uid,
+        "favorites",
+        itemfav.id
+      );
       const docSnap = await getDoc(favoriteRef);
 
       if (docSnap.exists()) {
@@ -133,18 +145,15 @@ export default function CupcakeFV() {
         Um sabor fresco e tem o equilíbrio perfeito entre doçura e acidez, com
         uma cobertura suave que realça o sabor das frutas!
       </Text>
-      
+
       <View style={styles.elementos}>
         <TouchableOpacity style={styles.car} onPress={handleAddToCart}>
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$8,50</Text>
 
-        <TouchableOpacity
-          style={styles.heart}
-          onPress={handleToggleFavorite}
-        >
+        <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
             <AntDesign name="heart" size={35} color="black" />
           ) : (
@@ -185,11 +194,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  row: {
+    width: "60%",
+    height: 2,
+    backgroundColor: "deeppink",
+    position: "absolute",
+    top: "18%",
+  },
   txt: {
     fontSize: 25,
     fontFamily: "Rokkitt",
     zIndex: 5,
-    width: "60%",
+    width: "85%",
     textAlign: "center",
     position: "absolute",
     top: "15%",
@@ -200,7 +216,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 400,
+    width: 300,
   },
   cupcakedefrutas: {
     width: 330,

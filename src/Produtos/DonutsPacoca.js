@@ -106,7 +106,7 @@ export default function DonutsPacoca() {
     <View style={styles.container}>
       <ImageBackground
         style={styles.fundo}
-        source={require("../assets/image/fundodntpcc.png")}
+        source={require("../assets/image/fundodntpacoca.png")}
       />
       <TouchableOpacity
         style={styles.seta}
@@ -131,7 +131,7 @@ export default function DonutsPacoca() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$14,50</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 400,
+    width: 300,
     color: "#555",
   },
   dntpacoca: {

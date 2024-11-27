@@ -51,7 +51,7 @@ export default function CookiesDuo() {
   const itemfav = {
     id: "14",
     name: "Cookie chocolate branco",
-    valor: 15.0,
+    valor: 18.0,
     description:
       "Uma delícia que mistura sorvete cremoso com pedaços crocantes de cookies",
   };
@@ -85,7 +85,13 @@ export default function CookiesDuo() {
         const currentUser = auth.currentUser;
         console.log("Usuário atual:", currentUser); // Verifique o estado do usuário logado
         if (currentUser) {
-          const favoriteRef = doc(firestore, "users", currentUser.uid, "favorites", itemfav.id);
+          const favoriteRef = doc(
+            firestore,
+            "users",
+            currentUser.uid,
+            "favorites",
+            itemfav.id
+          );
           const docSnap = await getDoc(favoriteRef);
           setIsFavorite(docSnap.exists());
         } else {
@@ -154,7 +160,9 @@ export default function CookiesDuo() {
 
       <Image
         style={styles.cookieduo}
-        source={imageUrl ? { uri: imageUrl } : require("../assets/image/ckduo.png")}
+        source={
+          imageUrl ? { uri: imageUrl } : require("../assets/image/ckduo.png")
+        }
       />
 
       <Text style={styles.txtcookies}>
@@ -168,7 +176,7 @@ export default function CookiesDuo() {
           <AntDesign name="shoppingcart" size={55} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.txtvalor}>$15,00</Text>
+        <Text style={styles.txtvalor}>$18,00</Text>
 
         <TouchableOpacity style={styles.heart} onPress={handleToggleFavorite}>
           {isFavorite ? (
@@ -233,7 +241,7 @@ const styles = StyleSheet.create({
     fontFamily: "Rokkitt",
     position: "absolute",
     textAlign: "center",
-    width: 350,
+    width: 300,
   },
   cookieduo: {
     width: 300,
@@ -305,5 +313,4 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
-
 });
