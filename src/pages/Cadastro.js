@@ -1,96 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   TextInput,
   Text,
-  Alert,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image,
+  Modal,
 } from "react-native";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithCredential,
-} from "firebase/auth";
-import * as Google from "expo-auth-session/providers/google";
-import * as WebBrowser from "expo-web-browser";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { AuthContext } from "../../AuthProvider";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-
-WebBrowser.maybeCompleteAuthSession();
+import Icon from "react-native-vector-icons/FontAwesome"; // Para o ícone de visibilidade de senha
+import { StatusBar } from "react-native";
 
 const Cadastro = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
+  const { setNickname } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // Estado para confirmação de senha
+  const [nickname, setNicknameInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Estado para mostrar/ocultar confirmação de senha
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(""); // State for modal message
+  const [modalType, setModalType] = useState(""); // Type of modal: "success" or "error"
   const auth = getAuth();
   const db = getFirestore();
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: "<SEU_CLIENT_ID>",
-    scopes: ["profile", "email"],
-  });
-
   const handleSignUp = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
-      Alert.alert("Erro", "Por favor, insira um email válido.");
+      setModalMessage("Por favor, insira um email válido.");
+      setModalType("error");
+      setShowModal(true);
       return;
     }
 
-    if (password.length < 8) {
-      Alert.alert("Erro", "A senha deve ter pelo menos 8 caracteres.");
+    if (password.length < 6) {
+      setModalMessage("A senha deve ter pelo menos 6 caracteres.");
+      setModalType("error");
+      setShowModal(true);
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Erro", "As senhas não coincidem.");
+      setModalMessage("As senhas não coincidem.");
+      setModalType("error");
+      setShowModal(true);
       return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Armazenando apenas email e nickname no Firestore
+      // Add nickname to Firestore
       await setDoc(doc(db, "users", user.uid), {
-        email: user.email,
-        nickname: nickname,
+        nickname: nickname || "Novo Usuário",
       });
 
-      Alert.alert("Sucesso!", "Cadastro realizado com sucesso!");
-      navigation.navigate("Login"); // Redirecionando para a tela de Login
+      // Set user nickname and log them in
+      setNickname(nickname || "Novo Usuário");
+      login(nickname || "Novo Usuário");
+
+      setModalMessage("Cadastro realizado com sucesso! Bem-vindo!");
+      setModalType("success");
+      setShowModal(true);
+
+      setTimeout(() => {
+        navigation.navigate("ProdutosDrawer");
+      }, 2000); // Navigate to ProdutosDrawer after 2 seconds
     } catch (error) {
       console.error("Erro ao cadastrar:", error.message);
-      Alert.alert("Erro", "Não foi possível cadastrar. Tente novamente.");
+      setModalMessage("Não foi possível cadastrar. Tente novamente.");
+      setModalType("error");
+      setShowModal(true);
     }
   };
 
-  React.useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.authentication;
-      const credential = GoogleAuthProvider.credential(id_token);
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Usuário já logado: ", user);
+        navigation.navigate("ProdutosDrawer");
+      }
+    });
 
-      signInWithCredential(auth, credential)
-        .then(async (userCredential) => {
-          const userId = userCredential.user.uid;
-          Alert.alert("Sucesso", "Login com Google realizado com sucesso!");
-          navigation.navigate("ProdutosDrawer", { userId });
-        })
-        .catch((error) => {
-          console.error("Erro ao fazer login com Google:", error.message);
-          Alert.alert("Erro", "Não foi possível fazer login com Google.");
-        });
-    }
-  }, [response]);
+    return () => unsub();
+  }, []);
 
   return (
     <ImageBackground
@@ -98,19 +97,13 @@ const Cadastro = ({ navigation }) => {
       source={require("../assets/image/fundologcad.png")}
       style={styles.background}
     >
+      <StatusBar />
       <View style={styles.container}>
         <View style={styles.viewtitle}>
-          <Text style={styles.title}> Vamos criar sua conta!</Text>
-          <Text style={styles.title2}>Apenas alguns passos para começar</Text>
+          <Text style={styles.title}>Crie sua conta!</Text>
+          <Text style={styles.title2}>Cadastre-se para começar.</Text>
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Apelido"
-            value={nickname}
-            onChangeText={setNickname}
-          />
-        </View>
+
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -119,6 +112,15 @@ const Cadastro = ({ navigation }) => {
             autoCapitalize="none"
             value={email}
             onChangeText={setEmail}
+          />
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Nome de usuário"
+            value={nickname}
+            onChangeText={setNicknameInput}
           />
         </View>
 
@@ -134,48 +136,64 @@ const Cadastro = ({ navigation }) => {
             style={styles.iconContainer}
             onPress={() => setShowPassword(!showPassword)}
           >
-            <Icon
-              name={showPassword ? "eye" : "eye-slash"}
-              size={20}
-              color="gray"
-            />
+            <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="gray" />
           </TouchableOpacity>
         </View>
 
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
-            placeholder="Confirme sua Senha"
-            secureTextEntry={!showPassword}
+            placeholder="Confirmar Senha"
+            secureTextEntry={!showConfirmPassword}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            <Icon name={showConfirmPassword ? "eye" : "eye-slash"} size={20} color="gray" />
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.bttCadastrar} onPress={handleSignUp}>
+        <TouchableOpacity
+          style={styles.bttentrar}
+          onPress={handleSignUp}
+        >
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.bttGoogle}
-          onPress={() => promptAsync()}
-        >
-          <View style={styles.googleButtonContent}>
-            <Image
-              style={styles.Googlelogo}
-              source={require("../assets/image/googlelogo.png")}
-            />
-            <Text style={styles.buttonTextG}>Entrar com Google</Text>
-          </View>
-        </TouchableOpacity>
-
         <Text
-          style={styles.loginText}
+          style={styles.registerText}
           onPress={() => navigation.navigate("Login")}
         >
-          Já tem uma conta? Entre
+          Já tem uma conta?{" "}
+          <Text style={styles.registerTextLink}>Login</Text>
         </Text>
       </View>
+
+      {/* Modal de Alerta para Cadastro */}
+      <Modal
+        transparent={true}
+        visible={showModal}
+        animationType="fade"
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>
+              {modalType === "success" ? "Cadastro realizado!" : "Atenção!"}
+            </Text>
+            <Text style={styles.alertMessage}>{modalMessage}</Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={styles.alertButtonText}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -202,7 +220,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title2: {
-    fontSize: 15,
+    fontSize: 20,
     color: "gray",
   },
   inputContainer: {
@@ -215,11 +233,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     width: "100%",
-  },
-  loginText: {
-    color: "black",
-    textAlign: "center",
-    marginTop: 16,
   },
   passwordContainer: {
     flexDirection: "row",
@@ -238,7 +251,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 5,
   },
-  bttCadastrar: {
+  bttentrar: {
     backgroundColor: "#ed8e8e",
     borderRadius: 50,
     paddingVertical: 12,
@@ -252,32 +265,49 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  bttGoogle: {
-    borderColor: "#ed8e8e",
-    borderWidth: 2,
-    backgroundColor: "white",
-    borderRadius: 50,
-    paddingVertical: 12,
-    marginTop: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "50%",
-    height: 50,
-  },
-  googleButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  Googlelogo: {
-    width: 40,
-    height: 40,
-    bottom: 5,
-  },
-  buttonTextG: {
+  registerText: {
     color: "black",
-    fontSize: 16,
+    textAlign: "center",
+    marginTop: 16,
+  },
+  registerTextLink: {
+    color: "#ed8e8e",
     fontWeight: "bold",
+  },
+
+  // Styles for Modal
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  alertBox: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    width: 300,
+    alignItems: "center",
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  alertButton: {
+    backgroundColor: "#ed8e8e",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 16,
   },
 });
 

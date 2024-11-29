@@ -26,7 +26,12 @@ export default function LogCad() {
 
   const handleEnterWithoutLogin = () => {
     enterWithoutLogin(); // Atualiza o estado para não logado
-    navigation.navigate("ProdutosDrawer"); // Navega para a tela do Drawer
+
+    // Redefine a pilha de navegação para evitar voltar para LogCad
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "ProdutosDrawer" }], // Define a tela inicial como ProdutosDrawer
+    });
   };
 
   return (
@@ -76,7 +81,6 @@ export default function LogCad() {
           <TouchableOpacity onPress={handleEnterWithoutLogin}>
             <Text style={styles.buttonTextPD}>Entrar sem login</Text>
           </TouchableOpacity>
-  
         </View>
       </View>
     </ImageBackground>
@@ -140,9 +144,9 @@ const styles = StyleSheet.create({
   },
   buttonTextPD: {
     color: "#ed8e8e",
-    fontSize:18,
-    bottom:20,
-    right:15,
+    fontSize: 18,
+    bottom: 20,
+    right: 15,
   },
   skipContainer: {
     position: "absolute",

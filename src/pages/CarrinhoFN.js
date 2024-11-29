@@ -246,7 +246,10 @@ export default function CarrinhoFN() {
                 />
                 <Pressable
                   style={[styles.buttonModal, styles.buttonClose]}
-                  onPress={() => setPixModalVisible(false)}
+                  onPress={() => {
+                    setPixModalVisible(false);
+                    navigation.navigate("Finalizado")
+                    }}
                 >
                   <Text style={styles.textStyle}>Fechar</Text>
                 </Pressable>

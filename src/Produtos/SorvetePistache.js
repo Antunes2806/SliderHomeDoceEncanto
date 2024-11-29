@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     width: "60%",
     textAlign: "center",
     position: "absolute",
-    top: "13%",
+    top: "10%",
   },
   txtsorvete: {
     fontSize: 15,
@@ -204,18 +204,18 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     zIndex: 5,
     position: "absolute",
-    top: "15%",
+    top: "13%",
+  },
+  sorvetepistache: {
+    width: "85%",
+    height: "90%",
+    position: "absolute",
+    top: "9%",
+    right: "25%",
   },
   fundo: {
     width: "100%",
     height: "100%",
-  },
-  sorvetepistache: {
-    width: "85%",
-    height: "100%",
-    right: 60,
-    position: "absolute",
-    top: "5%",
   },
   elementos: {
     position: "absolute",

@@ -3,11 +3,11 @@ import {
   View,
   TextInput,
   Text,
-  Alert,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
   Image,
+  Modal,
 } from "react-native";
 import {
   getAuth,
@@ -21,6 +21,7 @@ import * as WebBrowser from "expo-web-browser";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../../AuthProvider";
+import { StatusBar } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -32,6 +33,9 @@ const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const auth = getAuth();
   const db = getFirestore();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(""); // State for modal message
+  const [modalType, setModalType] = useState(""); // Type of modal: "success" or "error"
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: "<SEU_CLIENT_ID>",
@@ -45,12 +49,22 @@ const Login = ({ navigation }) => {
 
       signInWithCredential(auth, credential)
         .then(() => {
-          Alert.alert("Sucesso", "Login com Google realizado com sucesso!");
-          navigation.navigate("ProdutosDrawer");
+          setModalMessage(
+            "Bem-vindo de volta! Estamos felizes em tê-lo de volta!"
+          );
+          setModalType("success");
+          setShowModal(true); // Exibe o modal de sucesso
+          setTimeout(() => {
+            navigation.navigate("ProdutosDrawer");
+          }, 2000); // Aguarda 2 segundos antes de navegar
         })
         .catch((error) => {
+          setModalMessage(
+            "Não foi possível fazer login com Google. Tente novamente."
+          );
+          setModalType("error");
+          setShowModal(true); // Exibe o modal de erro
           console.error("Erro ao fazer login com Google:", error.message);
-          Alert.alert("Erro", "Não foi possível fazer login com Google.");
         });
     }
   }, [response]);
@@ -66,7 +80,9 @@ const Login = ({ navigation }) => {
 
   const handleEmailPasswordLogin = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
-      Alert.alert("Erro", "Por favor, insira um email válido.");
+      setModalMessage("Por favor, insira um email válido.");
+      setModalType("error");
+      setShowModal(true); // Exibe o modal de erro
       return;
     }
 
@@ -87,17 +103,26 @@ const Login = ({ navigation }) => {
 
         login(nickname);
 
-        Alert.alert("Sucesso", `Olá, ${nickname}!`);
-        navigation.navigate("ProdutosDrawer");
+        setModalMessage(
+          `Agora, é só escolher os doces que vão adoçar o seu dia!`
+        );
+        setModalType("success");
+        setShowModal(true); // Exibe o modal de sucesso
+        setTimeout(() => {
+          navigation.navigate("ProdutosDrawer");
+        }, 2000); // Aguarda 2 segundos antes de navegar
       } else {
-        Alert.alert("Erro", "Usuário não encontrado.");
+        setModalMessage("Usuário não encontrado.");
+        setModalType("error");
+        setShowModal(true); // Exibe o modal de erro
       }
     } catch (error) {
       console.error("Erro ao fazer login:", error.message);
-      Alert.alert(
-        "Erro",
+      setModalMessage(
         "Não foi possível fazer login. Verifique suas credenciais."
       );
+      setModalType("error");
+      setShowModal(true); // Exibe o modal de erro
     }
   };
 
@@ -107,6 +132,7 @@ const Login = ({ navigation }) => {
       source={require("../assets/image/fundologcad.png")}
       style={styles.background}
     >
+      <StatusBar />
       <View style={styles.container}>
         <View style={styles.viewtitle}>
           <Text style={styles.title}>Bem-vindo(a) de volta!</Text>
@@ -175,6 +201,31 @@ const Login = ({ navigation }) => {
           <Text style={styles.recoverPasswordText}>Esqueceu a senha?</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal de Alerta para Login */}
+      <Modal
+        transparent={true}
+        visible={showModal}
+        animationType="fade"
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertTitle}>
+              {modalType === "success"
+                ? "Login realizado com sucesso!"
+                : "Atenção!"}
+            </Text>
+            <Text style={styles.alertMessage}>{modalMessage}</Text>
+            <TouchableOpacity
+              style={styles.alertButton}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={styles.alertButtonText}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -287,6 +338,41 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 16,
+  },
+
+  // Styles for Modal
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  alertBox: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    width: 300,
+    alignItems: "center",
+  },
+  alertTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  alertMessage: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  alertButton: {
+    backgroundColor: "#ed8e8e",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 16,
   },
 });
 

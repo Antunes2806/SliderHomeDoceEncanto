@@ -100,8 +100,10 @@ const CarrinhoScreen = () => {
             height: "10%",
             justifyContent: "flex-end",
             alignItems: "center",
+            position: "absolut",
           }}
         >
+          
           <Text
             style={{ fontSize: 30, fontFamily: "League", textAlign: "center" }}
           >
@@ -194,10 +196,16 @@ const CarrinhoScreen = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       top: 20,
+                      position: "absolut",
                     }}
                   >
                     <Image
-                      style={{ width: 90, height: 90, borderRadius: 8 }}
+                      style={{
+                        width: "90%",
+                        height: "115%",
+                        borderRadius: 8,
+                        padding: 7,
+                      }}
                       source={item.image}
                     />
                   </View>
@@ -251,6 +259,16 @@ const CarrinhoScreen = () => {
           </View>
 
           <View style={{ bottom: 30, alignItems: "flex-end", right: 25 }}>
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: 100,
+              left: 10,
+            }}
+            onPress={() => navigation.navigate("Produtos")}
+          >
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
             <TouchableOpacity
               onPress={handleContinue}
               style={{

@@ -6,9 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
-  Animated,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { firestore, auth } from "../services/firebase";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
@@ -17,7 +15,6 @@ import { useFonts } from "expo-font";
 export default function Favoritos() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Função para buscar os favoritos do usuário logado
   const fetchFavorites = async () => {
@@ -79,20 +76,6 @@ export default function Favoritos() {
     }
   };
 
-  // Função para ir para o item anterior no carrossel
-  const goToPrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  // Função para ir para o item seguinte no carrossel
-  const goToNext = () => {
-    if (currentIndex < favorites.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
   // Carregamento de fontes personalizadas
   const [font] = useFonts({
     Rokkitt: require("../fontes/Rokkit/Rokkitt/static/Rokkitt-BoldItalic.ttf"),
@@ -104,7 +87,7 @@ export default function Favoritos() {
   }
 
   // Renderização de cada item no carrossel de favoritos
-  const renderCarouselItem = ({ item, index }) => {
+  const renderCarouselItem = ({ item }) => {
     const price = typeof item.valor === "number" ? item.valor : 0;
 
     return (
@@ -119,7 +102,15 @@ export default function Favoritos() {
         >
           AQUI ESTÃO SEUS PRODUTOS FAVORITOS!
         </Text>
-        <View style={{ alignItems: "center", borderRadius: 20, padding: 10, width: 400, height: 580,}}>
+        <View
+          style={{
+            alignItems: "center",
+            borderRadius: 20,
+            padding: 10,
+            width: 400,
+            height: 580,
+          }}
+        >
           <Image
             source={{ uri: item.image }}
             style={{
@@ -177,7 +168,7 @@ export default function Favoritos() {
         backgroundColor: "#F5F3F3",
       }}
     >
-      {/* Imagem de fundo */}
+      {/* Imagem de fundo fixa */}
       <View
         style={{
           position: "absolute",
@@ -188,9 +179,7 @@ export default function Favoritos() {
         }}
       >
         <Image
-          source={{
-            uri: favorites[currentIndex]?.image || "",
-          }}
+          source={require("../assets/image/fundofav1.png")} // Substitua com o caminho correto da imagem de fundo fixa
           style={{
             width: "100%",
             height: "100%",
@@ -208,11 +197,6 @@ export default function Favoritos() {
           keyExtractor={(item) => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={(e) => {
-            const contentOffsetX = e.nativeEvent.contentOffset.x;
-            const index = Math.floor(contentOffsetX / 250); // Ajuste conforme a largura do item
-            setCurrentIndex(index);
-          }}
         />
       ) : (
         <Image
